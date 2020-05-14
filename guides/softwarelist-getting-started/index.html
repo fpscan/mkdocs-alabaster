@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Getting Started with MAME Software List Emulation &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="getting-started-with-software-emulation-in-libretro-mame-cores">Getting started with software emulation in Libretro MAME cores<a class="headerlink" href="#getting-started-with-software-emulation-in-libretro-mame-cores" title="Permanent link">¶</a></h1>
+<p>Multi software emulation requires a different planning approach than arcade emulation. Terminology can also differ from the terms used in other kinds of emulation.
+The terms software and software list are used to define non-arcade machines emulated by MAME.</p>
+<h3 id="process">Process<a class="headerlink" href="#process" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Understand the core variants</strong></li>
+<li><strong>Use the correct version romsets for that emulator</strong></li>
+</ol>
+<p>The libretro core ecosystem currently includes many multi software emulators, that support software emulation. Arcade (MAME), Arcade (MAME 2016) will be the main focus of this guide but the MULTI (MESS 2015) and MULTI (UME 2015) cores have this ability. Each requiring its own distinct version of "romsets" which the emulator supports.</p>
+<p>!!! tip
+    Matching emulator and game versions is advised for maximum compatibility but you may find mis-matched combinations also work.  </p>
+<hr />
+<h2 id="step-1-understand-the-core-variants">Step 1: Understand the core variants<a class="headerlink" href="#step-1-understand-the-core-variants" title="Permanent link">¶</a></h2>
+<p>There are three families of multi-system software emulators available as libretro cores: MAME, MESS and UME. These emulators are in turn available in multiple versions to allow users to best match a core to their preference.</p>
+<h4 id="mame">MAME<a class="headerlink" href="#mame" title="Permanent link">¶</a></h4>
+<p>Arcade (MAME) &amp; Arcade (MAME 2016) are currently the only MAME cores that support the emulation of software &amp; arcade system. The Arcade (MAME) core is updated regulary and most inline with the official MAME project release. Arcade (MAME 2016) is an archived snapshot of MAME from the 0.174 release.</p>
+<h4 id="mess">MESS<a class="headerlink" href="#mess" title="Permanent link">¶</a></h4>
+<p>Multi (MESS 2015) is a snapshot of the MESS project from v0.160. The MESS project later merged with the MAME project in MAME v0.162</p>
+<h4 id="ume">UME<a class="headerlink" href="#ume" title="Permanent link">¶</a></h4>
+<p>Multi (UME 2015) is a snapshot of the Universal Machine Emulator. This was a precursor to the MAME/MESS merger, released by David Haywood (haze). The MAME and MESS project codebases co-existed in the MESS SVN development tree before they official merged. This allowed haze to build and release the eumlator with unmodified code from both projects under the name UME</p>
+<hr />
+<h2 id="step-2-use-the-correct-version-romsets-for-that-emulator">Step 2: Use the correct version romsets for that emulator<a class="headerlink" href="#step-2-use-the-correct-version-romsets-for-that-emulator" title="Permanent link">¶</a></h2>
+<p><strong>For best results, start with a full software list ROM collection with a version that matches the emulator you're using.</strong></p>
+<p>In general, you will only get good results with a full collection of software list romsets for your chosen emulator.Individual romset zip files may not include BIOS ROMs, "Parent" romsets, necessary audio sample files, etc.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Emulator</th>
+<th align="center">Required ROM Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">MAME 2016</td>
+<td align="center">MAME 0.174</td>
+</tr>
+<tr>
+<td align="center">MAME (latest version)</td>
+<td align="center">MAME (latest version)</td>
+</tr>
+<tr>
+<td align="center">MESS 2015</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">UME 2015</td>
+<td align="center">-</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="running-software-list-machines">Running software list machines<a class="headerlink" href="#running-software-list-machines" title="Permanent link">¶</a></h2>
+<p>There are two common methods of configuring Retroarch to launch software list machines and games with MAME cores.</p>
+<ol>
+<li><strong>MAME Frontend direct</strong></li>
+<li><strong>Libretro CMD file</strong></li>
+</ol>
+<p><strong>Method 1</strong> uses the inbuilt MAME logic and hash files to launch your games.
+<strong>Method 2</strong> uses an extra Libretro feature to pass command line functions to the core. This replicates sending command line functions directly to MAME like you would on a PC.</p>
+<h3 id="mame-frontend-direct">MAME Frontend direct<a class="headerlink" href="#mame-frontend-direct" title="Permanent link">¶</a></h3>
+<p>NOTES:-
+Method 1:- Authentic MAME
+Using the internal Software List functions of MAME.</p>
+<p>For this you will need some supporting files from the mainline MAME emulator. Download the windows MAME emulator here(link). Making sure to get the correct version you require.</p>
+<p>Extract the contents and remove the “hash” folder and it’s contents. If your device has limited storage just take the files relating to the system you want to emulate.</p>
+<p>Folder structure:-
+Folder structure/naming is very important for this use of the MAME Cores. The naming will depend on the machine you are trying to emulate but the folder structure will be the same. The example below is for the Atari 5200.</p>
+<p>“YourPath” is the location of your Retroarch and games folders.</p>
+<p>Create the following folders in your Retroarch installation or your specified “system” folder</p>
+<p>YourPath/Retroarch/System/mame</p>
+<p>Copy the hash folder acquired earlier to the above location.</p>
+<p>YourPath/Retroarch/system/mame/hash</p>
+<p>So for Atari 5200 you would have</p>
+<p>YourPath/Retroarch/system/mame/hash/a5200.xml</p>
+<p>(Check about .hsi file or use another example)</p>
+<p>Create the following folders in your games directory (these will be mame naming dependent)</p>
+<p>YourPath/Games/Atari 5200/a5200</p>
+<p>(The last folder MUST be named as MAME requires, in this case “a5200”)</p>
+<p>Place any .zip games and .zip bios files required here</p>
+<p>YourPath/Games/Atari 5200/a5200/a5200.zip
+YourPath/Games/Atari 5200/a5200/boogie.zip</p>
+<p>(You May also extract the bios file to their own folder within the games directory)
+YourPath/Games/Atari 5200/a5200/a5200/5200.rom)</p>
+<p>Now Load Content and browse to the game files and launch with a compatible core.
+————————————————
+Need to do a fresh install and confirm minimum files needed</p>
+<p>Add note about SoftList xml specifying the game names and crc and only supporting only those specific file names.
+————————————————</p>
+<p>Method2: Frontend Friendly</p>
+<p>CMD or command line file launching.</p>
+<p>This method follows the same folder structure as above but you can use custom naming outside of the hash file included with MAME.
+It utilises some custom additions to the Libretro MAME Cores. Specifically the use of text files (.cmd) to replicate sending command line actions as you can with mainline MAME.</p>
+<p>To do
+Deciding on contents of the cmd file</p>
+<p>Cmd file example</p>
+<p>Test on clean install</p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#process">Process</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#step-1-understand-the-core-variants">Step 1: Understand the core variants</a></li>
+      <ul>
+    
+      <li><a href="#mame">MAME</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#mess">MESS</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#ume">UME</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#step-2-use-the-correct-version-romsets-for-that-emulator">Step 2: Use the correct version romsets for that emulator</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#running-software-list-machines">Running software list machines</a></li>
+      <ul>
+    
+      <li><a href="#mame-frontend-direct">MAME Frontend direct</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../arcade-getting-started/" title="previous chapter">
+        Getting Started with Arcade Emulation
+      </a></li>
+    
+    
+      <li>Next: <a href="../../library/bios/" title="next chapter">
+        BIOS Information Hub
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

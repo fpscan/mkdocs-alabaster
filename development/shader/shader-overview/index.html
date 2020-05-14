@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Shader Development Overview &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <link rel="stylesheet" href="../../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="shader-development-overview">Shader Development Overview<a class="headerlink" href="#shader-development-overview" title="Permanent link">¶</a></h1>
+<h2 id="available-shader-types">Available shader types<a class="headerlink" href="#available-shader-types" title="Permanent link">¶</a></h2>
+<p>As the reference libretro frotnend, RetroArch supports three shader languages:</p>
+<table>
+<thead>
+<tr>
+<th>Shader Language</th>
+<th>Video Context Drivers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../slang-shaders/">Slang</a></td>
+<td>Vulkan, GL 2.x (legacy desktop), GL 3.x+ (modern desktop), GLES2 (legacy mobile), GLES3 (modern mobile), HLSL (Planned), Metal (Planned)</td>
+</tr>
+<tr>
+<td><a href="../glsl-shaders/">GLSL</a></td>
+<td>GL Shading Language, OpenGL, OpenGL ES, and EGL contexts including KMS mode in Linux)</td>
+</tr>
+<tr>
+<td><a href="../cg-shaders/">Cg (deprecated)</a></td>
+<td>HLSL/GLSL, nVidia</td>
+</tr>
+<tr>
+<td><a href="../xml-shaders/">XML (discontinued)</a></td>
+<td>GLSL</td>
+</tr>
+</tbody>
+</table>
+<p>When possible, it is recommended to use Slang shaders for supporting the widest variety of modern systems.</p>
+<p>RetroArch is able to stack these shaders to create a combined effect. These complex effects are saved with a special extension:</p>
+<ul>
+<li><code>.slangp</code> for Slang</li>
+<li><code>.glslp</code> for GLSL</li>
+<li><code>.cpg</code> for Cg </li>
+</ul>
+<h2 id="common-shaders-repository">Common Shaders Repository<a class="headerlink" href="#common-shaders-repository" title="Permanent link">¶</a></h2>
+<p>The Libretro organization hosts a <a href="https://github.com/libretro/common-shaders">repository</a> on Github that contains a compilation of shaders. Users can contribute their own shaders to this repository by doing a Pull Request.</p>
+<h2 id="shader-development-the-rendering-pipeline">Shader development: The rendering pipeline<a class="headerlink" href="#shader-development-the-rendering-pipeline" title="Permanent link">¶</a></h2>
+<p>With shaders you are able to take control over a large chunk of the GPUs inner workings by writing your own programs that are uploaded and run on the GPU. In the old days, GPUs were a big black box that was highly configurable using endless amount of API calls. In more modern times, rather than giving you endless amounts of buttons, you are expected to implement the few <code>«buttons»</code> you actually need, and have a streamlined API.</p>
+<p>The rendering pipeline is somewhat complex, but we can in general simplify
+it to:</p>
+<ul>
+<li>Vertex processing</li>
+<li>Rasterization</li>
+<li>Fragment processing</li>
+<li>Framebuffer blend</li>
+</ul>
+<p>Shader developers can take control of what happens during vertex processing, and fragment processing.</p>
+<h2 id="frontend-development-rendering-the-shader-chain">Frontend development: Rendering the shader chain<a class="headerlink" href="#frontend-development-rendering-the-shader-chain" title="Permanent link">¶</a></h2>
+<p>With all these options, the rendering pipeline can become somewhat complex. The meta-shader format greatly utilizes the possibility of off-screen rendering to achieve its effects.</p>
+<p>In OpenGL usually this is referred to as frame-buffer objects, and in HLSL as render targets. This feature will be referred to as FBO from here. FBO texture is assumed to be a texture bound to the FBO. As long as the visual result is approximately identical, the implementation does not have to employ FBO.</p>
+<p>With multiple passes our chain looks like this conceptually:</p>
+<p><code>|Source image| ---&gt; |Shader 0| ---&gt; |FBO 0| ---&gt; |Shader 1| ---&gt; |FBO 1| ---&gt; |Shader 2| ---&gt; (Back buffer)</code></p>
+<p>In the case that Shader 2 has set some scaling params, we need to first render to an FBO before stretching it to the back buffer.</p>
+<p><code>|Source image| ---&gt; ... |Shader 2| ---&gt; |FBO 2| ---&gt; (Back buffer)</code></p>
+<p>Scaling parameters determine the sizes of the FBOs. For visual fidelity it is recommended that power-of-two sized textures are bound to them. This is due to floating point inaccuracies that become far more apparent when not using power-of-two textures. If the absolute maximum size of the source image is known, then it is possible to preallocate the FBOs.</p>
+<p>Do note that the size of FBOn is determined by dimensions of <code>FBOn-1</code> when "source" scale is used, <em>not</em> the source image size! Of course, FBO0 would use source image size, as there is no <code>FBO-1</code>.</p>
+<p>For example, with SNES there is a maximum width of <code>512</code> and height of <code>478</code>. If a source relative scale of <code>3.0x</code> is desired for first pass, it is thus safe to allocate a FBO with size of <code>2048x2048</code>. However, most frames will just use a tiny fraction of this texture.</p>
+<p>With "viewport" scale it might be necessary to reallocate the FBO in run-time if the user resizes the window.</p>
+<h2 id="shader-compatibility-with-retroarch-video-drivers">Shader compatibility with RetroArch video drivers<a class="headerlink" href="#shader-compatibility-with-retroarch-video-drivers" title="Permanent link">¶</a></h2>
+<p>In RetroArch, the following table specifies which shader types work with what video contexts:</p>
+<table>
+<thead>
+<tr>
+<th>Context Driver</th>
+<th>GLSL</th>
+<th>CG</th>
+<th>HLSL</th>
+<th>Slang</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Android</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>CGL</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>D3D</td>
+<td>N</td>
+<td>Y</td>
+<td>N (Possible)</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>DRM</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>Emscripten</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>GDI</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>KHR</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Mali</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>Opendingux</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>OSMesa</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>PS3</td>
+<td>N</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>QNX</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>SDL</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>VC</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>Vivante</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>Wayland</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>WGL</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>X</td>
+<td>Y</td>
+<td>Y</td>
+<td>N</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>XEGL</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+<p>!!! Warning
+    Attempting to load unsupported shader types may result in segmentation faults because the context drivers currently do not have the behavior to declare which types of shaders it supports.</p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../../..">
+      <img class="logo" src="../../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#available-shader-types">Available shader types</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#common-shaders-repository">Common Shaders Repository</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#shader-development-the-rendering-pipeline">Shader development: The rendering pipeline</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#frontend-development-rendering-the-shader-chain">Frontend development: Rendering the shader chain</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#shader-compatibility-with-retroarch-video-drivers">Shader compatibility with RetroArch video drivers</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../../cores/core-specific/mame-2003-plus/" title="previous chapter">
+        MAME 2003-Plus
+      </a></li>
+    
+    
+      <li>Next: <a href="../slang-shaders/" title="next chapter">
+        Slang Shader Development
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

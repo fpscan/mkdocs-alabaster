@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Steam Link &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="downloading-and-installing-retroarch-for-steam-link">Downloading and Installing RetroArch for Steam Link<a class="headerlink" href="#downloading-and-installing-retroarch-for-steam-link" title="Permanent link">¶</a></h1>
+<p>The download and installation process is as follows, and may change in the future. Threads, alsa, pulse, neon and shaderpipeline are disabled, RGUI theme is pre-configured and most Cores installed into the <code>Cores</code> folder for full efficiency.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
+<p>This is probably the most straightforward way to install RetroArch.</p>
+<ul>
+<li>FAT32 formatted USB</li>
+</ul>
+<h1 id="download">Download<a class="headerlink" href="#download" title="Permanent link">¶</a></h1>
+<p>You can find a cores bundle with RetroArch by clicking <a href="https://www.retroarch.com/index.php?page=platforms">here</a> and scroll down until you see the <strong>Steam Link</strong> section.</p>
+<h1 id="getting-usb-ready">Getting USB Ready<a class="headerlink" href="#getting-usb-ready" title="Permanent link">¶</a></h1>
+<h2 id="setting-up-retroarch">Setting up RetroArch<a class="headerlink" href="#setting-up-retroarch" title="Permanent link">¶</a></h2>
+<p>Getting RetroArch ready to install is very simple. Create the file structure in the root directory of your USB as follows:</p>
+<blockquote>
+<p>steamlink/apps/</p>
+</blockquote>
+<p>Unzip the <code>RetroArch.zip</code>,  move the <code>RetroArch</code> folder into the <code>apps</code> folder we just created. </p>
+<h3 id="content-management">Content Management<a class="headerlink" href="#content-management" title="Permanent link">¶</a></h3>
+<p>Transferring files to Steam Link can be a bit tedious. You can put your contents inside the <code>Content</code> folder in the <code>RetroArch</code> folder, however our goal is to make this process more sustainable. In this case SSH or USBmount will help us.</p>
+<h4 id="ssh">SSH<a class="headerlink" href="#ssh" title="Permanent link">¶</a></h4>
+<p>In order to use an SFTP connection with SSH, we must first enable SSH. It's easy to enable SSH on your Steam Link. To do this, go to <code>steamlink</code> folder and create two nested folders first create the <code>Config</code> directory then enter it and create the <code>System</code> directory there. The directory structure should be as follows;</p>
+<blockquote>
+<p>steamlink/config/system/</p>
+</blockquote>
+<p>Then, enter the <code>System</code> directory and create an empty text file named <code>enable_ssh.txt</code>.</p>
+<p>Within this, create a blank text file, and label it <strong>enable_ssh.txt</strong>. The final directory structure should be as follows:</p>
+<blockquote>
+<p>steamlink/config/system/enable_ssh.txt
+</p>
+</blockquote>
+<h4 id="usbmount">USBmount<a class="headerlink" href="#usbmount" title="Permanent link">¶</a></h4>
+<p>USBmount is an alternative way to connect <code>/mnt/disk</code>. You can find more detailed information in the link below.</p>
+<p><a href="https://steamcommunity.com/app/353380/discussions/1/152393186490496699/">https://steamcommunity.com/app/353380/discussions/1/152393186490496699/</a></p>
+<p>Put your USBmount folder into <code>steamlink/apps/</code></p>
+<p><em>RetroArch is not affiliated with the above link this link may change in the future or may not be original, this subject may vary.</em></p>
+<h1 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h1>
+<p>After completing the above operations, you should have a directory structure like the one below. Repeat the above steps until you reach the final result.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>steamlink</td>
+<td>apps</td>
+<td>retroarch</td>
+<td>...</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>config</td>
+<td>system</td>
+<td>enable_ssh.txt</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Format your USB to FAT32 type for fresh install. Move the <code>steamlink</code> folder we just created into your USB root. Unplug your USB and make sure your SteamLink is completely turned off by unplugging the power cord. Plug your USB into the first USB port, and then plug in the power cable. When Steam Link boots, RetroArch structure will be read, and RetroArch will be installed. Remove the USB after you see the RetroArch logo on the home screen. You can run the application by pressing the RetroArch logo.</p>
+<h1 id="content-transfer">Content Transfer<a class="headerlink" href="#content-transfer" title="Permanent link">¶</a></h1>
+<p>We can transfer our content with SSH or USBmount we have previously configured.</p>
+<h2 id="ssh_1">SSH<a class="headerlink" href="#ssh_1" title="Permanent link">¶</a></h2>
+<p>Find out the IP address that SteamLink receives, which you can learn from your router or SteamLink network settings. Create an SFTP connection with your trusted FTP tool. SteamLink SSH username is <code>root</code> and password is <code>steamlink123</code>, 21 for FTP and 22 for SFTPthe sample scenario for this is as follows. It may be different(ip address) in your case. RetroArch is not related to the specified applications and cannot be held responsible.</p>
+<p>FileZilla</p>
+<table>
+<thead>
+<tr>
+<th>Host</th>
+<th>Username</th>
+<th>Passoword</th>
+<th>Port</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>192.168.1.5</td>
+<td>root</td>
+<td>steamlink123</td>
+<td>22</td>
+</tr>
+</tbody>
+</table>
+<p>Go to root folder and open <code>apps</code> folder, you will see RetroArch folder in there. Open it and move your contents to <code>contents</code> folder.</p>
+<h2 id="usbmount_1">USBmount<a class="headerlink" href="#usbmount_1" title="Permanent link">¶</a></h2>
+<p>Install USBmount the same way we install RetroArch. Remove the <code>RetroArch</code> folder from the <code>apps</code> directory before installation. Otherwise it will re-install on every boot.</p>
+<p>After completing the installation, create a folder on your USB and move your contents. Then plug the USB into your SteamLink and run the installed <code>USBmount</code> application.</p>
+<h4 id="video-tutorial">Video Tutorial<a class="headerlink" href="#video-tutorial" title="Permanent link">¶</a></h4>
+<p><a href="http://www.youtube.com/watch?v=02M9SdUKLa0"><img alt="Quick Video Demonstration" src="http://img.youtube.com/vi/02M9SdUKLa0/0.jpg" /></a></p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#prerequisites">Prerequisites</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+    <ul>
+    
+  </ul>
+  
+    <ul>
+    
+      <li><a href="#setting-up-retroarch">Setting up RetroArch</a></li>
+      <ul>
+    
+      <li><a href="#content-management">Content Management</a></li>
+      <ul>
+    
+      <li><a href="#ssh">SSH</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#usbmount">USBmount</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+    <ul>
+    
+  </ul>
+  
+    <ul>
+    
+      <li><a href="#ssh_1">SSH</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#usbmount_1">USBmount</a></li>
+      <ul>
+    
+      <li><a href="#video-tutorial">Video Tutorial</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../install-lakka/" title="previous chapter">
+        Lakka-PC
+      </a></li>
+    
+    
+      <li>Next: <a href="../web-player/" title="next chapter">
+        Web Player
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

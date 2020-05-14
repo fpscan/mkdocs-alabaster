@@ -1,0 +1,996 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>MSX/SVI/ColecoVision/SG-1000 (blueMSX) &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="msxsvicolecovisionsg-1000-bluemsx">MSX/SVI/ColecoVision/SG-1000 (blueMSX)<a class="headerlink" href="#msxsvicolecovisionsg-1000-bluemsx" title="Permanent link">¶</a></h1>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">¶</a></h2>
+<p>blueMSX is a cycle accurate emulator that emulates all generations of MSX computers as well as SVI, ColecoVision and Sega SG-1000.</p>
+<h3 id="authorlicense">Author/License<a class="headerlink" href="#authorlicense" title="Permanent link">¶</a></h3>
+<p>The blueMSX core has been authored by</p>
+<ul>
+<li>Daniel Vik</li>
+</ul>
+<p>The blueMSX core is licensed under</p>
+<ul>
+<li><a href="https://github.com/libretro/blueMSX-libretro/blob/master/license.txt">GPLv2</a></li>
+</ul>
+<p>A summary of the licenses behind RetroArch and its cores have found <a href="https://docs.libretro.com/tech/licenses/">here</a>.</p>
+<h2 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">¶</a></h2>
+<p>Content that can be loaded by the blueMSX core have the following file extensions:</p>
+<ul>
+<li>.rom</li>
+<li>.ri</li>
+<li>.mx1</li>
+<li>.mx2</li>
+<li>.col</li>
+<li>.dsk</li>
+<li>.cas</li>
+<li>.sg</li>
+<li>.sc</li>
+<li>.m3u</li>
+</ul>
+<h2 id="databases">Databases<a class="headerlink" href="#databases" title="Permanent link">¶</a></h2>
+<p>RetroArch database(s) that are associated with the blueMSX core:</p>
+<ul>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Microsoft%20-%20MSX.rdb">Microsoft - MSX</a></li>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Microsoft%20-%20MSX2.rdb">Microsoft - MSX2</a></li>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Coleco%20-%20ColecoVision.rdb">Coleco - ColecoVision</a></li>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Sega%20-%20SG-1000.rdb">Sega - SG-1000</a></li>
+</ul>
+<h2 id="bios">BIOS<a class="headerlink" href="#bios" title="Permanent link">¶</a></h2>
+<p>The blueMSX core requires the 'Databases' and 'Machines' folders from a full installation of blueMSX.</p>
+<p>You can download the 'Databases' and 'Machines' folders from an <a href="http://bluemsx.msxblue.com/download.html">official full standalone blueMSX emulator installation</a>. Get blueMSXv282full.zip near the bottom of the page.</p>
+<p>Move/Copy the 'Databases' and 'Machines' Folders to RetroArch's System directory.</p>
+<p><img alt="" src="/image/core/bluemsx/bios.png" /></p>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h2>
+<p>Frontend-level settings or features that the blueMSX core respects.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th align="center">Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Restart</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Screenshots</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Saves</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>States</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Rewind</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Netplay</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Core Options</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>RetroAchievements</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>RetroArch Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Native Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Controls</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Remapping</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Multi-Mouse</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Rumble</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Sensors</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Location</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Subsystem</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td><a href="https://docs.libretro.com/guides/softpatching/">Softpatching</a></td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Disk Control</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Username</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Language</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Crop Overscan</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>LEDs</td>
+<td align="center">✕</td>
+</tr>
+</tbody>
+</table>
+<h3 id="directories">Directories<a class="headerlink" href="#directories" title="Permanent link">¶</a></h3>
+<p>The blueMSX core's library name is 'blueMSX'</p>
+<p>The blueMSX core saves/loads to/from these directories.</p>
+<p><strong>Frontend's System directory</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">File</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">bluemsx.ini</td>
+<td align="center">blueMSX Config</td>
+</tr>
+<tr>
+<td align="center">bluemsx_history.ini</td>
+<td align="center">blueMSX History</td>
+</tr>
+</tbody>
+</table>
+<h3 id="geometry-and-timing">Geometry and timing<a class="headerlink" href="#geometry-and-timing" title="Permanent link">¶</a></h3>
+<ul>
+<li>The blueMSX core's core provided FPS is 60</li>
+<li>The blueMSX core's core provided sample rate is 44100 Hz</li>
+<li>The blueMSX core's base width is (Base width)</li>
+<li>The blueMSX core's base height is (Base height)</li>
+<li>The blueMSX core's max width is (Max width)</li>
+<li>The blueMSX core's max height is (Max height)</li>
+<li>The blueMSX core's core provided aspect ratio is (Ratio)</li>
+</ul>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">¶</a></h2>
+<p>ColecoVision Gamepad Mapping is as follow:</p>
+<ul>
+<li>Button 1 as Retropad A</li>
+<li>Button 2 as Retropad B</li>
+<li>Dial keys 1 to 8 as X, Y, R, L, R2, L2, R3, L3</li>
+<li>Star (*) as Select, Hash (#) as Start</li>
+<li>0 &amp; 9 are on keyboard 1 &amp; 2 for Player 1</li>
+<li>0 &amp; 9 are on keyboard 3 &amp; 4 for Player 2.</li>
+</ul>
+<p>To play SpectraVideo cassettes type 'cload' then 'run'</p>
+<p>or BLOAD ''CAS:'',R depending on the game.</p>
+<h2 id="multiple-disk-games">Multiple-disk games<a class="headerlink" href="#multiple-disk-games" title="Permanent link">¶</a></h2>
+<p>If foo is a multiple-disk game, you should have .dsk files for each one, e.g. <code>foo (Disk 1).dsk</code>, <code>foo (Disk 2).dsk</code>, <code>foo (Disk 3).dsk</code>.</p>
+<p>To take advantage of BlueMSX Disk Control feature for disk swapping, an index file (a m3u file) should be made.</p>
+<p>Create a text file and save it as <code>foo.m3u</code>. Then enter your game's .dsk files on it. The m3u file contents should look something like this:</p>
+<p><code>foo.m3u</code></p>
+<pre><code>foo (Disk 1).dsk
+foo (Disk 2).dsk
+foo (Disk 3).dsk
+</code></pre>
+
+<p>After that, you can load the <code>foo.m3u</code> file in RetroArch with the BlueMSX core.</p>
+<p>An alternative is to append disks to the current playlist via the "Disk Image Append" option RetroArch menu.</p>
+<h2 id="core-options">Core options<a class="headerlink" href="#core-options" title="Permanent link">¶</a></h2>
+<p>The blueMSX core has the following option(s) that can be tweaked from the core options menu. The default setting is bolded.</p>
+<p>Settings with (Restart) means that core has to be closed for the new setting to be applied on next launch.</p>
+<ul>
+<li>
+<p><strong>Machine Type (Restart)</strong> [bluemsx_msxtype] (<strong>Auto</strong>|MSX|MSXturboR|MSX2|MSX2+|SEGA - SG-1000|SEGA - SC-3000|SEGA - SF-7000|SVI - Spectravideo SVI-318|SVI - Spectravideo SVI-328|SVI - Spectravideo SVI-328 MK2|ColecoVision|Coleco (Spectravideo SVI-603))</p>
+<p>Manually select the machine type you would like the core to start in.</p>
+</li>
+<li>
+<p><strong>Crop Overscan</strong> [bluemsx_overscan] (<strong>disabled</strong>|enabled|MSX2)</p>
+<p>Forces cropping of overscanned frames</p>
+</li>
+</ul>
+<p>??? note "<em>Crop Overscan Off</em>"
+    <img alt="" src="/image/core/bluemsxcrop_off.png" /></p>
+<p>??? note "<em>Crop Overscan On</em>"
+    <img alt="" src="/image/core/bluemsxcrop_on.png" /></p>
+<p>??? note "<em>Crop Overscan MSX2</em>"
+    <img alt="" src="/image/core/bluemsxcrop_msx2.png" /></p>
+<ul>
+<li>
+<p><strong>VDP Sync Type (Restart)</strong> [bluemsx_vdp_synctype] (<strong>Auto</strong>|50Hz|60Hz)</p>
+<p>Match the game/machine region frequency to avoid emulated speed issues.</p>
+</li>
+<li>
+<p><strong>No Sprite Limit</strong> [bluemsx_nospritelimits] (<strong>OFF</strong>|ON)</p>
+<p>Remove the 4 sprite per line limit which can reduce or remove sprite flicker in some games.</p>
+</li>
+<li>
+<p><strong>Sound YM2413 Enable (Restart)</strong> [bluemsx_ym2413_enable] (<strong>enabled</strong>|disabled)</p>
+<p>Awaiting description.</p>
+</li>
+<li>
+<p><strong>Cart Mapper Type (Restart)</strong> [bluemsx_cartmapper] (<strong>Auto</strong>|Normal|mirrored|basic|0x4000|0xC000|ascii8|ascii8sram|ascii16|ascii16sram|
+ascii16nf|konami4|konami4nf|konami5|konamisynth|korean80|korean90|korean126|
+MegaFlashRomScc|MegaFlashRomSccPlus|msxdos2|scc|sccexpanded|sccmirrored|sccplus|
+snatcher|sdsnatcher|SegaBasic|SG1000|SG1000Castle|SG1000RamA|SG1000RamB|SC3000)</p>
+<p>When a ROM game or application is in the database, the emulator uses the databases to apply the correct mapper. If the sha1 value of a dump is not yet in the databases, it uses an automatic mapper detection system, but it can fail in some cases. In this situation, you can manually select the correct mapper.</p>
+</li>
+</ul>
+<h2 id="controllers">Controllers<a class="headerlink" href="#controllers" title="Permanent link">¶</a></h2>
+<p>The blueMSX core supports the following device type(s) in the controls menu, bolded device types are the default for the specified user(s):</p>
+<h3 id="user-1-device-types">User 1 device types<a class="headerlink" href="#user-1-device-types" title="Permanent link">¶</a></h3>
+<ul>
+<li>None - Doesn't disable input. There's no reason to switch to this.</li>
+<li><strong>RetroPad</strong> - Joypad</li>
+<li>RetroKeyboard - Keyboard - Keyboard inputs are always active. Has keymapper support.</li>
+<li>RetroPad Keyboard Map - Joypad - Awaiting description.</li>
+</ul>
+<h3 id="user-2-device-types">User 2 device types<a class="headerlink" href="#user-2-device-types" title="Permanent link">¶</a></h3>
+<ul>
+<li>None - Doesn't disable input. There's no reason to switch to this.</li>
+<li><strong>RetroPad</strong> - Joypad</li>
+<li>RetroKeyboard - Keyboard - Keyboard inputs are always active.</li>
+</ul>
+<h3 id="controller-tables">Controller tables<a class="headerlink" href="#controller-tables" title="Permanent link">¶</a></h3>
+<h4 id="joypad">Joypad<a class="headerlink" href="#joypad" title="Permanent link">¶</a></h4>
+<table>
+<thead>
+<tr>
+<th>User 1 and 2 Remap descriptors for 'RetroPad' device type</th>
+<th>RetroPad Inputs</th>
+<th>blueMSX core inputs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Button 2</td>
+<td><img alt="" src="/image/retropad/retro_b.png" /></td>
+<td>Button 2, Coleco Button 2</td>
+</tr>
+<tr>
+<td>Button 3</td>
+<td><img alt="" src="/image/retropad/retro_y.png" /></td>
+<td>Button 3, Coleco #2</td>
+</tr>
+<tr>
+<td>Select</td>
+<td><img alt="" src="/image/retropad/retro_select.png" /></td>
+<td>Select, Coleco Star (*)</td>
+</tr>
+<tr>
+<td>Start</td>
+<td><img alt="" src="/image/retropad/retro_start.png" /></td>
+<td>Start, Coleco Hash (#)</td>
+</tr>
+<tr>
+<td>Joy Up</td>
+<td><img alt="" src="/image/retropad/retro_dpad_up.png" /></td>
+<td>Joy Up</td>
+</tr>
+<tr>
+<td>Joy Down</td>
+<td><img alt="" src="/image/retropad/retro_dpad_down.png" /></td>
+<td>Joy Down</td>
+</tr>
+<tr>
+<td>Joy Left</td>
+<td><img alt="" src="/image/retropad/retro_dpad_left.png" /></td>
+<td>Joy Left</td>
+</tr>
+<tr>
+<td>Joy Right</td>
+<td><img alt="" src="/image/retropad/retro_dpad_right.png" /></td>
+<td>Joy Right</td>
+</tr>
+<tr>
+<td>Button 1</td>
+<td><img alt="" src="/image/retropad/retro_a.png" /></td>
+<td>Button 1,  Coleco Button 1</td>
+</tr>
+<tr>
+<td>Button 4</td>
+<td><img alt="" src="/image/retropad/retro_x.png" /></td>
+<td>Button 4, Coleco #1</td>
+</tr>
+<tr>
+<td>Button 5</td>
+<td><img alt="" src="/image/retropad/retro_l1.png" /></td>
+<td>Button 5, Coleco #4</td>
+</tr>
+<tr>
+<td>Button 6</td>
+<td><img alt="" src="/image/retropad/retro_r1.png" /></td>
+<td>Button 6, Coleco #3</td>
+</tr>
+<tr>
+<td>Button 7</td>
+<td><img alt="" src="/image/retropad/retro_l2.png" /></td>
+<td>Button 7, Coleco #6</td>
+</tr>
+<tr>
+<td>Button 8</td>
+<td><img alt="" src="/image/retropad/retro_r2.png" /></td>
+<td>Button 8, Coleco #5</td>
+</tr>
+<tr>
+<td>Button 9</td>
+<td><img alt="" src="/image/retropad/retro_l3.png" /></td>
+<td>Button 9. Coleco #8</td>
+</tr>
+<tr>
+<td>Button 10</td>
+<td><img alt="" src="/image/retropad/retro_r3.png" /></td>
+<td>Button 10, Coleco #7</td>
+</tr>
+</tbody>
+</table>
+<h4 id="keyboard">Keyboard<a class="headerlink" href="#keyboard" title="Permanent link">¶</a></h4>
+<table>
+<thead>
+<tr>
+<th>RetroKeyboard Inputs</th>
+<th>RetroKeyboard</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Keyboard Backspace</td>
+<td>BACKSPACE</td>
+</tr>
+<tr>
+<td>Keyboard Tab</td>
+<td>TAB</td>
+</tr>
+<tr>
+<td>Keyboard Return</td>
+<td>RETURN</td>
+</tr>
+<tr>
+<td>Keyboard Pause</td>
+<td>PAUSE</td>
+</tr>
+<tr>
+<td>Keyboard Escape</td>
+<td>ESCAPE</td>
+</tr>
+<tr>
+<td>Keyboard Space</td>
+<td>SPACE</td>
+</tr>
+<tr>
+<td>Keyboard Quote '</td>
+<td>COLON</td>
+</tr>
+<tr>
+<td>Keyboard Comma ,</td>
+<td>COMMA</td>
+</tr>
+<tr>
+<td>Keyboard Minus -</td>
+<td>NEGATIVE</td>
+</tr>
+<tr>
+<td>Keyboard Period .</td>
+<td>PERIOD</td>
+</tr>
+<tr>
+<td>Keyboard Slash /</td>
+<td>DIVIDE</td>
+</tr>
+<tr>
+<td>Keyboard 0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Keyboard 1</td>
+<td>1, Player 1 Coleco #0</td>
+</tr>
+<tr>
+<td>Keyboard 2</td>
+<td>2, Player 1 Coleco #9</td>
+</tr>
+<tr>
+<td>Keyboard 3</td>
+<td>3, Player 2 Coleco #0</td>
+</tr>
+<tr>
+<td>Keyboard 4</td>
+<td>4, Player 2 Coleco #9</td>
+</tr>
+<tr>
+<td>Keyboard 5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Keyboard 6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Keyboard 7</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Keyboard 8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Keyboard 9</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Keyboard Semicolon ;</td>
+<td>SEMICOLON</td>
+</tr>
+<tr>
+<td>Keyboard Equals =</td>
+<td>CIRCUMFLEX</td>
+</tr>
+<tr>
+<td>Keyboard Left Bracket [</td>
+<td>LEFT BRACKET</td>
+</tr>
+<tr>
+<td>Keyboard Backslash \</td>
+<td>BACKSLASH (YEN)</td>
+</tr>
+<tr>
+<td>Keyboard Right Bracket ]</td>
+<td>RIGHT BRACKET</td>
+</tr>
+<tr>
+<td>Keyboard Backquote `</td>
+<td>AT</td>
+</tr>
+<tr>
+<td>Keyboard a</td>
+<td>A</td>
+</tr>
+<tr>
+<td>Keyboard b</td>
+<td>B</td>
+</tr>
+<tr>
+<td>Keyboard c</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Keyboard d</td>
+<td>D</td>
+</tr>
+<tr>
+<td>Keyboard e</td>
+<td>E</td>
+</tr>
+<tr>
+<td>Keyboard f</td>
+<td>F</td>
+</tr>
+<tr>
+<td>Keyboard g</td>
+<td>G</td>
+</tr>
+<tr>
+<td>Keyboard h</td>
+<td>H</td>
+</tr>
+<tr>
+<td>Keyboard i</td>
+<td>I</td>
+</tr>
+<tr>
+<td>Keyboard j</td>
+<td>J</td>
+</tr>
+<tr>
+<td>Keyboard k</td>
+<td>K</td>
+</tr>
+<tr>
+<td>Keyboard l</td>
+<td>L</td>
+</tr>
+<tr>
+<td>Keyboard m</td>
+<td>M</td>
+</tr>
+<tr>
+<td>Keyboard n</td>
+<td>N</td>
+</tr>
+<tr>
+<td>Keyboard o</td>
+<td>O</td>
+</tr>
+<tr>
+<td>Keyboard p</td>
+<td>P</td>
+</tr>
+<tr>
+<td>Keyboard q</td>
+<td>Q</td>
+</tr>
+<tr>
+<td>Keyboard r</td>
+<td>R</td>
+</tr>
+<tr>
+<td>Keyboard s</td>
+<td>S</td>
+</tr>
+<tr>
+<td>Keyboard t</td>
+<td>T</td>
+</tr>
+<tr>
+<td>Keyboard u</td>
+<td>U</td>
+</tr>
+<tr>
+<td>Keyboard v</td>
+<td>V</td>
+</tr>
+<tr>
+<td>Keyboard w</td>
+<td>W</td>
+</tr>
+<tr>
+<td>Keyboard x</td>
+<td>X</td>
+</tr>
+<tr>
+<td>Keyboard y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Keyboard z</td>
+<td>Z</td>
+</tr>
+<tr>
+<td>Keyboard Delete</td>
+<td>DELETE</td>
+</tr>
+<tr>
+<td>Keyboard Keypad 0</td>
+<td>NUMPAD 0</td>
+</tr>
+<tr>
+<td>Keyboard Keypad 1</td>
+<td>NUMPAD 1</td>
+</tr>
+<tr>
+<td>Keyboard Keypad 2</td>
+<td>NUMPAD 2</td>
+</tr>
+<tr>
+<td>Keyboard Keypad 3</td>
+<td>NUMPAD 3</td>
+</tr>
+<tr>
+<td>Keyboard Keypad 4</td>
+<td>NUMPAD 4</td>
+</tr>
+<tr>
+<td>Keyboard Keypad 5</td>
+<td>NUMPAD 5</td>
+</tr>
+<tr>
+<td>Keyboard Keypad 6</td>
+<td>NUMPAD 6</td>
+</tr>
+<tr>
+<td>Keyboard Keypad 7</td>
+<td>NUMPAD 7</td>
+</tr>
+<tr>
+<td>Keyboard Keypad 8</td>
+<td>NUMPAD 8</td>
+</tr>
+<tr>
+<td>Keyboard Keypad 9</td>
+<td>NUMPAD 9</td>
+</tr>
+<tr>
+<td>Keyboard Keypad Period .</td>
+<td>NUMPAD COMMA</td>
+</tr>
+<tr>
+<td>Keyboard Keypad Divide /</td>
+<td>NUMPAD DIVIDE</td>
+</tr>
+<tr>
+<td>Keyboard Keypad Multiply *</td>
+<td>NUMPAD MULTIPLY</td>
+</tr>
+<tr>
+<td>Keyboard Keypad Minus -</td>
+<td>NUMPAD SUBTRACTION</td>
+</tr>
+<tr>
+<td>Keyboard Keypad Plus +</td>
+<td>NUMPAD ADD</td>
+</tr>
+<tr>
+<td>Keyboard Keypad Enter</td>
+<td>NUMPAD PERIOD</td>
+</tr>
+<tr>
+<td>Keyboard Up</td>
+<td>UP</td>
+</tr>
+<tr>
+<td>Keyboard Down</td>
+<td>DOWN</td>
+</tr>
+<tr>
+<td>Keyboard Right</td>
+<td>RIGHT</td>
+</tr>
+<tr>
+<td>Keyboard Left</td>
+<td>LEFT</td>
+</tr>
+<tr>
+<td>Keyboard Insert</td>
+<td>INSERT</td>
+</tr>
+<tr>
+<td>Keyboard Home</td>
+<td>CLS</td>
+</tr>
+<tr>
+<td>Keyboard End</td>
+<td>STOP</td>
+</tr>
+<tr>
+<td>Keyboard Page Up</td>
+<td>SELECT</td>
+</tr>
+<tr>
+<td>Keyboard F1</td>
+<td>F1</td>
+</tr>
+<tr>
+<td>Keyboard F2</td>
+<td>F2</td>
+</tr>
+<tr>
+<td>Keyboard F3</td>
+<td>F3</td>
+</tr>
+<tr>
+<td>Keyboard F4</td>
+<td>F4</td>
+</tr>
+<tr>
+<td>Keyboard F5</td>
+<td>F5</td>
+</tr>
+<tr>
+<td>Keyboard Caps Lock</td>
+<td>CAPS</td>
+</tr>
+<tr>
+<td>Keyboard Right Shift</td>
+<td>RIGHT SHIFT</td>
+</tr>
+<tr>
+<td>Keyboard Left Shift</td>
+<td>LEFT SHIFT</td>
+</tr>
+<tr>
+<td>Keyboard Left Control</td>
+<td>CONTROL</td>
+</tr>
+<tr>
+<td>Keyboard Left Alt</td>
+<td>GRAPH</td>
+</tr>
+<tr>
+<td>Keyboard Print</td>
+<td>PRINT</td>
+</tr>
+</tbody>
+</table>
+<p>Supported combinations</p>
+<ul>
+<li>Keyboard Left or Right Shift + Keyboard 0 = UNDERSCORE</li>
+</ul>
+<h2 id="compatibility">Compatibility<a class="headerlink" href="#compatibility" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="http://www.msxblue.com/manual/settingsports.htm">blueMSX Manual</a></li>
+</ul>
+<h2 id="external-links">External Links<a class="headerlink" href="#external-links" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="http://bluemsx.com/">Official blueMSX Website</a></li>
+<li><a href="http://sourceforge.net/projects/bluemsx/">Official blueMSX SourceForge Repository</a></li>
+<li><a href="https://github.com/libretro/libretro-super/blob/master/dist/info/bluemsx_libretro.info">Libretro blueMSX Core info file</a></li>
+<li><a href="https://github.com/libretro/blueMSX-libretro">Libretro blueMSX Github Repository</a></li>
+<li><a href="https://github.com/libretro/blueMSX-libretro/issues">Report Libretro blueMSX Core Issues Here</a></li>
+</ul>
+<h3 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h3>
+<h4 id="sega-sg-1000">Sega - SG-1000<a class="headerlink" href="#sega-sg-1000" title="Permanent link">¶</a></h4>
+<ul>
+<li><a href="https://docs.libretro.com/library/genesis_plus_gx/">Sega - MS/GG/MD/CD (Genesis Plus GX)</a></li>
+<li><a href="https://docs.libretro.com/library/gearsystem/">Sega - MS/GG/SG-1000 (Gearsystem)</a></li>
+</ul>
+<h4 id="microsoft-msx">Microsoft - MSX<a class="headerlink" href="#microsoft-msx" title="Permanent link">¶</a></h4>
+<ul>
+<li><a href="https://docs.libretro.com/library/fmsx/">Microsoft - MSX (fMSX)</a></li>
+</ul>
+<h4 id="microsoft-msx2">Microsoft - MSX2<a class="headerlink" href="#microsoft-msx2" title="Permanent link">¶</a></h4>
+<ul>
+<li><a href="https://docs.libretro.com/library/fmsx/">Microsoft - MSX (fMSX)</a></li>
+</ul>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#background">Background</a></li>
+      <ul>
+    
+      <li><a href="#authorlicense">Author/License</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#extensions">Extensions</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#databases">Databases</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#bios">BIOS</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#features">Features</a></li>
+      <ul>
+    
+      <li><a href="#directories">Directories</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#geometry-and-timing">Geometry and timing</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#usage">Usage</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#multiple-disk-games">Multiple-disk games</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#core-options">Core options</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#controllers">Controllers</a></li>
+      <ul>
+    
+      <li><a href="#user-1-device-types">User 1 device types</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#user-2-device-types">User 2 device types</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#controller-tables">Controller tables</a></li>
+      <ul>
+    
+      <li><a href="#joypad">Joypad</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#keyboard">Keyboard</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#compatibility">Compatibility</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#external-links">External Links</a></li>
+      <ul>
+    
+      <li><a href="#see-also">See also</a></li>
+      <ul>
+    
+      <li><a href="#sega-sg-1000">Sega - SG-1000</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#microsoft-msx">Microsoft - MSX</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#microsoft-msx2">Microsoft - MSX2</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../ppsspp/" title="previous chapter">
+        Sony - PlayStation Portable (PPSSPP)
+      </a></li>
+    
+    
+      <li>Next: <a href="../theodore/" title="next chapter">
+        Thomson - MO/TO (Theodore)
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:10
+  -->
+</body>
+</html>

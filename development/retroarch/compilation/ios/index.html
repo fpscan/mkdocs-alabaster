@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>iOS &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+    <link rel="stylesheet" href="../../../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="ios-compilation-development-guide">iOS Compilation / Development Guide<a class="headerlink" href="#ios-compilation-development-guide" title="Permanent link">¶</a></h1>
+<h2 id="environment-configuration">Environment configuration<a class="headerlink" href="#environment-configuration" title="Permanent link">¶</a></h2>
+<p>The following software needs to be installed:</p>
+<ul>
+<li>XCode</li>
+<li>iOS SDK</li>
+</ul>
+<p>The following versions of the operating system are supported:</p>
+<ul>
+<li>iOS 6.0</li>
+<li>iOS 7.0+</li>
+<li>iOS 8.0+</li>
+<li>iOS 9.0+</li>
+<li>iOS 10.0+</li>
+<li>iOS 11 support is in-progress</li>
+</ul>
+<h2 id="get-the-retroarch-source">Get the RetroArch source<a class="headerlink" href="#get-the-retroarch-source" title="Permanent link">¶</a></h2>
+<p>Clone RetroArch's repository from <a href="https://github.com/libretro/RetroArch">GitHub</a></p>
+<pre><code>git clone https://github.com/libretro/RetroArch.git retroarch
+cd retroarch
+</code></pre>
+<p>For subsequent builds you only need to pull the changes from the repo</p>
+<pre><code>cd retroarch
+git pull
+</code></pre>
+<p>To update your local copy from the repository run git pull</p>
+<h2 id="core-compilation">Core Compilation<a class="headerlink" href="#core-compilation" title="Permanent link">¶</a></h2>
+<p>RetroArch needs the emulation cores compiled for it to be useful. Let's compile the cores first.</p>
+<h3 id="fetching-cores">Fetching Cores<a class="headerlink" href="#fetching-cores" title="Permanent link">¶</a></h3>
+<p>The easiest way to fetch all the cores is to use libretro-super. Run</p>
+<pre><code>git clone https://github.com/libretro/libretro-super
+cd libretro-super
+./libretro-fetch.sh
+</code></pre>
+<h3 id="building-cores">Building Cores<a class="headerlink" href="#building-cores" title="Permanent link">¶</a></h3>
+<p>The easiest way to build all the cores (for iOS) is to use libretro-super. </p>
+<p>To build iOS 6 to 8-compatible cores, run</p>
+<pre><code>./libretro-build-ios.sh
+</code></pre>
+<p>To build iOS 9 and up-compatible cores, run</p>
+<pre><code>./libretro-build-ios9.sh
+</code></pre>
+<p>In case you only want to build one and/or more cores instead of all, you can specify the cores you want to build after the first command in no particular order. E.g.:</p>
+<pre><code>./libretro-build-ios.sh snes9x2010 fceumm
+</code></pre>
+<p>Once finished, you can find the libretro cores inside directory <code>dist/ios</code> or <code>dist/ios9</code>.</p>
+<h3 id="code-signing-the-cores">Code Signing the Cores<a class="headerlink" href="#code-signing-the-cores" title="Permanent link">¶</a></h3>
+<p>Note that you <em>must code sign the dylib cores</em> in order for you to use them.</p>
+<h4 id="in-ios-9-and-above">In iOS 9 and above<a class="headerlink" href="#in-ios-9-and-above" title="Permanent link">¶</a></h4>
+<p>Starting from iOS 9, the cores must be packaged as part of the application, even if they are code-signed. This was an additional security measure introduced in iOS 9. Fortunately, the code signing is handled as part of the Xcode build/archive process, so all you need to do is place your compiled <code>.dylib</code> cores in the <code>pkg/apple/iOS/modules</code> folder.  Running the application via Xcode or archiving the application for an adhoc distribution will codesign the cores as long as they are placed in the aforementioned <code>pkg/apple/iOS/modules</code> folder.</p>
+<h4 id="in-ios-6-to-8">In iOS 6 to 8<a class="headerlink" href="#in-ios-6-to-8" title="Permanent link">¶</a></h4>
+<p>You need to manually code sign the cores, and then you can copy them to the <code>Documents/RetroArch/cores</code> directory using an application like "iFunBox" or "iExplorer".</p>
+<h4 id="manually-code-signing">Manually Code Signing<a class="headerlink" href="#manually-code-signing" title="Permanent link">¶</a></h4>
+<pre><code>cd [path where the dylib cores are]
+codesign -fs '[Your Full Developer Certificate Name]' *.dylib
+</code></pre>
+
+<h4 id="known-issues-with-code-signing-ios-9-and-above">Known Issues with Code Signing (iOS 9 and above)<a class="headerlink" href="#known-issues-with-code-signing-ios-9-and-above" title="Permanent link">¶</a></h4>
+<p>Building and running from Xcode doesn't code sign the cores the first time for some reason. This is a bug in the build process. The cores seem to get signed after the cores are copied. If you build and run again, the cores will have been signed and will be usable in RetroArch.</p>
+<h3 id="building-retroarch">Building RetroArch<a class="headerlink" href="#building-retroarch" title="Permanent link">¶</a></h3>
+<h4 id="using-the-graphical-interface">Using the graphical interface<a class="headerlink" href="#using-the-graphical-interface" title="Permanent link">¶</a></h4>
+<h5 id="for-ios-6-to-8">For iOS 6 to 8<a class="headerlink" href="#for-ios-6-to-8" title="Permanent link">¶</a></h5>
+<p>Open Xcode. Open the following project file <code>pkg/apple/RetroArch_iOS.xcodeproj</code> in the Xcode IDE and build (<strong>&#8984;-B</strong>) and run (<strong>&#8984;-R</strong>) it there. </p>
+<h5 id="for-ios-10-and-up">For iOS 10 and up<a class="headerlink" href="#for-ios-10-and-up" title="Permanent link">¶</a></h5>
+<ol>
+<li>Open Xcode.</li>
+<li>Open the following project file <code>pkg/apple/RetroArch_iOS10.xcodeproj</code></li>
+<li>In the Navigator Pane on the left, select the Retroarch_iOS10 project</li>
+<li>In the Project and Targets list on the left side, choose the RetroArchiOS10 target. Select the Target (the one with the RetroArch icon), not the project.</li>
+<li>In the "General" tab, change the "Team" under Signing to be your developer name.</li>
+<li>Set the active scheme to RetroArchiOS10, and select your connected iOS device as the device.</li>
+<li>Run (<strong>&#8984;-R</strong>)</li>
+</ol>
+<h5 id="creating-an-ipa-for-adhoc-distribution-or-for-someone-else-to-re-sign">Creating an IPA for adhoc distribution (or for someone else to re-sign)<a class="headerlink" href="#creating-an-ipa-for-adhoc-distribution-or-for-someone-else-to-re-sign" title="Permanent link">¶</a></h5>
+<p>You will need an adhoc distribution certificate to create an adhoc distribution. Go to developer.apple.com to create an adhoc certificate.</p>
+<p>In Xcode, select your target (RetroArchiOS10 for iOS 10 and above, RetroArch for others), Choose "Generic iOS Device" for the device, and select Product -&gt; Archive. After it is done archiving, the Organizer window will appear. Select the archive and then use the "Export.." button on the right pane, and select "Save for Ad Hoc Deployment". Choose your developer name and you'll create an IPA in a directory of your choosing. This IPA can be resigned for other people to use using utilities such as <a href="http://dantheman827.github.io/ios-app-signer/">iOS App Signer</a>.</p>
+<p>You can install the IPA on your iOS device by dragging the IPA onto the Installed Apps section in the Devices window.</p>
+<h5 id="notes-on-building-and-running">Notes on building and running<a class="headerlink" href="#notes-on-building-and-running" title="Permanent link">¶</a></h5>
+<p>If you use Xcode to build and run RetroArch, and overwrite an existing RetroArch, you'll notice that your configuration will be wrong and stuff like your settings and directory locations will be missing. That's because you get a new application identifier when you do a re-install or upgrade, and the RetroArch config uses absolute paths in its configuration. You'll need to delete the app and then reinstall, or manually edit the RetroArch config file and fix the file paths by hand.</p>
+<h4 id="using-the-command-line">Using the command line<a class="headerlink" href="#using-the-command-line" title="Permanent link">¶</a></h4>
+<h5 id="for-ios-6-to-8_1">For iOS 6 to 8<a class="headerlink" href="#for-ios-6-to-8_1" title="Permanent link">¶</a></h5>
+<p>To build a debug build :</p>
+<pre><code># Build
+xcodebuild -target RetroArch -configuration Debug -project pkg/apple/RetroArch_iOS.xcodeproj
+# Run
+open ./pkg/apple/build/Debug/RetroArch.app/
+</code></pre>
+<p>To build a release build :</p>
+<pre><code># Build
+xcodebuild -target RetroArch -configuration Release -project pkg/apple/RetroArch_iOS.xcodeproj
+# Run
+open ./pkg/apple/build/Release/RetroArch.app/
+</code></pre>
+<h5 id="for-ios-10-and-up_1">For iOS 10 and up<a class="headerlink" href="#for-ios-10-and-up_1" title="Permanent link">¶</a></h5>
+<p>To build a debug build :</p>
+<pre><code># Build
+xcodebuild -target RetroArch -configuration Debug -project pkg/apple/RetroArch_iOS10.xcodeproj
+# Run
+open ./pkg/apple/build/Debug/RetroArch.app/
+</code></pre>
+<p>To build a release build :</p>
+<pre><code># Build
+xcodebuild -target RetroArch -configuration Release -project pkg/apple/RetroArch_iOS10.xcodeproj
+# Run
+open ./pkg/apple/build/Release/RetroArch.app/
+</code></pre>
+<h3 id="packaging-retroarch">Packaging RetroArch<a class="headerlink" href="#packaging-retroarch" title="Permanent link">¶</a></h3>
+<h3 id="additional-tips">Additional Tips:<a class="headerlink" href="#additional-tips" title="Permanent link">¶</a></h3>
+<h4 id="cores">Cores<a class="headerlink" href="#cores" title="Permanent link">¶</a></h4>
+<ul>
+<li>
+<p>When you run RetroArch and try to run a game, and see the message "Failed to load libretro core", that means the core is not code signed. See the above "Code Signing the Cores" section on making sure your cores are signed. You can manually check the code signature on a file by doing: <code>codesign -dvv mednafen_psx_libretro_ios.dylib</code>. The Authority entry has your certificate - make sure it's your dev or adhoc distribution certificate.</p>
+</li>
+<li>
+<p>To see if your core is valid and usable in RetroArch, you can also try Load Core and selecting the core. If you see the core name appear at the top (in the GUI menu), then it is properly codesigned and loaded. If you still see "No Core", then your core is not codesigned and cannot be used.</p>
+</li>
+</ul>
+<h4 id="getting-your-romscontentbios-in-retroarch">Getting your ROMs/content/BIOS in RetroArch<a class="headerlink" href="#getting-your-romscontentbios-in-retroarch" title="Permanent link">¶</a></h4>
+<ul>
+<li>
+<p>Use a desktop tool like "iFunBox" or "iExplorer". You can use iTunes but note that it cannot access subdirectories. BIOS files go in <code>RetroArch/system</code></p>
+</li>
+<li>
+<p>You can also download content in Safari and "Open in.." and choose RetroArch. Currently there is a bug in that it will crash (the app delegate needs fixing), but it gets placed in the "Inbox" folder in RetroArch's Documents folder. You can choose "Load Content" and navigate to the "Inbox" directory.</p>
+</li>
+</ul>
+<h3 id="development">Development<a class="headerlink" href="#development" title="Permanent link">¶</a></h3>
+<h4 id="where-do-i-start">Where do I start?<a class="headerlink" href="#where-do-i-start" title="Permanent link">¶</a></h4>
+<p>The RetroArch codebase can be daunting, especially if you're used to iOS development in Objective C or Swift. Objective C is a subset of C so the syntax should look somewhat familiar to you.</p>
+<p>The first and main entrypoint you should look at is in <code>core/griffin/griffin.c</code>. This is where all the code is included, with compiler flags used to bring in code specific to the platform. For iOS, you should pay attention to the compiler flags like <code>__APPLE__</code>, <code>TARGET_OS_IPHONE</code>, <code>HAVE_COCOATOUCH</code>.</p>
+<p>Note that you can Cmd-click into the <code>#include</code> paths to peer into the source code. You can also Cmd-Shift-O and type in the source file as well. And, breakpoints work as well!</p>
+<p>The iOS specific code is in <code>core/griffin/griffin_objc.m</code>. Here you'll find the include to <code>./ui/drivers/ui_cocoatouch.m</code>, which contains the application delegate - the main entry point for the iOS application lifecycle. From there everything should look familiar to you as an iOS developer, and you should be able to hook in any iOS specific objective c code. Although you can use Objective C data structures and code, you'll probably be having to use C data structures since you'll have to call methods in C to hook back into RetroArch, and they will expect C data structures. The great thing is you can mix C code with Objective C, as long as you do the necessary conversions to the data structures that RetroArch expects.</p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../../../..">
+      <img class="logo" src="../../../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#environment-configuration">Environment configuration</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#get-the-retroarch-source">Get the RetroArch source</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#core-compilation">Core Compilation</a></li>
+      <ul>
+    
+      <li><a href="#fetching-cores">Fetching Cores</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#building-cores">Building Cores</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#code-signing-the-cores">Code Signing the Cores</a></li>
+      <ul>
+    
+      <li><a href="#in-ios-9-and-above">In iOS 9 and above</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#in-ios-6-to-8">In iOS 6 to 8</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#manually-code-signing">Manually Code Signing</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#known-issues-with-code-signing-ios-9-and-above">Known Issues with Code Signing (iOS 9 and above)</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#building-retroarch">Building RetroArch</a></li>
+      <ul>
+    
+      <li><a href="#using-the-graphical-interface">Using the graphical interface</a></li>
+      <ul>
+    
+      <li><a href="#for-ios-6-to-8">For iOS 6 to 8</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#for-ios-10-and-up">For iOS 10 and up</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#creating-an-ipa-for-adhoc-distribution-or-for-someone-else-to-re-sign">Creating an IPA for adhoc distribution (or for someone else to re-sign)</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#notes-on-building-and-running">Notes on building and running</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#using-the-command-line">Using the command line</a></li>
+      <ul>
+    
+      <li><a href="#for-ios-6-to-8_1">For iOS 6 to 8</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#for-ios-10-and-up_1">For iOS 10 and up</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#packaging-retroarch">Packaging RetroArch</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#additional-tips">Additional Tips:</a></li>
+      <ul>
+    
+      <li><a href="#cores">Cores</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#getting-your-romscontentbios-in-retroarch">Getting your ROMs/content/BIOS in RetroArch</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#development">Development</a></li>
+      <ul>
+    
+      <li><a href="#where-do-i-start">Where do I start?</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../osx/" title="previous chapter">
+        OSX/macOS
+      </a></li>
+    
+    
+      <li>Next: <a href="../android/" title="next chapter">
+        Android
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

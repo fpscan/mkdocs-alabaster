@@ -1,0 +1,713 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Sega - Dreamcast (flycast) &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="sega-dreamcast-flycast">Sega Dreamcast (flycast)<a class="headerlink" href="#sega-dreamcast-flycast" title="Permanent link">¶</a></h1>
+<h2 id="contribute-to-this-documentation">Contribute to this documentation<a class="headerlink" href="#contribute-to-this-documentation" title="Permanent link">¶</a></h2>
+<p>In order to propose improvements to this document, <a href="https://github.com/libretro/docs/tree/master/docs/library/flycastc.md">visit its corresponding source page on github</a>. Changes are proposed using "Pull Requests."</p>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">¶</a></h2>
+<p>Flycast is a multi-platform Sega Dreamcast emulator. </p>
+<h3 id="why-use-this-core">Why use this core?<a class="headerlink" href="#why-use-this-core" title="Permanent link">¶</a></h3>
+<p>Awaiting description.</p>
+<h3 id="how-to-get-and-install-the-flycast-core">How to get and install the flycast core:<a class="headerlink" href="#how-to-get-and-install-the-flycast-core" title="Permanent link">¶</a></h3>
+<ol>
+<li>
+<p>Start up RetroArch. Inside the main menu, go to 'Online Updater'.</p>
+</li>
+<li>
+<p>Just to make sure we have the latest info files, select 'Update Core Info FIles'. Wait until this is done. Then, select 'Core Updater'.</p>
+</li>
+<li>
+<p>Browse through the list and select 'Sega Dreamcast (flycast)'.</p>
+</li>
+</ol>
+<p>After this has finished downloading, the core should now be ready for use!</p>
+<h4 id="how-to-play-after-installation">How to play (after installation):<a class="headerlink" href="#how-to-play-after-installation" title="Permanent link">¶</a></h4>
+<ol>
+<li>
+<p>Go back to RetroArch's main menu screen. Select 'Load Content'.</p>
+</li>
+<li>
+<p>Browse to the folder that contains the content you want to run.</p>
+</li>
+<li>
+<p>Select the content that you want to run.</p>
+</li>
+<li>
+<p>If you are asked which core to select, choose 'Sega Dreamcast (flycast)'.</p>
+</li>
+</ol>
+<p>The game should now start running!</p>
+<h4 id="how-to-play-naomi-games">How to play NAOMI Games:<a class="headerlink" href="#how-to-play-naomi-games" title="Permanent link">¶</a></h4>
+<ol>
+<li>
+<p>Run NAOMI games stored in MAME format zip files by following the same process as standard Dreamcast games</p>
+</li>
+<li>
+<p>Run NAOMI GD-ROM format games stored in MAME zip + chd format by running the zip file through RetroArch.  The zip file should be stored in your roms folder with the chd file in a subdirectory of the roms folder named after the mame ID.</p>
+</li>
+</ol>
+<p>Example (MAME ID=ikaruga)
+- [ROM FOLDER]/ikaruga.zip
+- [ROM FOLDER]/ikaruga/gdl-0010.chd</p>
+<h3 id="authors">Authors<a class="headerlink" href="#authors" title="Permanent link">¶</a></h3>
+<ul>
+<li>flyinghead</li>
+</ul>
+<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
+<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">¶</a></h2>
+<p>A summary of the licenses behind RetroArch and its cores have found <a href="https://docs.libretro.com/tech/licenses/">here</a>.</p>
+<ul>
+<li><a href="https://github.com/reicast/reicast-emulator/blob/master/LICENSE">GPLv2</a></li>
+</ul>
+<h2 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">¶</a></h2>
+<p>Content that can be loaded by the flycast core have the following file extensions:</p>
+<ul>
+<li>.cdi</li>
+<li>.gdi</li>
+<li>.chd</li>
+<li>.cue</li>
+<li>.zip</li>
+<li>.m3u</li>
+</ul>
+<h2 id="databases">Databases<a class="headerlink" href="#databases" title="Permanent link">¶</a></h2>
+<p>RetroArch database(s) that are associated with the flycast core:</p>
+<ul>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Sega%20-%20Dreamcast.rdb">Sega - Dreamcast</a></li>
+</ul>
+<h2 id="bios">BIOS<a class="headerlink" href="#bios" title="Permanent link">¶</a></h2>
+<p>Required or optional firmware files go in RetroArch's system directory.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Filename</th>
+<th align="center">Description</th>
+<th align="center">md5sum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">dc/dc_boot.bin</td>
+<td align="center">Dreamcast BIOS - Requried</td>
+<td align="center">e10c53c2f8b90bab96ead2d368858623</td>
+</tr>
+<tr>
+<td align="center">dc/dc_flash.bin</td>
+<td align="center">Date/Time/Language - Required</td>
+<td align="center">0a93f7940c455905bea6e392dfde92a4</td>
+</tr>
+<tr>
+<td align="center">dc/naomi.zip</td>
+<td align="center">A MAME format BIOS file (naomi.zip) from a recent (post 0.154) MAME build - Required</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p>!!! attention
+        1. naomi.zip must include the epr-21576g.ic27 file (md5sum:3bffafac42a7767d8dcecf771f5552ba)
+    2. The 'dc_boot.bin', 'dc_flash.bin', and 'naomi.zip' files need to be in a directory named 'dc' in RetroArch's system directory.</p>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th align="center">Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Restart</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Screenshots</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Saves</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>States</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Rewind</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Netplay</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Core Options</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>RetroAchievements</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>RetroArch Cheats</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Native Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Controls</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Remapping</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Multi-Mouse</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Rumble</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Sensors</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Location</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Subsystem</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Softpatching</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Disk Control</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Username</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Crop Overscan (in RetroArch's Video settings)</td>
+<td align="center">✕</td>
+</tr>
+</tbody>
+</table>
+<h3 id="directories">Directories<a class="headerlink" href="#directories" title="Permanent link">¶</a></h3>
+<p>The FlyCast core's directory name is 'Reicast'</p>
+<p>The FlyCast core creates these files in RetroArch's system directory.</p>
+<ul>
+<li>dc/vmu_save_A1.bin</li>
+<li>dc/vmu_save_B1.bin</li>
+<li>dc/vmu_save_C1.bin</li>
+<li>dc/vmu_save_D1.bin</li>
+<li>
+<p>dc/data/dc_nvmem.bin</p>
+</li>
+<li>
+<p>dc directory ()
+-- vmu_save_A1.bin ()
+-- vmu_save_B1.bin ()
+-- vmu_save_C1.bin ()
+-- vmu_save_D1.bin ()
+-- data directory ()
+--- dc_nvmem.bin ()</p>
+</li>
+</ul>
+<h3 id="core-provided-aspect-ratio">Core provided aspect ratio<a class="headerlink" href="#core-provided-aspect-ratio" title="Permanent link">¶</a></h3>
+<p>FlyCast's core provided aspect ratio is 4/3.</p>
+<h3 id="rumble">Rumble<a class="headerlink" href="#rumble" title="Permanent link">¶</a></h3>
+<p>Rumble only works when the Joypad being used has rumble functionality and the Joypad input driver being used has rumble function implementation (e.g. <strong>Xinput</strong>).</p>
+<h2 id="core-options">Core options<a class="headerlink" href="#core-options" title="Permanent link">¶</a></h2>
+<p>The FlyCast core has the following option(s) that can be tweaked from the core options menu. The default setting is bolded. Settings with (Restart) means that core has to be closed for the new setting to be applied on next launch.</p>
+<ul>
+<li><strong>CPU Mode (restart)</strong> (<strong>dynamic_recomplier</strong>/generic_recomplier)</li>
+</ul>
+<p><center> Awaiting description. </center></p>
+<ul>
+<li><strong>Boot to BIOS (restart)</strong> (<strong>Off</strong>/On)</li>
+</ul>
+<p><center> Boot directly into the Dreamcast BIOS menu. </center></p>
+<ul>
+<li><strong>Internal resolution (restart)</strong> (<strong>640x480</strong>/1280x960/1920x1440/2560x1920/3200x2400/3840x2880/
+4480x3360/5120x3840/5760x4320/6400x4800/7040x5280/7680x5760/8320x6240/8960x6720/
+9600x7200/10240x7680/10880x8160/11520x8640/12160x9120/12800x9600)</li>
+</ul>
+<p><center> Self explanatory. </center></p>
+<p><center></p>
+<p>??? note "Internal resolution - 640x480"
+    <img alt="" src="/image/core/reicast640x480.png" /></p>
+<p></center></p>
+<p><center></p>
+<p>??? note "Internal resolution - 1920x1440"
+    <img alt="" src="/image/core/reicast1920x1440.png" /></p>
+<p></center></p>
+<ul>
+<li><strong>Mipmapping</strong> (Off/<strong>On</strong>)</li>
+</ul>
+<p><center> Awaiting description. </center></p>
+<ul>
+<li><strong>Volume modifier</strong> (<strong>On</strong>/off)</li>
+</ul>
+<p><center> A GPU feature that is typically used by games to draw shadows of objects. You should typically leave this on - performance impact should be minimal to negligible. </center></p>
+<ul>
+<li><strong>Widescreen hack</strong> (<strong>Off</strong>/On)</li>
+</ul>
+<p><center> Awaiting description. </center></p>
+<ul>
+<li><strong>Audio buffer size</strong> (<strong>1024</strong>/2048)</li>
+</ul>
+<p><center> Awaiting description. </center></p>
+<ul>
+<li><strong>Cable type</strong> (<strong>TV (VBS/Y+S/C)</strong>/TV (RGB)/VGA (RGB))</li>
+</ul>
+<p><center> Awaiting description. </center></p>
+<ul>
+<li><strong>Broadcast</strong> (<strong>2</strong>/3/4/0/1)</li>
+</ul>
+<p><center> Awaiting description. </center></p>
+<ul>
+<li><strong>Framerate</strong> (<strong>fullspeed</strong>/normal)</li>
+</ul>
+<p><center> Awaiting description. </center></p>
+<ul>
+<li><strong>Region</strong> (<strong>3</strong>/0/1/2)</li>
+</ul>
+<p><center> Awaiting description. </center></p>
+<ul>
+<li><strong>Precompile shaders</strong> (<strong>Off</strong>/On)</li>
+</ul>
+<p><center> Awaiting description. </center></p>
+<ul>
+<li><strong>"Enable RTT (Render To Texture)</strong> (Off/<strong>On</strong>)</li>
+</ul>
+<p><center> Awaiting description. </center></p>
+<ul>
+<li><strong>Purupuru Pack (restart)</strong> (Off/<strong>On</strong>)</li>
+</ul>
+<p><center> Awaiting description. </center></p>
+<h2 id="controllers">Controllers<a class="headerlink" href="#controllers" title="Permanent link">¶</a></h2>
+<h3 id="device-types">Device types<a class="headerlink" href="#device-types" title="Permanent link">¶</a></h3>
+<p>The FlyCast core supports the following device type(s) in the controls menu, bolded device types are the default for the specified user(s):</p>
+<h4 id="user-1-4-device-types">User 1 - 4 device types<a class="headerlink" href="#user-1-4-device-types" title="Permanent link">¶</a></h4>
+<ul>
+<li>None - Input disabled.</li>
+<li><strong>RetroPad</strong> - Joypad</li>
+<li>RetroPad w/Analog - Joypad - <strong>There is no reason to switch to this.</strong></li>
+</ul>
+<h3 id="controller-tables">Controller tables<a class="headerlink" href="#controller-tables" title="Permanent link">¶</a></h3>
+<h4 id="joypad-and-analog-device-type-table">Joypad and analog device type table<a class="headerlink" href="#joypad-and-analog-device-type-table" title="Permanent link">¶</a></h4>
+<p><img alt="" src="/image/controller/dc.png" /></p>
+<table>
+<thead>
+<tr>
+<th>User 1 - 4 input descriptors</th>
+<th></th>
+<th>RetroPad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td><img alt="" src="/image/retropad/retro_b.png" /></td>
+<td>A</td>
+</tr>
+<tr>
+<td>X</td>
+<td><img alt="" src="/image/retropad/retro_y.png" /></td>
+<td>X</td>
+</tr>
+<tr>
+<td>Start</td>
+<td><img alt="" src="/image/retropad/retro_start.png" /></td>
+<td>Start</td>
+</tr>
+<tr>
+<td>D-Pad Up</td>
+<td><img alt="" src="/image/retropad/retro_dpad_up.png" /></td>
+<td>D-Pad Up</td>
+</tr>
+<tr>
+<td>D-Pad Down</td>
+<td><img alt="" src="/image/retropad/retro_dpad_down.png" /></td>
+<td>D-Pad Down</td>
+</tr>
+<tr>
+<td>D-Pad Left</td>
+<td><img alt="" src="/image/retropad/retro_dpad_left.png" /></td>
+<td>D-Pad Left</td>
+</tr>
+<tr>
+<td>D-Pad Right</td>
+<td><img alt="" src="/image/retropad/retro_dpad_right.png" /></td>
+<td>D-Pad Right</td>
+</tr>
+<tr>
+<td>B</td>
+<td><img alt="" src="/image/retropad/retro_a.png" /></td>
+<td>B</td>
+</tr>
+<tr>
+<td>Y</td>
+<td><img alt="" src="/image/retropad/retro_x.png" /></td>
+<td>Y</td>
+</tr>
+<tr>
+<td>L (fierce)</td>
+<td><img alt="" src="/image/retropad/retro_l1.png" /></td>
+<td>L (fierce)</td>
+</tr>
+<tr>
+<td>R (fierce)</td>
+<td><img alt="" src="/image/retropad/retro_r1.png" /></td>
+<td>R (fierce)</td>
+</tr>
+<tr>
+<td>L (weak)</td>
+<td><img alt="" src="/image/retropad/retro_l2.png" /></td>
+<td>L (weak)</td>
+</tr>
+<tr>
+<td>R (weak)</td>
+<td><img alt="" src="/image/retropad/retro_r2.png" /></td>
+<td>R (weak)</td>
+</tr>
+<tr>
+<td>Analog X</td>
+<td><img alt="" src="/image/retropad/retro_left_stick.png" /> X</td>
+<td>Analog X</td>
+</tr>
+<tr>
+<td>Analog Y</td>
+<td><img alt="" src="/image/retropad/retro_left_stick.png" /> Y</td>
+<td>Analog Y</td>
+</tr>
+</tbody>
+</table>
+<h2 id="multiple-disc-games">Multiple-disc games<a class="headerlink" href="#multiple-disc-games" title="Permanent link">¶</a></h2>
+<p>If foo is a multiple-disc game, you should have .chd/cue/cdi/gdi files for each one, e.g. <code>foo (Disc 1).chd</code>, <code>foo (Disc 2).chd</code>, <code>foo (Disc 3).chd</code>.</p>
+<p>To take advantage of FlyCast's Disk Control feature for disk swapping, an index file (a m3u file) should be made.</p>
+<p>Create a text file and save it as <code>foo.m3u</code>. Then enter your game's .chd/cue/cdi/gdi files on it. The m3u file contents should look something like this:</p>
+<p><code>foo.m3u</code></p>
+<pre><code>foo (Disc 1).chd
+foo (Disc 2).chd
+foo (Disc 3).chd
+</code></pre>
+
+<p>After that, you can load the <code>foo.m3u</code> file in RetroArch with the FlyCast core.</p>
+<p>An alternative is to append discs to the current playlist via the "Disk Image Append" option in the Disk Control RetroArch menu.</p>
+<h2 id="compatibility">Compatibility<a class="headerlink" href="#compatibility" title="Permanent link">¶</a></h2>
+<h3 id="general-flycast-issues">General Flycast Issues<a class="headerlink" href="#general-flycast-issues" title="Permanent link">¶</a></h3>
+<ul>
+<li>If the date and time are not being saved properly, please ensure you have the correct dc_flash.bin and dc_bios.bin files (check the md5sum values).  Also try deleting all of the dc_nvmem.bin files in the system/dc directory.</li>
+<li>Once you save to a VMU slot with any game, that VMU becomes inaccessible the next time you load the emulator. The fix for this is to enable the Core Option for "Boot to BIOS", exit RA, delete all of the vmu_save*.bin files, start RA/FlyCast.  It will boot to BIOS where you can select the VMU option, select one of the VMUs, click the "All" icon in upper-left, click Delete All and the VMU will be formatted/intialized.  Disable the "Boot to BIOS" option, restart RA, and everything should be fine.</li>
+<li>Polygon sorting issues can make objects appear distorted. Use Per-Pixel Alpha sorting for accurate rendering (at the expense of performance).</li>
+<li>When using an Xbox 360 Controller, analog triggers don't work properly. Use the bumpers instead. </li>
+<li>Changing games without closing and reloading RetroArch often leads to RetroArch crashing. </li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Game</th>
+<th>Issue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Crazy Taxi (PAL)</td>
+<td>Player taxis do not emit engine sounds.</td>
+</tr>
+<tr>
+<td>Crazy Taxi (USA)</td>
+<td>Player taxis do not emit engine sounds.</td>
+</tr>
+<tr>
+<td>Jet Grind Radio (USA)</td>
+<td>Police reports during levels do not display correctly.</td>
+</tr>
+<tr>
+<td>Sonic Adventure (PAL)</td>
+<td>Must be set to use "VGA" output in core options, as "TV" mode will cause all subsequent FMV to make RetroArch become unresponsive.</td>
+</tr>
+<tr>
+<td>Unreal Tournament (USA)</td>
+<td>Set Cable Type to 'VGA (RGB)', otherwise the game will crash at start.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="external-links">External Links<a class="headerlink" href="#external-links" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://github.com/libretro/libretro-super/blob/master/dist/info/flycast_libretro.info">Libretro flycast Core info file</a></li>
+<li><a href="https://github.com/libretro/flycast">Libretro flycast Github Repository</a></li>
+<li><a href="https://github.com/libretro/flycast/issues">Report flycast Core Issues Here</a></li>
+</ul>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#contribute-to-this-documentation">Contribute to this documentation</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#background">Background</a></li>
+      <ul>
+    
+      <li><a href="#why-use-this-core">Why use this core?</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#how-to-get-and-install-the-flycast-core">How to get and install the flycast core:</a></li>
+      <ul>
+    
+      <li><a href="#how-to-play-after-installation">How to play (after installation):</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#how-to-play-naomi-games">How to play NAOMI Games:</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#authors">Authors</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#see-also">See also</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#license">License</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#extensions">Extensions</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#databases">Databases</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#bios">BIOS</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#features">Features</a></li>
+      <ul>
+    
+      <li><a href="#directories">Directories</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#core-provided-aspect-ratio">Core provided aspect ratio</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#rumble">Rumble</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#core-options">Core options</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#controllers">Controllers</a></li>
+      <ul>
+    
+      <li><a href="#device-types">Device types</a></li>
+      <ul>
+    
+      <li><a href="#user-1-4-device-types">User 1 - 4 device types</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#controller-tables">Controller tables</a></li>
+      <ul>
+    
+      <li><a href="#joypad-and-analog-device-type-table">Joypad and analog device type table</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#multiple-disc-games">Multiple-disc games</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#compatibility">Compatibility</a></li>
+      <ul>
+    
+      <li><a href="#general-flycast-issues">General Flycast Issues</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#external-links">External Links</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../compatibility/saturn/" title="previous chapter">
+        Sega - Saturn Compatibility List
+      </a></li>
+    
+    
+      <li>Next: <a href="../emux_sms/" title="next chapter">
+        Sega - Master System (Emux SMS)
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:10
+  -->
+</body>
+</html>

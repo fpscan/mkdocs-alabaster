@@ -1,0 +1,503 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>MAME 2003-Plus &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+    <link rel="stylesheet" href="../../../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="mame-2003-plus-development">MAME 2003-Plus Development<a class="headerlink" href="#mame-2003-plus-development" title="Permanent link">¶</a></h1>
+<h2 id="build-environement">Build environement<a class="headerlink" href="#build-environement" title="Permanent link">¶</a></h2>
+<p>MAME 2003-Plus is generally compatibile with the RetroArch build environments that can be found in the docs section <code>For Developers</code> -&gt; <code>RetroArch</code> -&gt; <code>Compilation Guides</code>.</p>
+<h2 id="submitting-control-names">Submitting Control Names<a class="headerlink" href="#submitting-control-names" title="Permanent link">¶</a></h2>
+<p><em>Note: This first half of this section is written for users who cannot submit code themselves so that coders have the information necessary to assist. The second half is the process written from a coding perspective.</em></p>
+<h3 id="background-reference-controlsdat">Background reference: controls.dat<a class="headerlink" href="#background-reference-controlsdat" title="Permanent link">¶</a></h3>
+<p><a href="https://github.com/libretro/mame2003-plus-libretro/blob/master/src/controls.c">As part of mame2003 we have an 'automated port' of the MAME 0.141 controls.dat project information</a>. It address many, but not all games supported by mame2003-plus.</p>
+<p>Therefore in many cases adding new control labels can be as simple as adding the existing controls.dat metadata to a driver declaration. However as part of that process the controls.dat metadata needs to be checked in two ways before it can be added:
+1. From the user perspective: are the control names actually correct
+2. From the coder perspective: does the switch logic in the controls.dat naming function work as intended</p>
+<h3 id="users-necessary-information">Users: Necessary Information<a class="headerlink" href="#users-necessary-information" title="Permanent link">¶</a></h3>
+<h4 id="games-affected">Games affected<a class="headerlink" href="#games-affected" title="Permanent link">¶</a></h4>
+<p>Often clones and even different games that share the same hardware platform and operating system share the same control names. Please do as best you can to submit a complete list of all games which share the control names you are submitting so that it can be applied comprehensively.</p>
+<p>For example there are quite a few games in the CPS1 driver which use the same control labels as <code>sf2</code>, Street Fighter 2. In that driver, the <code>sf2</code> control labels are applied all games listed as being a clone of <code>sf2</code> or a clone of <code>sf2ce</code>.</p>
+<h4 id="list-of-control-names">List of control names<a class="headerlink" href="#list-of-control-names" title="Permanent link">¶</a></h4>
+<p>Please submit your list of control names in a plain text list following the format below with one name to a line and the control number on the left.</p>
+<h4 id="naming-standard">Naming standard<a class="headerlink" href="#naming-standard" title="Permanent link">¶</a></h4>
+<p>The standard we use for determining the proper text to use for the name is to refer to current MAME. That is considered the canonical reference.</p>
+<p>For example the button names for Street Fighter 2 would be submitted as:</p>
+<pre><code>BUTTON1: &quot;Jab Punch&quot;
+BUTTON2: &quot;Strong Punch&quot;
+BUTTON3: &quot;Fierce Punch&quot;
+BUTTON4: &quot;Short Kick&quot;
+BUTTON5: &quot;Forward Kick&quot;
+BUTTON6: &quot;Roundhouse Kick&quot;
+</code></pre>
+
+<h3 id="coders-implementation">Coders: Implementation<a class="headerlink" href="#coders-implementation" title="Permanent link">¶</a></h3>
+<p>Custom button names are added by creating a <code>ControlInfo</code> struct and a button label function in the driver such for <em>Street Fighter 2</em> and its clones. <strong>Note that in the button labeler function we prefix the name of the control with a macro like <code>BTN1</code>, <code>BTN2</code>, etc. so that there is a reference to the original MAME button number still visible in the libretro frontend.</strong></p>
+<h4 id="generic-and-custom-joystick-labels">Generic and custom joystick labels<a class="headerlink" href="#generic-and-custom-joystick-labels" title="Permanent link">¶</a></h4>
+<p>There are two generic joystick labeling functions available for control panels with joysticks that have no game-specific labels. <code>joy2way_labels</code> returns only generic <code>Left</code> and <code>Right</code> strings. <code>joy4way_labels</code> returns only generic <code>Left</code>, <code>Right</code>, <code>Up</code>, and <code>Down</code> strings for 4-way and 8-way joysticks</p>
+<p>An example of game-specific 8-way joystick labels is Street Fighter 2, which uses <code>Crouch</code> instead of <code>Down</code> and <code>Jump</code> instead of <code>Up</code>. Street Fighter 2 is therefore is not suitable for the generic function.</p>
+<h4 id="street-fighter-2-example">Street Fighter 2 Example<a class="headerlink" href="#street-fighter-2-example" title="Permanent link">¶</a></h4>
+<p>In this case, we were able to incorporate some of the <strong>control.dat</strong> metadata which populates the <code>st2_ctrl</code> struct:</p>
+<pre><code class="c">const struct ControlInfo sf2_ctrl =
+{
+  false, /* alternating_controls */
+  true,  /* mirrored_controls */
+  &quot;&quot;,    /* control_details */
+  &amp;sf2_get_btn
+};
+
+
+const char *sf2_get_btn(int type)
+{
+  switch(type)
+  {
+/* P1NumButtons=6 */
+    case (IPT_OSD_DESCRIPTION): return &quot;8-way Joystick+joy8way&quot;;
+    case IPT_BUTTON1: return BTN1 &quot;Jab Punch&quot;;
+    case IPT_BUTTON2: return BTN2 &quot;Strong Punch&quot;;
+    case IPT_BUTTON3: return BTN3 &quot;Fierce Punch&quot;;
+    case IPT_BUTTON4: return BTN4 &quot;Short Kick&quot;;
+    case IPT_BUTTON5: return BTN5 &quot;Forward Kick&quot;;
+    case IPT_BUTTON6: return BTN6 &quot;Roundhouse Kick&quot;;
+    case IPT_JOYSTICK_UP: return &quot;Jump&quot;;
+    case IPT_JOYSTICK_DOWN: return &quot;Crouch&quot;;
+    case IPT_JOYSTICK_LEFT: return &quot;Left&quot;;
+    case IPT_JOYSTICK_RIGHT: return &quot;Right&quot;;
+  } /* end of switch */
+
+  return generic_btn_label(type);
+}
+</code></pre>
+
+<h4 id="driver-declaration">Driver Declaration<a class="headerlink" href="#driver-declaration" title="Permanent link">¶</a></h4>
+<p>Then you indicate the change for the appropriate romsets by adding a new letter (<code>C</code>) to the macro name and adding a function pointer to the struct. <strong>In other words, the <code>GAME</code> driver macro becomes <code>GAMEC</code>.</strong></p>
+<h5 id="before">Before:<a class="headerlink" href="#before" title="Permanent link">¶</a></h5>
+<pre><code class="c">GAME(1991, sf2,      0,        sf2,      sf2,      cps1,     ROT0,   &quot;Capcom&quot;, &quot;Street Fighter II - The World Warrior (World 910522)&quot; )
+</code></pre>
+
+<h5 id="after">After:<a class="headerlink" href="#after" title="Permanent link">¶</a></h5>
+<pre><code class="c">GAMEC(1991, sf2,      0,        sf2,      sf2,      cps1,     ROT0,   &quot;Capcom&quot;, &quot;Street Fighter II - The World Warrior (World 910522)&quot;, &amp;sf2_ctrl, NULL )
+</code></pre>
+
+<p><strong>Note that a <code>NULL</code> is also added to the end of the macro. That parameter is used for NVRAM bootstraps. The same driver macro is used for adding controls and bootstraps in order to avoid having more and more macros. If this game also had an NVRAM bootstrap, the bootstrap would be included rather than NULL.</strong></p>
+<h4 id="stone-ball-example">Stone Ball Example<a class="headerlink" href="#stone-ball-example" title="Permanent link">¶</a></h4>
+<p>In this case we do not currently have much control metadata, so the implementation is minimal:</p>
+<pre><code class="c">const struct ControlInfo stonebal_ctrl =
+{
+  false, /* alternating_controls */
+  false, /* mirrored_controls */
+  &quot;&quot;,    /* control__details */
+  &amp;stonebal_get_btn
+};
+
+const char *stonebal_get_btn(int type)
+{
+  switch(type)
+  {
+    case IPT_BUTTON1: return BTN1 &quot;Shoot/Fight&quot;;
+    case IPT_BUTTON2: return BTN2 &quot;Pass/Tackle&quot;;
+    case IPT_BUTTON3: return BTN3 &quot;Push&quot;;
+  } /* end of switch */
+
+  return generic_btn_label(type);
+}
+</code></pre>
+
+<h4 id="driver-declaration_1">Driver Declaration<a class="headerlink" href="#driver-declaration_1" title="Permanent link">¶</a></h4>
+<h5 id="before_1">Before:<a class="headerlink" href="#before_1" title="Permanent link">¶</a></h5>
+<pre><code class="c">GAME( 1994, stonebal, 0,        stonebal, stonebal, stonebal, ROT0, &quot;Art and Magic&quot;, &quot;Stone Ball (4 Players)&quot; )
+GAME( 1994, stoneba2, stonebal, stonebal, stonebal, stonebal, ROT0, &quot;Art and Magic&quot;, &quot;Stone Ball (2 Players)&quot; )
+</code></pre>
+
+<h5 id="after_1">After:<a class="headerlink" href="#after_1" title="Permanent link">¶</a></h5>
+<pre><code class="c">GAMEC( 1994, stonebal, 0,        stonebal, stonebal, stonebal, ROT0, &quot;Art and Magic&quot;, &quot;Stone Ball (4 Players)&quot;, &amp;stonebal_ctrl, NULL )
+GAMEC( 1994, stoneba2, stonebal, stonebal, stonebal, stonebal, ROT0, &quot;Art and Magic&quot;, &quot;Stone Ball (2 Players)&quot;, &amp;stonebal_ctrl, NULL )
+</code></pre>
+
+<p><strong>Note that a <code>NULL</code> is also added to the end of the macro. That parameter is used for NVRAM bootstraps. The same driver macro is used for adding controls and bootstraps in order to avoid having more and more macros. If this game also had an NVRAM bootstrap, the bootstrap would be included rather than NULL.</strong></p>
+<hr />
+<h2 id="adding-an-nvram-bootstrap">Adding an NVRAM Bootstrap<a class="headerlink" href="#adding-an-nvram-bootstrap" title="Permanent link">¶</a></h2>
+<h3 id="purpose-and-criteria-for-bootstraps">Purpose and criteria for bootstraps<a class="headerlink" href="#purpose-and-criteria-for-bootstraps" title="Permanent link">¶</a></h3>
+<p>The purpose of the NVRAM bootstrap functionality is to create a good user experience the first time a game is booted. When the behavior of a game on its first boot is impossible for a new user to tell from a crash, then a bootstrap is in order.</p>
+<p>More specifically, the conditions for adding a bootstrap are:
+* It is not clear what the user needs to do to get into the game <strong>or</strong>
+* It is not reasonably possible for the user to get into the game using a SNES controller or arcade control panel</p>
+<h3 id="example-commit">Example commit<a class="headerlink" href="#example-commit" title="Permanent link">¶</a></h3>
+<p>This doc will use the process of adding an nvram bootstrap for the game "Run and Gun (US ver. UAB)" with the driver name <code>rungunu</code>.</p>
+<h4 id="step-1-generate-a-working-nvram-file">Step 1: Generate a working NVRAM file<a class="headerlink" href="#step-1-generate-a-working-nvram-file" title="Permanent link">¶</a></h4>
+<p>The exact process is game-specific.</p>
+<h4 id="step-2-compile-and-execute-bin2c">Step 2: Compile and execute bin2c<a class="headerlink" href="#step-2-compile-and-execute-bin2c" title="Permanent link">¶</a></h4>
+<pre><code class="bash">git clone http://github.com/libretro/mame2003-plus-libretro
+cd mame2003-plus-libretro
+cd tools/bin2c
+make
+./bin2c -o rungunu_bootstrap.c rungunu.nv
+</code></pre>
+
+<h4 id="output">Output<a class="headerlink" href="#output" title="Permanent link">¶</a></h4>
+<p>The generated output will look like this:</p>
+<pre><code class="c">const unsigned char rungunu_nv_bytes[] = {
+    4, 38,251,217,146, 71, 85, 65, 66,  0, 16,  3,  7,  3,  0,  0,  0,  0,
+    0,  7,  7,  0,  7, 26,  1, 16, 26,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,
+};
+
+const unsigned int rungunu_nv_length = 128;
+</code></pre>
+
+<h3 id="step-3-create-a-bin2cfile">Step 3: Create a bin2cFILE<a class="headerlink" href="#step-3-create-a-bin2cfile" title="Permanent link">¶</a></h3>
+<p>The next step is manual -- putting the data that bin2c generated into the format that the core uses:</p>
+<pre><code class="c">struct bin2cFILE {
+  const unsigned int length;
+  const unsigned char data[]; 
+};
+</code></pre>
+
+<h4 id="resulting-bootstrap-structure">Resulting bootstrap structure<a class="headerlink" href="#resulting-bootstrap-structure" title="Permanent link">¶</a></h4>
+<pre><code class="c">const struct bin2cFILE rungunu_bootstrap = {
+  128,
+ {
+    4, 38,251,217,146, 71, 85, 65, 66,  0, 16,  3,  7,  3,  0,  0,  0,  0,
+    0,  7,  7,  0,  7, 26,  1, 16, 26,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,
+  } 
+};
+</code></pre>
+
+<h3 id="step-4-setup-the-various-source-files">Step 4: Setup the various source files<a class="headerlink" href="#step-4-setup-the-various-source-files" title="Permanent link">¶</a></h3>
+<p>Add <code>rungunu_bootstrap</code> to <code>bootstrap.c</code> and <code>bootstrap.h</code>.</p>
+<p>If <code>rungun.c</code> didn't already include the necessary headers from a prior bootstrap project I would have needed to add:</p>
+<pre><code class="c">#include &quot;bootstrap.h&quot;
+#include &quot;inptport.h&quot;
+</code></pre>
+
+<h3 id="step-5-declare-the-bootstrap-in-the-driver">Step 5: Declare the bootstrap in the driver<a class="headerlink" href="#step-5-declare-the-bootstrap-in-the-driver" title="Permanent link">¶</a></h3>
+<h4 id="original">Original:<a class="headerlink" href="#original" title="Permanent link">¶</a></h4>
+<pre><code class="c">GAMEX( 1993, rungunu,   0,      rng, rng, rng, ROT0, &quot;Konami&quot;, &quot;Run and Gun (US ver. UAB)&quot;, GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
+</code></pre>
+
+<h4 id="bootstrapped">Bootstrapped:<a class="headerlink" href="#bootstrapped" title="Permanent link">¶</a></h4>
+<pre><code class="c">GAMECX( 1993, rungunu,   0,      rng, rng, rng, ROT0, &quot;Konami&quot;, &quot;Run and Gun (US ver. UAB)&quot;, GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND, &amp;generic_ctrl, &amp;rungun_bootstrap )
+</code></pre>
+
+<p>!!! Important
+    The newer driver macros that support setting the bootstrap pointer also need a button labeling function pointer. If there is no existing control name function, passing <code>&amp;generic_ctrl</code> suffices.</p>
+<hr />
+<h2 id="compiling-a-pr-for-testing">Compiling a PR for testing<a class="headerlink" href="#compiling-a-pr-for-testing" title="Permanent link">¶</a></h2>
+<p><strong>Note:</strong> For purposes of this guide, replace <code>PR_NUMBER</code> with the literal number of the github Pull Request you are interested in testing. For example, if you are interested in testing out the Pull Request which implemented the libretro analog input API, you would substitute <code>PR_NUMBER</code> below with <code>590</code>, the PR number <a href="https://github.com/libretro/mame2003-plus-libretro/pull/590">for that request</a>.</p>
+<h3 id="nix-or-msys">*nix or msys:<a class="headerlink" href="#nix-or-msys" title="Permanent link">¶</a></h3>
+<pre><code class="shell">git clone https://github.com/libretro/mame2003-plus-libretro.git
+patch -p1 -d  mame2003-plus-libretro &lt; &lt;(wget -qO- https://patch-diff.githubusercontent.com/raw/libretro/mame2003-plus-libretro/pull/PR_NUMBER.diff)
+cd mame2003-plus-libretro
+make
+</code></pre>
+
+<p><strong>Note:</strong> If you are using the standard libretro/RetroArch msys2 environment, you will first need to install <code>patch</code> with this command:</p>
+<pre><code class="shell">pacman -S patch
+</code></pre>
+
+<h3 id="retropie">RetroPie<a class="headerlink" href="#retropie" title="Permanent link">¶</a></h3>
+<pre><code class="shell">cd ~/RetroPie-Setup/
+sudo ./retropie_packages.sh lr-mame2003-plus clean
+sudo ./retropie_packages.sh lr-mame2003-plus sources
+sudo patch -p1 -d tmp/build/lr-mame2003-plus &lt; &lt;(wget -qO- https://patch-diff.githubusercontent.com/raw/libretro/mame2003-plus-libretro/pull/PR_NUMBER.diff)
+rm 590.diff
+sudo ./retropie_packages.sh lr-mame2003-plus build
+sudo ./retropie_packages.sh lr-mame2003-plus build install
+</code></pre>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../../../..">
+      <img class="logo" src="../../../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#build-environement">Build environement</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#submitting-control-names">Submitting Control Names</a></li>
+      <ul>
+    
+      <li><a href="#background-reference-controlsdat">Background reference: controls.dat</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#users-necessary-information">Users: Necessary Information</a></li>
+      <ul>
+    
+      <li><a href="#games-affected">Games affected</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#list-of-control-names">List of control names</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#naming-standard">Naming standard</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#coders-implementation">Coders: Implementation</a></li>
+      <ul>
+    
+      <li><a href="#generic-and-custom-joystick-labels">Generic and custom joystick labels</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#street-fighter-2-example">Street Fighter 2 Example</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#driver-declaration">Driver Declaration</a></li>
+      <ul>
+    
+      <li><a href="#before">Before:</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#after">After:</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#stone-ball-example">Stone Ball Example</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#driver-declaration_1">Driver Declaration</a></li>
+      <ul>
+    
+      <li><a href="#before_1">Before:</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#after_1">After:</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#adding-an-nvram-bootstrap">Adding an NVRAM Bootstrap</a></li>
+      <ul>
+    
+      <li><a href="#purpose-and-criteria-for-bootstraps">Purpose and criteria for bootstraps</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#example-commit">Example commit</a></li>
+      <ul>
+    
+      <li><a href="#step-1-generate-a-working-nvram-file">Step 1: Generate a working NVRAM file</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#step-2-compile-and-execute-bin2c">Step 2: Compile and execute bin2c</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#output">Output</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#step-3-create-a-bin2cfile">Step 3: Create a bin2cFILE</a></li>
+      <ul>
+    
+      <li><a href="#resulting-bootstrap-structure">Resulting bootstrap structure</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#step-4-setup-the-various-source-files">Step 4: Setup the various source files</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#step-5-declare-the-bootstrap-in-the-driver">Step 5: Declare the bootstrap in the driver</a></li>
+      <ul>
+    
+      <li><a href="#original">Original:</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#bootstrapped">Bootstrapped:</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#compiling-a-pr-for-testing">Compiling a PR for testing</a></li>
+      <ul>
+    
+      <li><a href="#nix-or-msys">*nix or msys:</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#retropie">RetroPie</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../mame-2016/" title="previous chapter">
+        MAME 2016
+      </a></li>
+    
+    
+      <li>Next: <a href="../../../shader/shader-overview/" title="next chapter">
+        Shader Development Overview
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

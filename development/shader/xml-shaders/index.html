@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>XML Shader Development (discontinued) &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <link rel="stylesheet" href="../../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="xml-shaders-discontinued">XML Shaders (Discontinued)<a class="headerlink" href="#xml-shaders-discontinued" title="Permanent link">¶</a></h1>
+<p>!!! Warning
+    XML shaders have been discontinued and are no longer available in RetroArch. This page should be considered only for historical reference.</p>
+<h2 id="history">History<a class="headerlink" href="#history" title="Permanent link">¶</a></h2>
+<p>XML shaders were originally implemented in bSNES as single pass GLSL shaders. The extension is <code>.shader</code> and is marked up with XML. These shaders were written against the fixed-function pipeline and is now referred to as a legacy XML shaders by RetroArch. The prefix ofruby originates from bSNES’ driver module, ruby::.</p>
+<h2 id="example-legacy-xml-shader">Example legacy XML shader<a class="headerlink" href="#example-legacy-xml-shader" title="Permanent link">¶</a></h2>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!--
+     Blank shader
+--&gt;
+&lt;shader language=&quot;GLSL&quot;&gt;
+   &lt;fragment&gt;&lt;![CDATA[
+      uniform sampler2D rubyTexture;
+      void main()
+      {
+         gl_FragColor = texture2D(rubyTexture, gl_TexCoord[0].xy);
+      }
+   ]]&gt;&lt;/fragment&gt;
+&lt;/shader&gt;
+</code></pre>
+
+<p>RetroArch implemented this legacy shader spec to be compatible with many shaders written at the time. It is also referred to as v1.0 XML shaders. This specification was then extended to support multi-pass, scaling arguments, etc, which resulted in v1.1 XML shaders (spec here). It is still legacy as it uses fixed-function features. RetroArch implements v1.1 XML shaders, and some more features to be feature equivalent with the Cg shader implementation. bSNES did not implement v1.1 and adoption of this spec was slowed down.</p>
+<h2 id="modern-xml-shaders">Modern XML shaders<a class="headerlink" href="#modern-xml-shaders" title="Permanent link">¶</a></h2>
+<p>Legacy XML shaders used fixed function, and they would therefore never work with modern GL (GLES, GL3.x+). To fix this, RetroArch extended the XML shader spec. Fixed function cruft like gl_ModelViewProjectionMatrix, gl_MultiTexCoord0 and gl_Vertex was replaced with uniforms and attribute streams. The modern XML shader spec in RetroArch focuses on being compatible with GLES2 (and compatible with GL 3.x+ as well).</p>
+<p>The ruby prefix was later deprecated and you could use TexCoord, VertexCoord etc. For compatibility reasons, the ruby prefix is still accepted.</p>
+<h2 id="example-modern-shader">Example modern shader<a class="headerlink" href="#example-modern-shader" title="Permanent link">¶</a></h2>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;shader language=&quot;GLSL&quot; style=&quot;GLES2&quot;&gt;
+   &lt;vertex&gt;&lt;![CDATA[
+      attribute vec2 rubyTexCoord;
+      attribute vec2 rubyVertexCoord;
+      uniform mat4 rubyMVPMatrix;
+      varying vec2 tex_coord;
+      void main()
+      {
+         gl_Position = rubyMVPMatrix * vec4(rubyVertexCoord, 0.0, 1.0);
+         tex_coord = rubyTexCoord;
+      }
+   ]]&gt;&lt;/vertex&gt;
+   &lt;fragment&gt;&lt;![CDATA[
+      uniform sampler2D rubyTexture;
+      varying vec2 tex_coord;
+      void main()
+      {
+         gl_FragColor = texture2D(rubyTexture, tex_coord);
+      }
+   ]]&gt;&lt;/fragment&gt;
+&lt;/shader&gt;
+</code></pre>
+
+<h2 id="moving-off-xml-shaders">Moving off XML shaders<a class="headerlink" href="#moving-off-xml-shaders" title="Permanent link">¶</a></h2>
+<p>XML shaders as a whole are deprecated in RetroArch, and will not be selectable in RGUI. You can still use them via video_shader config option. To use GLSL in RetroArch, the new GLSL shaders format is used, which mirrors the Cg shaders implementation quite well. The new GLSL shaders only support modern style, no fixed function. To convert XML shaders into straight GLSL, see GLSL shaders. </p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../../..">
+      <img class="logo" src="../../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#history">History</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#example-legacy-xml-shader">Example legacy XML shader</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#modern-xml-shaders">Modern XML shaders</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#example-modern-shader">Example modern shader</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#moving-off-xml-shaders">Moving off XML shaders</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../cg-shaders/" title="previous chapter">
+        Cg Shader Development (deprecated)
+      </a></li>
+    
+    
+      <li>Next: <a href="../content-aware-shaders/" title="next chapter">
+        Content-Aware Shaders
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

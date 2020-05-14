@@ -1,0 +1,459 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Nintendo - NES (bnes) &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="nintendo-nes-famicom-bnes">Nintendo - NES / Famicom (bnes)<a class="headerlink" href="#nintendo-nes-famicom-bnes" title="Permanent link">¶</a></h1>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">¶</a></h2>
+<p>A port of bNES v083 to libretro.</p>
+<h3 id="authorlicense">Author/License<a class="headerlink" href="#authorlicense" title="Permanent link">¶</a></h3>
+<p>The bnes core has been authored by</p>
+<ul>
+<li>byuu</li>
+<li>Ryphecha</li>
+</ul>
+<p>The bnes core is licensed under</p>
+<ul>
+<li><a href="https://github.com/libretro/bnes-libretro/blob/master/license">GPLv3</a></li>
+</ul>
+<p>A summary of the licenses behind RetroArch and its cores have found <a href="https://docs.libretro.com/tech/licenses/">here</a>.</p>
+<h2 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">¶</a></h2>
+<p>Content that can be loaded by the bnes core have the following file extensions:</p>
+<ul>
+<li>.nes</li>
+</ul>
+<h2 id="databases">Databases<a class="headerlink" href="#databases" title="Permanent link">¶</a></h2>
+<p>RetroArch database(s) that are associated with the bnes core:</p>
+<ul>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Nintendo%20-%20Nintendo%20Entertainment%20System.rdb">Nintendo - Nintendo Entertainment System</a></li>
+</ul>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h2>
+<p>Frontend-level settings or features that the bnes core respects.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th align="center">Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Restart</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Screenshots</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Saves</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>States</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Rewind</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Netplay</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Core Options</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>RetroAchievements</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>RetroArch Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Native Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Controls</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Remapping</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Multi-Mouse</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Rumble</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Sensors</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Location</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Subsystem</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td><a href="https://docs.libretro.com/guides/softpatching/">Softpatching</a></td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Disk Control</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Username</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Language</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Crop Overscan</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>LEDs</td>
+<td align="center">✕</td>
+</tr>
+</tbody>
+</table>
+<h3 id="directories">Directories<a class="headerlink" href="#directories" title="Permanent link">¶</a></h3>
+<p>The bnes core's directory name is 'bnes'</p>
+<p>The bnes core saves/loads to/from these directories.</p>
+<p><strong>Frontend's Save directory</strong></p>
+<ul>
+<li>'content-name'.srm (Cartridge battery save)</li>
+</ul>
+<p><strong>Frontend's State directory</strong></p>
+<ul>
+<li>'content-name'.state# (State)</li>
+</ul>
+<h3 id="geometry-and-timing">Geometry and timing<a class="headerlink" href="#geometry-and-timing" title="Permanent link">¶</a></h3>
+<ul>
+<li>The bnes core's core provided FPS is 60</li>
+<li>The bnes core's core provided sample rate is 32000 Hz</li>
+<li>The bnes core's core provided aspect ratio is 16/15</li>
+</ul>
+<h2 id="controllers">Controllers<a class="headerlink" href="#controllers" title="Permanent link">¶</a></h2>
+<p>The bnes core supports the following device type(s) in the controls menu, bolded device types are the default for the specified user(s):</p>
+<h3 id="user-1-2-device-types">User 1 - 2 device types<a class="headerlink" href="#user-1-2-device-types" title="Permanent link">¶</a></h3>
+<ul>
+<li>None - Doesn't disable input.</li>
+<li><strong>RetroPad</strong> - Joypad</li>
+<li>RetroPad w/Analog - Joypad - There is no reason to switch to this.</li>
+</ul>
+<h3 id="controller-tables">Controller tables<a class="headerlink" href="#controller-tables" title="Permanent link">¶</a></h3>
+<h4 id="joypad">Joypad<a class="headerlink" href="#joypad" title="Permanent link">¶</a></h4>
+<p><img alt="" src="/image/controller/nes.png" /></p>
+<table>
+<thead>
+<tr>
+<th>User 1 - 2 Remap descriptors</th>
+<th>RetroPad Inputs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td><img alt="" src="/image/retropad/retro_b.png" /></td>
+</tr>
+<tr>
+<td>Select</td>
+<td><img alt="" src="/image/retropad/retro_select.png" /></td>
+</tr>
+<tr>
+<td>Start</td>
+<td><img alt="" src="/image/retropad/retro_start.png" /></td>
+</tr>
+<tr>
+<td>D-Pad Up</td>
+<td><img alt="" src="/image/retropad/retro_dpad_up.png" /></td>
+</tr>
+<tr>
+<td>D-Pad Down</td>
+<td><img alt="" src="/image/retropad/retro_dpad_down.png" /></td>
+</tr>
+<tr>
+<td>D-Pad Left</td>
+<td><img alt="" src="/image/retropad/retro_dpad_left.png" /></td>
+</tr>
+<tr>
+<td>D-Pad Right</td>
+<td><img alt="" src="/image/retropad/retro_dpad_right.png" /></td>
+</tr>
+<tr>
+<td>A</td>
+<td><img alt="" src="/image/retropad/retro_a.png" /></td>
+</tr>
+</tbody>
+</table>
+<h2 id="compatibility">Compatibility<a class="headerlink" href="#compatibility" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Game</th>
+<th>Issue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Crisis Force</td>
+<td>Graphical glitches. (1)</td>
+</tr>
+<tr>
+<td>Huge Insect</td>
+<td>No enemies spawn.</td>
+</tr>
+<tr>
+<td>Lagrange Point</td>
+<td>No music.</td>
+</tr>
+<tr>
+<td>Ms. Pac-Man (Tengen version)</td>
+<td>Graphical glitches on the sides of the screen.</td>
+</tr>
+<tr>
+<td>Skull &amp; Crossbones</td>
+<td>Crashes on start.</td>
+</tr>
+</tbody>
+</table>
+<p>??? note "(1)"
+    <img alt="" src="/images/cores/bnes/crisisforce.png" /></p>
+<h2 id="external-links">External Links<a class="headerlink" href="#external-links" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://byuu.org/">Official higan Website</a></li>
+<li><a href="https://byuu.org/emulation/higan/">Official higan Downloads</a></li>
+<li><a href="https://github.com/libretro/libretro-super/blob/master/dist/info/bnes_libretro.info">Libretro bnes Core info file</a></li>
+<li><a href="https://github.com/libretro/bnes-libretro">Libretro bnes Github Repository</a></li>
+<li><a href="https://github.com/libretro/bnes-libretro/issues">Report Libretro bnes Core Issues Here</a></li>
+</ul>
+<h3 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h3>
+<h4 id="nintendo-nintendo-entertainment-system">Nintendo - Nintendo Entertainment System<a class="headerlink" href="#nintendo-nintendo-entertainment-system" title="Permanent link">¶</a></h4>
+<ul>
+<li><a href="https://docs.libretro.com/library/emux_nes/">Nintendo - NES / Famicom (Emux NES)</a></li>
+<li><a href="https://docs.libretro.com/library/fceumm/">Nintendo - NES / Famicom (FCEUmm)</a></li>
+<li><a href="https://docs.libretro.com/library/mesen/">Nintendo - NES / Famicom (Mesen)</a></li>
+<li><a href="https://docs.libretro.com/library/nestopia_ue/">Nintendo - NES / Famicom (Nestopia UE)</a></li>
+<li><a href="https://docs.libretro.com/library/quicknes/">Nintendo - NES / Famicom (QuickNES)</a></li>
+</ul>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#background">Background</a></li>
+      <ul>
+    
+      <li><a href="#authorlicense">Author/License</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#extensions">Extensions</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#databases">Databases</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#features">Features</a></li>
+      <ul>
+    
+      <li><a href="#directories">Directories</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#geometry-and-timing">Geometry and timing</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#controllers">Controllers</a></li>
+      <ul>
+    
+      <li><a href="#user-1-2-device-types">User 1 - 2 device types</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#controller-tables">Controller tables</a></li>
+      <ul>
+    
+      <li><a href="#joypad">Joypad</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#compatibility">Compatibility</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#external-links">External Links</a></li>
+      <ul>
+    
+      <li><a href="#see-also">See also</a></li>
+      <ul>
+    
+      <li><a href="#nintendo-nintendo-entertainment-system">Nintendo - Nintendo Entertainment System</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../dolphin/" title="previous chapter">
+        Nintendo - GameCube/Wii (Dolphin)
+      </a></li>
+    
+    
+      <li>Next: <a href="../emux_nes/" title="next chapter">
+        Nintendo - NES / Famicom (Emux NES)
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:10
+  -->
+</body>
+</html>

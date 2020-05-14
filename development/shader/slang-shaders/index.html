@@ -1,0 +1,910 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Slang Shader Development &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <link rel="stylesheet" href="../../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="developing-slang-shaders">Developing Slang Shaders<a class="headerlink" href="#developing-slang-shaders" title="Permanent link">¶</a></h1>
+<h2 id="target-shader-languages">Target shader languages<a class="headerlink" href="#target-shader-languages" title="Permanent link">¶</a></h2>
+<ul>
+<li>Vulkan</li>
+<li>GL 2.x (legacy desktop)</li>
+<li>GL 3.x+ (modern desktop)</li>
+<li>GLES2 (legacy mobile)</li>
+<li>GLES3 (modern mobile)</li>
+<li>HLSL</li>
+<li>Metal</li>
+</ul>
+<p><strong>Design principle: Avoid mandating high-level features which do not work for GLES2.</strong></p>
+<p>RetroArch runs on GL, GL2, and GLES2. GL and GL2 are only relevant from a legacy standpoint, but GLES2 a relevant target platform today and having GLES2 compatibility makes GL2 very easy. We therefore avoid a design which deliberately ruins GLES2 compatibility.</p>
+<p>However, we also do not want to artificially limit ourselves to shader features which are only available in GLES2. There are many shader builtins, for example, which only work in GLES3/GL3 and we should not hold back support in these cases.</p>
+<h2 id="why-a-new-spec">Why a new spec?<a class="headerlink" href="#why-a-new-spec" title="Permanent link">¶</a></h2>
+<p>The previous RetroArch shader subsystem in RetroArch is quite mature with a large body of shaders written for it. While it has served us well, it was not forward-compatible.</p>
+<p>The current state of writing high-level shading languages that work everywhere is challenging. Up until now, we have relied on nVidia Cg to serve as a basic foundation for shaders, but Cg has been discontinued for years and is closed source. Developers cannot use Cg for newer APIs such as Vulkan, D3D12, and Metal.</p>
+<p>Cg cross-compilation to GLSL is unmaintainable. We cannot do the Cg transform in runtime on mobile due to lack of open source Cg runtime.</p>
+<p>Another alternative was to write straight-up GLSL, but this too has serious drawbacks. All the different GL versions and GLSL variants are different enough that it becomes painful to write portable GLSL code that works without modification.</p>
+<p>Examples include:</p>
+<ul>
+<li>varying/attribute vs in/out (legacy vs modern)</li>
+<li>precision qualifiers (GLSL vs ESSL)</li>
+<li>texture2D vs texture (legacy vs modern)</li>
+<li>Lack of standard support for <code>#include</code> to reduce copy-pasta</li>
+</ul>
+<p>The fundamental issue is that GLSL shaders are dependent on the runtime GL version, which makes it difficult to test all shader variants. We did not want to litter every shader with heaps of <code>#ifdefs</code> everywhere to combat this problem. We also wanted to avoid having to write pseudo-GLSL with some text-based replacement behind the scenes.</p>
+<h2 id="vulkan-glsl-as-the-portable-solution">Vulkan GLSL as the portable solution<a class="headerlink" href="#vulkan-glsl-as-the-portable-solution" title="Permanent link">¶</a></h2>
+<p>Fortunately, there is now a forward looking and promising solution to our problems. Vulkan GLSL is a GLSL dialect designed for Vulkan and SPIR-V intermediate representation. We can use whatever GLSL version we want when writing shaders, as it is decoupled from the GL runtime.</p>
+<p>In runtime, we can have a vendor-neutral mature compiler, <a href="glslang">https://github.com/KhronosGroup/glslang</a> which compiles our Vulkan GLSL to SPIR-V. Using <a href="SPIRV-Cross">https://github.com/KhronosGroup/SPIRV-Cross</a>, we can then do reflection on the SPIR-V binary to deduce our filter chain layout.</p>
+<p>We can also disassemble back to our desired GLSL dialect in the GL backend based on which GL version we're running, which effectively means we can completely sidestep all our current problems with a pure GLSL based shading system.</p>
+<p>Another upside is that we no longer have to deal with vendor-specific quirks in the GLSL frontend. A common problem when people write for nVidia is that people mistakingly use <code>float2</code>/<code>float3</code>/<code>float4</code> types from Cg/HLSL, which is supported as an extension in their GLSL frontend.</p>
+<h2 id="why-not-spir-v-directly">Why not SPIR-V directly?<a class="headerlink" href="#why-not-spir-v-directly" title="Permanent link">¶</a></h2>
+<p>This was considered, but there are several convenience problems with having a shading spec around pure SPIR-V. The first problem is metadata. In GLSL, we can quite easily extend with custom <code>#pragmas</code> or similar, but there is no trivial way to do this in SPIR-V outside writing custom tools to emit special metadata as debug information or similar with OpSource.</p>
+<p>We could also have this metadata outside in a separate file, but juggling more files means more churn, which we should try to avoid. The other problem is convenience. If RetroArch only accepts SPIR-V, we would need an explicit build step outside RetroArch first before we could test a shader. This gets very annoying during shader development, so it is clear that we need to support GLSL anyways, making SPIR-V support kinda redundant.</p>
+<p>The main argument for supporting SPIR-V would be to allow new shading languages to be used. This is a reasonable thing to consider, which is why the goal is to not design ourselves into a corner where it's only Vulkan GLSL that can possibly work down the line. We are open to the idea that new shading languages that target SPIR-V will emerge.</p>
+<h2 id="high-level-overview">High level Overview<a class="headerlink" href="#high-level-overview" title="Permanent link">¶</a></h2>
+<p>The RetroArch shader format outlines a filter chain/graph, a series of shader passes which operate on previously generated data to produce a final result. The goal is for every individual pass to access information from <em>all</em> previous shader passes, even across frames, easily.</p>
+<ul>
+<li>The filter chain specifies a number of shader passes to be executed one after the other.</li>
+<li>Each pass renders a full-screen quad to a texture of a certain resolution and format.</li>
+<li>The resolution can be dependent on external information.</li>
+<li>All filter chains begin at an input texture, which is created by a libretro core or similar.</li>
+<li>All filter chains terminate by rendering to the "backbuffer".</li>
+</ul>
+<p>The backbuffer is somewhat special since the resolution of it cannot be controlled by the shader. It can also not be fed back into the filter chain later because the frontend (here RetroArch) will render UI elements and such on top of the final pass output.</p>
+<p>Let's first look at what we mean by filter chains and how far we can expand this idea.</p>
+<h3 id="simplest-filter-chain">Simplest filter chain<a class="headerlink" href="#simplest-filter-chain" title="Permanent link">¶</a></h3>
+<p>The simplest filter chain we can specify is a single pass.</p>
+<pre><code>(Input) -&gt; [ Shader Pass #0 ] -&gt; (Backbuffer)
+</code></pre>
+
+<p>In this case there are no offscreen render targets necessary since our input is rendered directly to screen.</p>
+<h3 id="multiple-passes">Multiple passes<a class="headerlink" href="#multiple-passes" title="Permanent link">¶</a></h3>
+<p>A trivial extension is to keep our straight line view of the world where each pass looks at the previous output.</p>
+<pre><code>(Input) -&gt; [ Shader Pass #0 ] -&gt; (Framebuffer) -&gt; [ Shader Pass #1 ] -&gt; (Backbuffer)
+</code></pre>
+
+<p>Framebuffer here might have a different resolution than both Input and Backbuffer. A very common scenario for this is separable filters where we first scale horizontally, then vertically.</p>
+<h3 id="multiple-passes-and-multiple-inputs">Multiple passes and multiple inputs<a class="headerlink" href="#multiple-passes-and-multiple-inputs" title="Permanent link">¶</a></h3>
+<p>There is no reason why we should restrict ourselves to a straight-line view.</p>
+<pre><code>     /------------------------------------------------\
+    /                                                  v
+(Input) -&gt; [ Shader Pass #0 ] -&gt; (Framebuffer #0) -&gt; [ Shader Pass #1 ] -&gt; (Backbuffer)
+</code></pre>
+
+<p>In this scenario, we have two inputs to shader pass #1, both the original, untouched input as well as the result of a pass in-between. All the inputs to a pass can have different resolutions.</p>
+<p>We have a way to query the resolution of individual textures to allow highly controlled sampling. We are now at a point where we can express an arbitrarily complex filter graph, but we can do better. For certain effects, time (or rather, results from earlier frames) can be an important factor.</p>
+<h3 id="multiple-passes-multiple-inputs-with-history">Multiple passes, multiple inputs, with history<a class="headerlink" href="#multiple-passes-multiple-inputs-with-history" title="Permanent link">¶</a></h3>
+<p>We now extend our filter graph, where we also have access to information from earlier frames. Note that this is still a causal filter system.</p>
+<pre><code>Frame N:        (Input     N, Input N - 1, Input N - 2) -&gt; [ Shader Pass #0 ] -&gt; (Framebuffer     N, Framebuffer N - 1, Input N - 3) -&gt; [ Shader Pass #1 ] -&gt; (Backbuffer)
+Frame N - 1:    (Input N - 1, Input N - 2, Input N - 3) -&gt; [ Shader Pass #0 ] -&gt; (Framebuffer N - 1, Framebuffer N - 2, Input N - 4) -&gt; [ Shader Pass #1 ] -&gt; (Backbuffer)
+Frame N - 2:    (Input N - 2, Input N - 3, Input N - 4) -&gt; [ Shader Pass #0 ] -&gt; (Framebuffer N - 2, Framebuffer N - 3, Input N - 5) -&gt; [ Shader Pass #1 ] -&gt; (Backbuffer)
+</code></pre>
+
+<p>For framebuffers we can read the previous frame's framebuffer. We don't really need more than one frame of history since we have a feedback effect in place. Just like IIR filters, the "response" of such a feedback in the filter graph gives us essentially "infinite" history back in time, although it is mostly useful for long-lasting blurs and ghosting effects.</p>
+<p>Supporting more than one frame of feedback would also be extremely memory intensive since framebuffers tend to be much higher resolution than their input counterparts. One frame is also a nice "clean" limit. Once we go beyond just 1, the floodgate opens to arbitrary numbers, which we would want to avoid.</p>
+<p>It is also possible to fake as many feedback frames of history we want anyways, since we can copy a feedback frame to a separate pass anyways which effectively creates a "shift register" of feedback framebuffers in memory.</p>
+<p>Input textures can have arbitrary number of textures as history (just limited by memory). They cannot feedback since the filter chain cannot render into it, so it effectively is finite response (FIR). For the very first frames, frames with frame <code>N &lt; 0</code> are transparent black (all values <code>0</code>).</p>
+<h3 id="no-pot-padding">No POT padding<a class="headerlink" href="#no-pot-padding" title="Permanent link">¶</a></h3>
+<p>No texture in the filter chain is padded at any time. It is possible for resolutions in the filter chain to vary over time which is common with certain emulated systems. In this scenarios, the textures and framebuffers are simply resized appropriately. Older frames still keep their old resolution in the brief moment that the resolution is changing.</p>
+<p>It is very important that shaders do not blindly sample with nearest filter with any scale factor. If naive nearest neighbor sampling is to be used, shaders must make sure that the filter chain is configured with integer scaling factors so that ambiguous texel-edge sampling is avoided.</p>
+<h3 id="deduce-shader-inputs-by-reflection">Deduce shader inputs by reflection<a class="headerlink" href="#deduce-shader-inputs-by-reflection" title="Permanent link">¶</a></h3>
+<p>We want to have as much useful information in the shader source as possible. We want to avoid having to explicitly write out metadata in shaders whereever we can. The biggest hurdle to overcome is how we describe our pipeline layout. The pipeline layout contains information about how we access resources such as uniforms and textures.</p>
+<p>There are three main types of inputs in this shader system:</p>
+<ul>
+<li>Texture samplers (sampler2D)</li>
+<li>Look-up textures for static input data</li>
+<li>Uniform data describing dimensions of textures</li>
+<li>Uniform ancillary data for render target dimensions, backbuffer target dimensions, frame count, etc</li>
+<li>Uniform user-defined parameters</li>
+<li>Uniform MVP for vertex shader</li>
+</ul>
+<h4 id="deduction-by-name">Deduction by name<a class="headerlink" href="#deduction-by-name" title="Permanent link">¶</a></h4>
+<p>There are two main approaches to deduce what a sampler2D uniform wants to sample from. The first way is to explicitly state somewhere else what that particular sampler needs, e.g.</p>
+<pre><code>uniform sampler2D geeWhatAmI;
+
+// Metadata somewhere else
+SAMPLER geeWhatAmI = Input[-2]; // Input frame from 2 frames ago
+</code></pre>
+
+<p>The other approach is to have built-in identifiers which correspond to certain textures.</p>
+<pre><code>// Source here being defined as the texture from previous framebuffer pass or the input texture if this is the first pass in the chain.
+uniform sampler2D Source;
+</code></pre>
+
+<p>In SPIR-V, we can use <code>OpName</code> to describe these names, so we do not require the original Vulkan GLSL source to perform this reflection. We use this approach throughout the specification. An identifier is mapped to an internal meaning (semantic). The shader backend looks at these semantics and constructs a filter chain based on all shaders in the chain.</p>
+<p>Identifiers can also have user defined meaning, either as an alias to existing identifiers or mapping to user defined parameters.</p>
+<h3 id="combining-vertex-and-fragment-into-a-single-shader-file">Combining vertex and fragment into a single shader file<a class="headerlink" href="#combining-vertex-and-fragment-into-a-single-shader-file" title="Permanent link">¶</a></h3>
+<p>One strength of Cg is its ability to contain multiple shader stages in the same .cg file. This is very convenient since we always want to consider vertex and fragment together. This is especially needed when trying to mix and match shaders in a GUI window for example. We don't want to require users to load first a vertex shader, then fragment manually.</p>
+<p>GLSL however does not support this out of the box. This means we need to define a light-weight system for preprocessing one GLSL source file into multiple stages.</p>
+<h4 id="should-we-make-vertex-optional">Should we make vertex optional?<a class="headerlink" href="#should-we-make-vertex-optional" title="Permanent link">¶</a></h4>
+<p>In most cases, the vertex shader will remain the same. This leaves us with the option to provide a "default" vertex stage if the shader stage is not defined.</p>
+<h3 id="include-support">#include support<a class="headerlink" href="#include-support" title="Permanent link">¶</a></h3>
+<p>With complex filter chains there is a lot of opportunity to reuse code. We therefore want light support for the #include directive.</p>
+<h3 id="user-parameter-support">User parameter support<a class="headerlink" href="#user-parameter-support" title="Permanent link">¶</a></h3>
+<p>Since we already have a "preprocessor" of sorts, we can also trivially extend this idea with user parameters. In the shader source we can specify which uniform inputs are user controlled, GUI visible name, their effective range, etc.</p>
+<h3 id="lookup-textures">Lookup textures<a class="headerlink" href="#lookup-textures" title="Permanent link">¶</a></h3>
+<p>A handy feature to have is reading from lookup textures. We can specify that some sampler inputs are loaded from a PNG file on disk as a plain RGBA8 texture.</p>
+<h4 id="do-we-want-to-support-complex-reinterpretation">Do we want to support complex reinterpretation?<a class="headerlink" href="#do-we-want-to-support-complex-reinterpretation" title="Permanent link">¶</a></h4>
+<p>There could be valid use cases for supporting other formats than plain <code>RGBA8_UNORM</code>. <code>SRGB</code> and <code>UINT</code> might be valid cases as well and maybe even 2x16-bit, 1x32-bit integer formats.</p>
+<h4 id="lookup-buffers">Lookup buffers<a class="headerlink" href="#lookup-buffers" title="Permanent link">¶</a></h4>
+<p><em>Do we want to support lookup buffers as UBOs as well?</em> This wouldn't be doable in GLES2, but it could be useful as a more modern feature. If the <code>LUT</code> is small enough, we could realize it via plain old uniforms as well perhaps.</p>
+<p>This particular feature could be very interesting for generic polyphase lookup banks with different <code>LUT</code> files for different filters.</p>
+<h2 id="slang-specification">Slang specification<a class="headerlink" href="#slang-specification" title="Permanent link">¶</a></h2>
+<p>This part of the spec considers how Vulkan GLSL shaders are written. The frontend uses the glslang frontend to compile GLSL sources. This ensures that we do not end up with vendor-specific extensions.</p>
+<p>The <code>#version</code> string should be as recent as possible, e.g. <code>#version 450</code> or <code>#version 310 es</code>. It is recommended to use <code>310 es</code> since it allows <code>mediump</code> which can help on mobile.</p>
+<p>!!! Note
+    After the Vulkan GLSL is turned into SPIR-V, the original <code>#version</code> string does not matter anymore.</p>
+<p>!!! Warning
+    SPIR-V cannot be generated from legacy shader versions such as <code>#version 100</code> (ES 2.0) or <code>#version 120</code> (GL 2.1).</p>
+<p>The frontend will use reflection on the resulting SPIR-V file in order to deduce what each element in the UBO or what each texture means. The main types of data passed to shaders are read-only and can be classified as:</p>
+<ul>
+<li><code>uniform sampler2D</code>: This is used for input textures, framebuffer results and lookup-textures.</li>
+<li><code>uniform Block { };</code>: This is used for any constant data which is passed to the shader.</li>
+<li><code>layout(push_constant) uniform Push {} name;</code>: This is used for any push constant data which is passed to the shader.</li>
+</ul>
+<h3 id="resource-usage-rules">Resource usage rules<a class="headerlink" href="#resource-usage-rules" title="Permanent link">¶</a></h3>
+<p>Certain rules must be adhered to in order to make it easier for the frontend to dynamically set up bindings to resources.</p>
+<ul>
+<li>All resources must be using descriptor set <code>#0</code>, or don't use <code>layout(set = #N)</code> at all.</li>
+<li><code>layout(binding = #N)</code> must be declared for all <code>UBO</code>s and <code>sampler2D</code>s.</li>
+<li>All resources must use different bindings.</li>
+<li>There can be only one UBO.</li>
+<li>There can be only use push constant block.</li>
+<li>It is possible to have one regular UBO and one push constant UBO.</li>
+<li>If a UBO is used in both vertex and fragment, their binding number must match.</li>
+<li>If a UBO is used in both vertex and fragment, members with the same name must have the same offset/binary interface.
+   This problem is easily avoided by having the same UBO visible to both vertex and fragment as "common" code.</li>
+<li>If a push constant block is used in both vertex and fragment, members with the same name must have the same offset/binary interface.</li>
+<li><code>sampler2D</code> cannot be used in vertex, although the size parameters of samplers can be used in vertex.</li>
+<li>Other resource types such as SSBOs, images, atomic counters, etc, etc, are not allowed.</li>
+<li>Every member of the UBOs and push constant blocks as well as every texture must be meaningful
+   to the frontend in some way, or an error is generated.</li>
+</ul>
+<h3 id="initial-pre-process-of-slang-files">Initial pre-process of slang files<a class="headerlink" href="#initial-pre-process-of-slang-files" title="Permanent link">¶</a></h3>
+<p>The very first line of a <code>.slang</code> file must contain a <code>#version</code> statement.</p>
+<p>The first process which takes place is dealing with <code>#include</code> statements. A slang file is preprocessed by scanning through the slang and resolving all <code>#include</code> statements.</p>
+<p>The include process does not consider any preprocessor defines or conditional expressions. The include path must always be relative, and it will be relative to the file path of the current file. Nested includes are allowed, but includes in a cycle are undefined as preprocessor guards are not considered.</p>
+<p>E.g.:</p>
+<pre><code>#include &quot;common.inc&quot;
+</code></pre>
+
+<p>After includes have been resolved, the frontend scans through all lines of the shader and considers <code>#pragma</code> statements.
+These pragmas build up ancillary reflection information and otherwise meaningful metadata.</p>
+<h4 id="pragma-stage"><code>#pragma stage</code><a class="headerlink" href="#pragma-stage" title="Permanent link">¶</a></h4>
+<p>This pragma controls which part of a <code>.slang</code> file are visible to certain shader stages.
+Currently, two variants of this pragma are supported:</p>
+<ul>
+<li><code>#pragma stage vertex</code></li>
+<li><code>#pragma stage fragment</code></li>
+</ul>
+<p>If no <code>#pragma stage</code> has been encountered yet, lines of code in a shader belong to all shader stages.</p>
+<p>If a <code>#pragma stage</code> statement has been encountered, that stage is considered active, and the following lines of shader code will only be used when building source for that particular shader stage. A new <code>#pragma stage</code> can override which stage is active.</p>
+<h4 id="pragma-name"><code>#pragma name</code><a class="headerlink" href="#pragma-name" title="Permanent link">¶</a></h4>
+<p>This pragma lets a shader set its identifier. This identifier can be used to create simple aliases for other passes.</p>
+<p>E.g.:</p>
+<pre><code>#pragma name HorizontalPass
+</code></pre>
+
+<h4 id="pragma-format"><code>#pragma format</code><a class="headerlink" href="#pragma-format" title="Permanent link">¶</a></h4>
+<p>This pragma controls the format of the framebuffer which this shader will render to. The default render target format is <code>R8G8B8A8_UNORM</code>.</p>
+<p>Supported render target formats are listed below. From a portability perspective, please be aware that GLES2 has abysmal render target format support, and GLES3/GL3 may have restricted floating point render target support.</p>
+<p>If rendering to uint/int formats, make sure your fragment shader output target is uint/int.</p>
+<h4 id="8-bit">8-bit<a class="headerlink" href="#8-bit" title="Permanent link">¶</a></h4>
+<ul>
+<li><code>R8_UNORM</code></li>
+<li><code>R8_UINT</code></li>
+<li><code>R8_SINT</code></li>
+<li><code>R8G8_UNORM</code></li>
+<li><code>R8G8_UINT</code></li>
+<li><code>R8G8_SINT</code></li>
+<li><code>R8G8B8A8_UNORM</code></li>
+<li><code>R8G8B8A8_UINT</code></li>
+<li><code>R8G8B8A8_SINT</code></li>
+<li><code>R8G8B8A8_SRGB</code></li>
+</ul>
+<h4 id="10-bit">10-bit<a class="headerlink" href="#10-bit" title="Permanent link">¶</a></h4>
+<ul>
+<li><code>A2B10G10R10_UNORM_PACK32</code></li>
+<li><code>A2B10G10R10_UINT_PACK32</code></li>
+</ul>
+<h4 id="16-bit">16-bit<a class="headerlink" href="#16-bit" title="Permanent link">¶</a></h4>
+<ul>
+<li><code>R16_UINT</code></li>
+<li><code>R16_SINT</code></li>
+<li><code>R16_SFLOAT</code></li>
+<li><code>R16G16_UINT</code></li>
+<li><code>R16G16_SINT</code></li>
+<li><code>R16G16_SFLOAT</code></li>
+<li><code>R16G16B16A16_UINT</code></li>
+<li><code>R16G16B16A16_SINT</code></li>
+<li><code>R16G16B16A16_SFLOAT</code></li>
+</ul>
+<h4 id="32-bit">32-bit<a class="headerlink" href="#32-bit" title="Permanent link">¶</a></h4>
+<ul>
+<li><code>R32_UINT</code></li>
+<li><code>R32_SINT</code></li>
+<li><code>R32_SFLOAT</code></li>
+<li><code>R32G32_UINT</code></li>
+<li><code>R32G32_SINT</code></li>
+<li><code>R32G32_SFLOAT</code></li>
+<li><code>R32G32B32A32_UINT</code></li>
+<li><code>R32G32B32A32_SINT</code></li>
+<li><code>R32G32B32A32_SFLOAT</code></li>
+</ul>
+<p>E.g.:</p>
+<pre><code>#pragma format R16_SFLOAT
+</code></pre>
+
+<h4 id="pragma-parameter"><code>#pragma parameter</code><a class="headerlink" href="#pragma-parameter" title="Permanent link">¶</a></h4>
+<p>Shader parameters allow shaders to take user-defined inputs as uniform values. This makes shaders more configurable.</p>
+<p>The format is:</p>
+<pre><code>#pragma parameter IDENTIFIER &quot;DESCRIPTION&quot; INITIAL MINIMUM MAXIMUM [STEP]
+</code></pre>
+
+<p>The step parameter is optional. <code>INITIAL</code>, <code>MINIMUM</code>, and <code>MAXIMUM</code> are floating point values. <code>IDENTIFIER</code> is the meaningful string which is the name of the uniform which will be used in a UBO or push constant block. <code>DESCRIPTION</code> is a string which is human readable representation of IDENTIFIER.</p>
+<p>E.g:</p>
+<pre><code>layout(push_constant) uniform Push {
+   float DummyVariable;
+} registers;
+#pragma parameter DummyVariable &quot;This is a dummy variable&quot; 1.0 0.2 2.0 0.1
+</code></pre>
+
+<h3 id="io-interface-variables">I/O interface variables<a class="headerlink" href="#io-interface-variables" title="Permanent link">¶</a></h3>
+<p>The slang shader spec specifies two vertex inputs and one fragment output. Varyings between vertex and fragment shaders are user-defined.</p>
+<h4 id="vertex-inputs">Vertex inputs<a class="headerlink" href="#vertex-inputs" title="Permanent link">¶</a></h4>
+<p>Two attributes are provided and must be present in a shader. It is only the layout(location = #N) which is actually significant. The particular names of input and output variables are ignored, but should be consistent for readability.</p>
+<h5 id="layoutlocation-0-in-vec4-position"><code>layout(location = 0) in vec4 Position;</code><a class="headerlink" href="#layoutlocation-0-in-vec4-position" title="Permanent link">¶</a></h5>
+<p>This attribute is a 2D position in the form <code>vec4(x, y, 0.0, 1.0);</code>. Shaders should not try to extract meaning from the x, y.</p>
+<p><code>gl_Position</code> must be assigned as:</p>
+<pre><code>gl_Position = MVP * Position;
+</code></pre>
+
+<h5 id="layoutlocation-1-in-vec2-texcoord"><code>layout(location = 1) in vec2 TexCoord;</code><a class="headerlink" href="#layoutlocation-1-in-vec2-texcoord" title="Permanent link">¶</a></h5>
+<p>The texture coordinate is semantically such that <code>(0.0, 0.0)</code> is top-left and <code>(1.0, 1.0)</code> is bottom right.</p>
+<p>If TexCoord is passed to a varying unmodified, the interpolated varying will be <code>uv = 0.5 / OutputSize</code> when rendering the upper left pixel as expected and <code>uv = 1.0 - 0.5 / OutputSize</code> when rendering the bottom-right pixel.</p>
+<h4 id="vertexfragment-interface">Vertex/Fragment interface<a class="headerlink" href="#vertexfragment-interface" title="Permanent link">¶</a></h4>
+<p>Vertex outputs and fragment inputs link by location, and not name.</p>
+<p>E.g.:</p>
+<pre><code>// Vertex
+layout(location = 0) out vec4 varying;
+// Fragment
+layout(location = 0) in vec4 some_other_name;
+</code></pre>
+
+<p>will still link fine, although using same names are encouraged for readability.</p>
+<h4 id="fragment-outputs">Fragment outputs<a class="headerlink" href="#fragment-outputs" title="Permanent link">¶</a></h4>
+<h5 id="layoutlocation-0-out-vec4-fragcolor"><code>layout(location = 0) out vec4 FragColor;</code><a class="headerlink" href="#layoutlocation-0-out-vec4-fragcolor" title="Permanent link">¶</a></h5>
+<p>Fragment shaders must have a single output to <code>location = 0</code>.</p>
+<p>Multiple render targets are not allowed. The type of the output depends on the render target format. <code>int</code>/<code>uint</code> type must be used if <code>UINT</code>/<code>INT</code> render target formats are used; otherwise <code>float</code> type.</p>
+<h3 id="builtin-variables">Builtin variables<a class="headerlink" href="#builtin-variables" title="Permanent link">¶</a></h3>
+<h4 id="builtin-texture-variables">Builtin texture variables<a class="headerlink" href="#builtin-texture-variables" title="Permanent link">¶</a></h4>
+<p>The input of textures get their meaning from their name.</p>
+<ul>
+<li><code>Original</code>: This accesses the input of the filter chain, accessible from any pass.</li>
+<li><code>Source</code>: This accesses the input from previous shader pass, or <code>Original</code> if accessed in the first pass of the filter chain.</li>
+<li><code>OriginalHistory#</code>: This accesses the input # frames back in time. There is no limit on #, except larger numbers will consume more VRAM. <code>OriginalHistory0</code> is an alias for <code>Original</code>, <code>OriginalHistory1</code> is the previous frame and so on.</li>
+<li><code>PassOutput#</code>: This accesses the output from pass # in this frame. <code>PassOutput#</code> must be causal, it is an error to access <code>PassOutputN</code> in pass <code>M</code> if <code>N &gt;= M</code>. <code>PassOutput#</code> will typically be aliased to a more readable value.</li>
+<li><code>PassFeedback#</code>: This accesses PassOutput# from the previous frame. Any pass can read the feedback of any feedback, since it is causal. <code>PassFeedback#</code> will typically be aliased to a more readable value.</li>
+<li><code>User#</code>: This accesses look-up textures. However, the direct use of <code>User#</code> is discouraged and should always be accessed via aliases.</li>
+</ul>
+<h4 id="builtin-texture-size-uniform-variables">Builtin texture size uniform variables<a class="headerlink" href="#builtin-texture-size-uniform-variables" title="Permanent link">¶</a></h4>
+<p>If a member of a UBO or a push constant block is called <code>???Size#</code> where <code>???#</code> is the name of a texture variable,
+that member must be a <code>vec4</code>, which will receive these values:</p>
+<ul>
+<li><code>X</code>: Horizontal size of texture</li>
+<li><code>Y</code>: Vertical size of texture</li>
+<li><code>Z</code>: <code>1.0</code> / (Horizontal size of texture)</li>
+<li><code>W</code>: <code>1.0</code> / (Vertical size of texture)</li>
+</ul>
+<p>It is valid to use a size variable without declaring the texture itself. This is useful for vertex shading.</p>
+<p>It is valid (although probably not useful) for a variable to be present in both a push constant block and a UBO block at the same time.</p>
+<h4 id="builtin-uniform-variables">Builtin uniform variables<a class="headerlink" href="#builtin-uniform-variables" title="Permanent link">¶</a></h4>
+<p>Other than uniforms related to textures, there are other special uniforms available. These builtin variables may be part of a UBO block and/or a push constant block.</p>
+<ul>
+<li><code>MVP</code>: <code>mat4</code> model view projection matrix.</li>
+<li><code>OutputSize</code>: a <code>vec4(x, y, 1.0 / x, 1.0 / y)</code> variable describing the render target size <code>(x, y)</code> for this pass.</li>
+<li><code>FinalViewportSize</code>: a <code>vec4(x, y, 1.0 / x, 1.0 / y)</code> variable describing the render target size for the final pass. Accessible from any pass.</li>
+<li><code>FrameCount</code>: an <code>uint</code> variable taking a value which increases by one every frame. This value could be pre-wrapped by modulo if specified in preset. This is useful for creating time-dependent effects.</li>
+<li><code>FrameDirection</code>: an <code>int</code> variable which indicates whether the content is currently being rewinded. Has a value of <code>-1</code> while rewinding, otherwise <code>1</code>.</li>
+</ul>
+<h4 id="aliases">Aliases<a class="headerlink" href="#aliases" title="Permanent link">¶</a></h4>
+<p>Aliases can give meaning to arbitrary names in a slang file. This is mostly relevant for LUT textures, shader parameters and accessing other passes by name.</p>
+<p>If a shader pass has a <code>#pragma name NAME</code> associated with it, meaning is given to the shader:</p>
+<ul>
+<li><code>NAME</code> is a <code>sampler2D</code>.</li>
+<li><code>NAMESize</code> is a <code>vec4</code> size uniform associated with <code>NAME</code>.</li>
+<li><code>NAMEFeedback</code> is a <code>sampler2D</code> for the previous frame.</li>
+<li><code>NAMEFeedbackSize</code> is a <code>vec4</code> size uniform associated with <code>NAMEFeedback</code>.</li>
+</ul>
+<h4 id="example-slang-shader">Example slang shader<a class="headerlink" href="#example-slang-shader" title="Permanent link">¶</a></h4>
+<pre><code>#version 450
+// 450 or 310 es are recommended
+
+layout(set = 0, binding = 0, std140) uniform UBO
+{
+   mat4 MVP;
+   vec4 SourceSize; // Not used here, but doesn't hurt
+   float ColorMod;
+};
+
+#pragma name StockShader
+#pragma format R8G8B8A8_UNORM
+#pragma parameter ColorMod &quot;Color intensity&quot; 1.0 0.1 2.0 0.1
+
+#pragma stage vertex
+layout(location = 0) in vec4 Position;
+layout(location = 1) in vec2 TexCoord;
+layout(location = 0) out vec2 vTexCoord;
+void main()
+{
+   gl_Position = MVP * Position;
+   vTexCoord = TexCoord;
+}
+
+#pragma stage fragment
+layout(location = 0) in vec2 vTexCoord;
+layout(location = 0) out vec4 FragColor;
+layout(binding = 1) uniform sampler2D Source;
+void main()
+{
+   FragColor = texture(Source, vTexCoord) * ColorMod;
+}
+</code></pre>
+
+<h3 id="push-constants-vs-uniform-blocks">Push constants vs uniform blocks<a class="headerlink" href="#push-constants-vs-uniform-blocks" title="Permanent link">¶</a></h3>
+<p>Push constants are fast-access uniform data which on some GPUs will improve performance over plain UBOs.
+It is encouraged to use push constant data as much as possible.</p>
+<pre><code>layout(push_constant) uniform Push
+{
+   vec4 SourceSize;
+   vec4 FinalViewportSize;
+} registers;
+</code></pre>
+
+<p>However, be aware that there is a limit to how large push constant blocks can be used. Vulkan puts a minimum required size of 128 bytes, which equals 8 <code>vec4</code>s. It is an error to use more than 128 bytes.</p>
+<p>If you're running out of space, you can move the MVP to a UBO instead, which frees up 64 bytes. Always prioritize push constants for data used in fragment shaders as there are many more fragment threads than vertex. Also note that like UBOs, the push constant space is shared across vertex and fragment.</p>
+<p>If you need more than 8 <code>vec4</code>s, you can spill uniforms over to plain UBOs, but more than 8 <code>vec4</code>s should be quite rare in practice.</p>
+<p>E.g.:</p>
+<pre><code>layout(binding = 0, std140) uniform UBO
+{
+   mat4 MVP; // Only used in vertex
+   vec4 SpilledUniform;
+} global;
+
+layout(push_constant) uniform Push
+{
+   vec4 SourceSize;
+   vec4 BlurPassSize;
+   // ...
+} registers;
+</code></pre>
+
+<h3 id="samplers">Samplers<a class="headerlink" href="#samplers" title="Permanent link">¶</a></h3>
+<p>Which samplers are used for textures are specified by the preset format. The sampler remains constant throughout the frame, there is currently no way to select samplers on a frame-by-frame basic. This is mostly to make it possible to use the spec in GLES2 as GLES2 has no concept of separate samplers and images.</p>
+<h3 id="srgb">sRGB<a class="headerlink" href="#srgb" title="Permanent link">¶</a></h3>
+<p>The input to the filter chain will not be of an sRGB format. This is due to many reasons, the main one being that it is very difficult for the frontend to get "free" passthrough of sRGB. It is possible to have a first pass which linearizes the input to a proper sRGB render target. In this way, custom gammas can be used as well.</p>
+<p>Similarly, the final pass will not be an sRGB backbuffer for similar reasons.</p>
+<h2 id="caveats">Caveats<a class="headerlink" href="#caveats" title="Permanent link">¶</a></h2>
+<h3 id="frag-coord">Frag Coord<a class="headerlink" href="#frag-coord" title="Permanent link">¶</a></h3>
+<p>TexCoord also replaces <code>gl_FragCoord</code>. Do not use <code>gl_FragCoord</code> as it doesn't consider the viewports correctly. If you need <code>gl_FragCoord</code> use <code>vTexCoord * OutputSize.xy</code> instead.</p>
+<h3 id="derivatives">Derivatives<a class="headerlink" href="#derivatives" title="Permanent link">¶</a></h3>
+<p>Be careful with derivatives of <code>vTexCoord</code>. The screen might have been rotated by the vertex shader, which will also rotate the derivatives, especially in the final pass which hits the backbuffer.</p>
+<p>However, derivatives are fortunately never really needed, since <code>w = 1</code> (we render flat 2D quads), which means derivatives of varyings are constant. You can do some trivial replacements which will be faster and more robust.</p>
+<pre><code>dFdx(vTexCoord) = vec2(OutputSize.z, 0.0);
+dFdy(vTexCoord) = vec2(0.0, OutputSize.w);
+fwidth(vTexCoord) = max(OutputSize.z, OutputSize.w);
+</code></pre>
+
+<p>To avoid issues with rotation or unexpected derivatives in case derivatives are really needed, off-screen passes will not have rotation and dFdx and dFdy will behave as expected.</p>
+<h3 id="correctly-sampling-textures">Correctly sampling textures<a class="headerlink" href="#correctly-sampling-textures" title="Permanent link">¶</a></h3>
+<p>A common mistake made by shaders is that they aren't careful enough about sampling textures correctly.</p>
+<p>There are three major cases to consider:</p>
+<p>| Bilinear sampling               | If bilinear is used, it is always safe to sample a texture. |
+| Nearest, with integer scale     | If the OutputSize / InputSize is integer, the interpolated vTexCoord will always fall inside the texel safely, so no special precautions have to be used. For very particular shaders which rely on nearest neighbor sampling, using integer scale to a framebuffer and upscaling that with more stable upscaling filters like bicubic for example is usually a great choice.
+| Nearest, with non-integer scale | Sometimes, it is necessary to upscale images to the backbuffer which have an arbitrary size. Bilinear is not always good enough here, so we must deal with a complicated case.</p>
+<p>If we interpolate <code>vTexCoord</code> over a frame with non-integer scale, it is possible that we end up just between two texels. Nearest neighbor will have to find a texel which is nearest, but there is no clear "nearest" texel. In this scenario, we end up having lots of failure cases which are typically observed as weird glitches in the image which change based on the resolution.</p>
+<p>To correctly sample nearest textures with non-integer scale, we must pre-quantize our texture coordinates. Here's a snippet which lets us safely sample a nearest filtered texture and emulate bilinear filtering.</p>
+<pre><code>   vec2 uv = vTexCoord * global.SourceSize.xy - 0.5; // Shift by 0.5 since the texel sampling points are in the texel center.
+   vec2 a = fract(uv);
+   vec2 tex = (floor(uv) + 0.5) * global.SourceSize.zw; // Build a sampling point which is in the center of the texel.
+
+   // Sample the bilinear footprint.
+   vec4 t0 = textureLodOffset(Source, tex, 0.0, ivec2(0, 0));
+   vec4 t1 = textureLodOffset(Source, tex, 0.0, ivec2(1, 0));
+   vec4 t2 = textureLodOffset(Source, tex, 0.0, ivec2(0, 1));
+   vec4 t3 = textureLodOffset(Source, tex, 0.0, ivec2(1, 1));
+
+   // Bilinear filter.
+   vec4 result = mix(mix(t0, t1, a.x), mix(t2, t3, a.x), a.y);
+</code></pre>
+
+<p>The concept of splitting up the integer texel along with the fractional texel helps us safely do arbitrary non-integer scaling safely. The uv variable could also be passed pre-computed from vertex to avoid the extra computation in fragment.</p>
+<h3 id="preset-format-slangp">Preset format (.slangp)<a class="headerlink" href="#preset-format-slangp" title="Permanent link">¶</a></h3>
+<p>The present format is essentially unchanged from the old .cgp and .glslp, except the new preset format is called .slangp.</p>
+<h2 id="porting-guide-from-legacy-cg-spec">Porting guide from legacy Cg spec<a class="headerlink" href="#porting-guide-from-legacy-cg-spec" title="Permanent link">¶</a></h2>
+<h3 id="common-functions">Common functions<a class="headerlink" href="#common-functions" title="Permanent link">¶</a></h3>
+<ul>
+<li>mul(mat, vec) -&gt; mat * vec</li>
+<li>lerp() -&gt; mix()</li>
+<li>ddx() -&gt; dFdx()</li>
+<li>ddy() -&gt; dFdy()</li>
+<li>tex2D() -&gt; texture()</li>
+<li>frac() -&gt; fract()</li>
+</ul>
+<h3 id="types">Types<a class="headerlink" href="#types" title="Permanent link">¶</a></h3>
+<ul>
+<li>floatN -&gt; vecN</li>
+<li>boolN -&gt; bvecN</li>
+<li>intN -&gt; ivecN</li>
+<li>uintN -&gt; uvecN</li>
+<li>float4x4 -&gt; mat4</li>
+</ul>
+<h3 id="builtin-uniforms-and-misc">Builtin uniforms and misc<a class="headerlink" href="#builtin-uniforms-and-misc" title="Permanent link">¶</a></h3>
+<ul>
+<li>modelViewProj -&gt; MVP</li>
+<li>IN.video_size -&gt; SourceSize.xy</li>
+<li>IN.texture_size -&gt; SourceSize.xy (no POT shenanigans, so they are the same)</li>
+<li>IN.output_size -&gt; OutputSize.xy</li>
+<li>IN.frame_count -&gt; FrameCount (uint instead of float)</li>
+<li>*.tex_coord -&gt; TexCoord (no POT shenanigans, so they are all the same)</li>
+<li>*.lut_tex_coord -&gt; TexCoord</li>
+<li>ORIG -&gt; <code>Original</code></li>
+<li>PASS# -&gt; PassOutput#</li>
+<li>PASSPREV# -&gt; No direct analog, PassOutput(CurrentPass - #), but prefer aliases</li>
+</ul>
+<h3 id="cg-semantics">Cg semantics<a class="headerlink" href="#cg-semantics" title="Permanent link">¶</a></h3>
+<ul>
+<li>POSITION -&gt; gl_Position</li>
+<li>float2 texcoord : TEXCOORD0 -&gt; layout(location = 1) in vec2 TexCoord;</li>
+<li>float4 varying : TEXCOORD# -&gt; layout(location = #) out vec4 varying;</li>
+<li>uniform float4x4 modelViewProj -&gt; uniform UBO { mat4 MVP; };</li>
+</ul>
+<p>Output structs should be flattened into separate varyings.</p>
+<p>E.g. instead of</p>
+<pre><code>struct VertexData
+{
+   float pos : POSITION;
+   float4 tex0 : TEXCOORD0;
+   float4 tex1 : TEXCOORD1;
+};
+
+void main_vertex(out VertexData vout)
+{
+   vout.pos = ...;
+   vout.tex0 = ...;
+   vout.tex1 = ...;
+}
+
+void main_fragment(in VertexData vout)
+{
+   ...
+}
+</code></pre>
+
+<p>do this</p>
+<pre><code>#pragma stage vertex
+layout(location = 0) out vec4 tex0;
+layout(location = 1) out vec4 tex1;
+void main()
+{
+   gl_Position = ...;
+   tex0 = ...;
+   tex1 = ...;
+}
+
+#pragma stage fragment
+layout(location = 0) in vec4 tex0;
+layout(location = 1) in vec4 tex1;
+void main()
+{
+}
+</code></pre>
+
+<p>Instead of returning a float4 from main_fragment, have an output in fragment:</p>
+<pre><code>layout(location = 0) out vec4 FragColor;
+</code></pre>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../../..">
+      <img class="logo" src="../../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#target-shader-languages">Target shader languages</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#why-a-new-spec">Why a new spec?</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#vulkan-glsl-as-the-portable-solution">Vulkan GLSL as the portable solution</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#why-not-spir-v-directly">Why not SPIR-V directly?</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#high-level-overview">High level Overview</a></li>
+      <ul>
+    
+      <li><a href="#simplest-filter-chain">Simplest filter chain</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#multiple-passes">Multiple passes</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#multiple-passes-and-multiple-inputs">Multiple passes and multiple inputs</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#multiple-passes-multiple-inputs-with-history">Multiple passes, multiple inputs, with history</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#no-pot-padding">No POT padding</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#deduce-shader-inputs-by-reflection">Deduce shader inputs by reflection</a></li>
+      <ul>
+    
+      <li><a href="#deduction-by-name">Deduction by name</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#combining-vertex-and-fragment-into-a-single-shader-file">Combining vertex and fragment into a single shader file</a></li>
+      <ul>
+    
+      <li><a href="#should-we-make-vertex-optional">Should we make vertex optional?</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#include-support">#include support</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#user-parameter-support">User parameter support</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#lookup-textures">Lookup textures</a></li>
+      <ul>
+    
+      <li><a href="#do-we-want-to-support-complex-reinterpretation">Do we want to support complex reinterpretation?</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#lookup-buffers">Lookup buffers</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#slang-specification">Slang specification</a></li>
+      <ul>
+    
+      <li><a href="#resource-usage-rules">Resource usage rules</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#initial-pre-process-of-slang-files">Initial pre-process of slang files</a></li>
+      <ul>
+    
+      <li><a href="#pragma-stage">#pragma stage</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#pragma-name">#pragma name</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#pragma-format">#pragma format</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#8-bit">8-bit</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#10-bit">10-bit</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#16-bit">16-bit</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#32-bit">32-bit</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#pragma-parameter">#pragma parameter</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#io-interface-variables">I/O interface variables</a></li>
+      <ul>
+    
+      <li><a href="#vertex-inputs">Vertex inputs</a></li>
+      <ul>
+    
+      <li><a href="#layoutlocation-0-in-vec4-position">layout(location = 0) in vec4 Position;</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#layoutlocation-1-in-vec2-texcoord">layout(location = 1) in vec2 TexCoord;</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#vertexfragment-interface">Vertex/Fragment interface</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#fragment-outputs">Fragment outputs</a></li>
+      <ul>
+    
+      <li><a href="#layoutlocation-0-out-vec4-fragcolor">layout(location = 0) out vec4 FragColor;</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#builtin-variables">Builtin variables</a></li>
+      <ul>
+    
+      <li><a href="#builtin-texture-variables">Builtin texture variables</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#builtin-texture-size-uniform-variables">Builtin texture size uniform variables</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#builtin-uniform-variables">Builtin uniform variables</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#aliases">Aliases</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#example-slang-shader">Example slang shader</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#push-constants-vs-uniform-blocks">Push constants vs uniform blocks</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#samplers">Samplers</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#srgb">sRGB</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#caveats">Caveats</a></li>
+      <ul>
+    
+      <li><a href="#frag-coord">Frag Coord</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#derivatives">Derivatives</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#correctly-sampling-textures">Correctly sampling textures</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#preset-format-slangp">Preset format (.slangp)</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#porting-guide-from-legacy-cg-spec">Porting guide from legacy Cg spec</a></li>
+      <ul>
+    
+      <li><a href="#common-functions">Common functions</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#types">Types</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#builtin-uniforms-and-misc">Builtin uniforms and misc</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#cg-semantics">Cg semantics</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../shader-overview/" title="previous chapter">
+        Shader Development Overview
+      </a></li>
+    
+    
+      <li>Next: <a href="../glsl-shaders/" title="next chapter">
+        GLSL Shader Development
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

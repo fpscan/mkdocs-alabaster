@@ -1,0 +1,512 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Tomb Raider (OpenLara) &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="tomb-raider-openlara">Tomb Raider (OpenLara)<a class="headerlink" href="#tomb-raider-openlara" title="Permanent link">¶</a></h1>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">¶</a></h2>
+<p>A new work-in-progress Tomb Raider game engine ported to libretro.</p>
+<p>This game engine recreation seeks to allow you to play the original Tomb Raider engine games, from 1 all the way up to 5.</p>
+<p>OpenLara V1 Tomb Raider 1 is fully playable.</p>
+<p>The nice thing about OpenLara is that, while staying true to the original look and feel of the original, it also adds some enhancements to it that manages to make the boxy old-school Tomb Raider games look a bit less archaic. Some examples include :</p>
+<ul>
+<li>The framerate is no longer fixed to 30fps, and you can now run it at a smooth 60fps framerate. There are even more framerate options, allowing you to play at 90fps, 120fps or even 144fps.</li>
+<li>You can set the internal resolution of the game.</li>
+<li>New water effects which replaces the simple vertex manipulation of the water surface on the PSX. The Saturn version actually was the only version that tried to do something a bit more sophisticated with the water.</li>
+<li>Self-shadowing on all the player models (although this still has some visual anomalies at places).</li>
+<li>Improved lighting effects, including colored lighting (you can see the save crystals emanating a blue light for instance, something which definitely was not in any of the prior Tomb Raider versions).</li>
+<li>Shading effects – after Lara gets out of the water, her skin has a slightly wet shading effect.</li>
+<li>There is also a brand new local multiplayer mode. You toggle the game into splitscreen mode by pressing Start at any one time. From there, you can see a second Lara character, which is only distinguished from the main character by a slightly jerky animation update routine. Player 2 can now take control of this Lara and you can engage in ‘jolly co-operation’. At all times, Player 1 can beckon Player 2 back to his position by pressing the Start button, which resets player 2’s position back to Player 1’s so that Player 2 can always be brought back in case he/she is running too far astray.</li>
+<li>There is also a first person view that you can toggle into by pressing the Look button (L button) and then pressing the Action button (B button). This gives you a Mirror’s Edge-esque first person view.</li>
+<li>The ability to target two enemies at the same time individually.</li>
+<li>The graphical enhancements can all be toggled on/off inside the game’s inventory settings screen (toggleable by pressing the Select button).</li>
+</ul>
+<p>The OpenLara core has been authored by</p>
+<ul>
+<li>XProger</li>
+</ul>
+<p>The OpenLara core is licensed under</p>
+<ul>
+<li><a href="https://github.com/XProger/OpenLara/blob/master/LICENSE">2-clause BSD</a></li>
+</ul>
+<p>A summary of the licenses behind RetroArch and its cores have found <a href="https://docs.libretro.com/tech/licenses/">here</a>.</p>
+<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">¶</a></h2>
+<p>This core requires that you use OpenGL as the video driver. Go to Settings -&gt; Driver. If ‘video driver’ is set to ‘vulkan’, switch it back to ‘gl’, and then restart.</p>
+<p><img alt="" src="/image/core/openlara/gl.png" /></p>
+<p>!!! attention 
+    There is currently no ‘working’ macOS version available due to the OpenGL requirement.</p>
+<h2 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">¶</a></h2>
+<p>Content that can be loaded by the OpenLara core have the following file extensions:</p>
+<ul>
+<li>.phd</li>
+<li>.psx</li>
+<li>.tr2</li>
+</ul>
+<p>RetroArch dat that is associated with the OpenLara core:</p>
+<ul>
+<li><a href="https://raw.githubusercontent.com/libretro/libretro-database/master/dat/Tomb%20Raider.dat">Tomb Raider</a></li>
+</ul>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h2>
+<p>Frontend-level settings or features that the OpenLara core respects.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th align="center">Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Restart</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Saves</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>States</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Rewind</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Netplay</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Core Options</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>RetroAchievements</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>RetroArch Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Native Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Controls</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Remapping</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Multi-Mouse</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Rumble</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Sensors</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Location</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Subsystem</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td><a href="https://docs.libretro.com/guides/softpatching/">Softpatching</a></td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Disk Control</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Username</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Language</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Crop Overscan</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>LEDs</td>
+<td align="center">✕</td>
+</tr>
+</tbody>
+</table>
+<h2 id="directories">Directories<a class="headerlink" href="#directories" title="Permanent link">¶</a></h2>
+<p>The OpenLara core's library name is 'OpenLara'</p>
+<p>To achieve a continuous game that loads from one level to the next you can load directly from CD
+or preferably setup the content folder like this:</p>
+<table>
+<thead>
+<tr>
+<th align="center">Folder</th>
+<th align="center">File Type(s)</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">audio/1/</td>
+<td align="center">track_XX.ogg or XXX.ogg</td>
+<td align="center">X represents a number</td>
+</tr>
+<tr>
+<td align="center">audio/2/</td>
+<td align="center">track_XX.ogg and MAIN.SFX</td>
+<td align="center">Both tracks and MAIN.SFX are required</td>
+</tr>
+<tr>
+<td align="center">audio/3/</td>
+<td align="center">track_XX.ogg and MAIN.SFX</td>
+<td align="center">Both tracks and MAIN.SFX are required</td>
+</tr>
+<tr>
+<td align="center">level/1/</td>
+<td align="center"><em>.PNG and </em>.PHD or <em>.PSX or </em>.SAT</td>
+<td align="center">Load-screens and levels</td>
+</tr>
+<tr>
+<td align="center">level/2/</td>
+<td align="center"><em>.PNG and </em>.TR2 or *.PSX</td>
+<td align="center">Load-screens and levels</td>
+</tr>
+<tr>
+<td align="center">level/3/</td>
+<td align="center"><em>.PNG and </em>.TR2 or *.PSX</td>
+<td align="center">Load-screens and levels</td>
+</tr>
+<tr>
+<td align="center">video/1/</td>
+<td align="center"><em>.RPL or </em>.FMV</td>
+<td align="center">Video cut-scenes</td>
+</tr>
+<tr>
+<td align="center">video/2/</td>
+<td align="center"><em>.RPL or </em>.FMV</td>
+<td align="center">Video cut-scenes</td>
+</tr>
+<tr>
+<td align="center">video/3/</td>
+<td align="center"><em>.RPL or </em>.FMV</td>
+<td align="center">Video cut-scenes</td>
+</tr>
+</tbody>
+</table>
+<p>!!! note
+    if you load from CD you won't have soundtrack in TR1</p>
+<p>The OpenLara core saves/loads to/from these directories.</p>
+<table>
+<thead>
+<tr>
+<th align="center">File</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">system/openlara/*.xsh</td>
+<td align="center">Shader files</td>
+</tr>
+<tr>
+<td align="center">saves/openlara/savegame.dat</td>
+<td align="center">Savegame</td>
+</tr>
+<tr>
+<td align="center">saves/openlara/settings</td>
+<td align="center">Settings</td>
+</tr>
+</tbody>
+</table>
+<h2 id="geometry-and-timing">Geometry and timing<a class="headerlink" href="#geometry-and-timing" title="Permanent link">¶</a></h2>
+<ul>
+<li>The OpenLara core's core provided FPS is dependent on the <a href="https://docs.libretro.com/library/openlara/#core-options">'Framerate' core option</a>.</li>
+<li>The OpenLara core's core provided sample rate is 44100 Hz</li>
+<li>The OpenLara core's base width is 320</li>
+<li>The OpenLara core's base height is 240</li>
+<li>The OpenLara core's max width is dependent on the <a href="https://docs.libretro.com/library/openlara/#core-options">'Internal resolution' core option</a></li>
+<li>The OpenLara core's max height is dependent on the <a href="https://docs.libretro.com/library/openlara/#core-options">'Internal resolution' core option</a></li>
+<li>The OpenLara core's core provided aspect ratio is 4/3</li>
+</ul>
+<h2 id="core-options">Core options<a class="headerlink" href="#core-options" title="Permanent link">¶</a></h2>
+<p>The OpenLara core has the following option(s) that can be tweaked from the core options menu. The default setting is bolded. </p>
+<p>Settings with (Restart) means that core has to be closed for the new setting to be applied on next launch.</p>
+<ul>
+<li>
+<p><strong>Framerate (restart)</strong> [openlara_framerate] (<strong>60fps</strong>|70fps|72fps|75fps|90fps|100fps|119fps|120fps|
+144fps|240fps|244fps|15fps|30fps)</p>
+<p>Modify framerate. Requires a restart.</p>
+</li>
+<li>
+<p><strong>Internal resolution (restart)</strong> [openlara_resolution] (<strong>320x240</strong>|360x480|480x272|512x384|512x512|640x240|
+640x448|640x480|720x576|800x600|960x720|1024x768|
+1024x1024|1280x720|1280x960|1600x1200|1920x1080|
+1920x1440|1920x1600|2048x2048|2560x1440|
+3840x2160|7680x4320|15360x8640|16000x9000)</p>
+<p>Modify the internal resolution. Requires a restart.</p>
+</li>
+</ul>
+<p>??? note "Internal resolution - 320x240"
+    <img alt="" src="/image/core/openlara/320x240.png" /></p>
+<p>??? note "Internal resolution - 1920x1080"
+    <img alt="" src="/image/core/openlara/1920x1080.png" /> </p>
+<h2 id="joypad">Joypad<a class="headerlink" href="#joypad" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>RetroPad Inputs</th>
+<th>User 1 input descriptors</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="/image/retropad/retro_b.png" /></td>
+<td>Action (Shoot/grab)</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_y.png" /></td>
+<td>Jump</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_select.png" /></td>
+<td>Inventory</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_start.png" /></td>
+<td>Start</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_dpad_up.png" /></td>
+<td>Up</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_dpad_down.png" /></td>
+<td>Down</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_dpad_left.png" /></td>
+<td>Left</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_dpad_right.png" /></td>
+<td>Right</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_a.png" /></td>
+<td>Roll</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_x.png" /></td>
+<td>Draw weapon</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_r1.png" /></td>
+<td>Walk (when holding)</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_l2.png" /></td>
+<td>Duck/Crouch (TR3 and up)</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_r2.png" /></td>
+<td>Dash (TR3 and up)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="external-links">External Links<a class="headerlink" href="#external-links" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://github.com/XProger/OpenLara">Official OpenLara Github Repository</a></li>
+<li><a href="http://xproger.info/projects/OpenLara/">Official OpenLara Website</a></li>
+<li><a href="https://github.com/libretro/libretro-super/blob/master/dist/info/openlara_libretro.info">Libretro OpenLara Core info file</a></li>
+<li><a href="https://github.com/libretro/OpenLara">Libretro OpenLara Github Repository</a></li>
+<li><a href="https://github.com/libretro/libretro-meta/issues">Report Libretro OpenLara Core Issues Here</a></li>
+</ul>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#background">Background</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#requirements">Requirements</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#extensions">Extensions</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#features">Features</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#directories">Directories</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#geometry-and-timing">Geometry and timing</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#core-options">Core options</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#joypad">Joypad</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#external-links">External Links</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../tic80/" title="previous chapter">
+        TIC-80
+      </a></li>
+    
+    
+      <li>Next: <a href="../uzem/" title="next chapter">
+        Uzebox (Uzem)
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:11
+  -->
+</body>
+</html>

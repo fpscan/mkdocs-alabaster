@@ -1,0 +1,490 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Nintendo - Virtual Boy (Beetle VB) &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="nintendo-virtual-boy-beetle-vb">Nintendo - Virtual Boy (Beetle VB)<a class="headerlink" href="#nintendo-virtual-boy-beetle-vb" title="Permanent link">¶</a></h1>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">¶</a></h2>
+<p>Port of Mednafen VB to libretro.</p>
+<h3 id="authorlicense">Author/License<a class="headerlink" href="#authorlicense" title="Permanent link">¶</a></h3>
+<p>The Beetle VB core has been authored by</p>
+<ul>
+<li><a href="https://mednafen.github.io/">Mednafen Team</a></li>
+</ul>
+<p>The Beetle VB core is licensed under</p>
+<ul>
+<li><a href="https://github.com/libretro/beetle-vb-libretro/blob/master/COPYING">GPLv2</a></li>
+</ul>
+<p>A summary of the licenses behind RetroArch and its cores have found <a href="https://docs.libretro.com/tech/licenses/">here</a>.</p>
+<h2 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">¶</a></h2>
+<p>Content that can be loaded by the Beetle VB core have the following file extensions:</p>
+<ul>
+<li>.vb</li>
+<li>.vboy</li>
+<li>.bin</li>
+</ul>
+<h2 id="databases">Databases<a class="headerlink" href="#databases" title="Permanent link">¶</a></h2>
+<p>RetroArch database(s) that are associated with the Beetle VB core:</p>
+<ul>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Nintendo%20-%20Virtual%20Boy.rdb">Nintendo - Virtual Boy</a></li>
+</ul>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h2>
+<p>Frontend-level settings or features that the Beetle VB core respects.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th align="center">Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Restart</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Screenshots</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Saves</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>States</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Rewind</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Netplay (State based)</td>
+<td align="center">✔ (not link-cable emulation)</td>
+</tr>
+<tr>
+<td>Core Options</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>RetroAchievements</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Cheats (Cheats menu)</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Native Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Controls</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Remapping</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Multi-Mouse</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Rumble</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Sensors</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Location</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Subsystem</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td><a href="https://docs.libretro.com/guides/softpatching/">Softpatching</a></td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Disk Control</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Username</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Language</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Crop Overscan</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>LEDs</td>
+<td align="center">✕</td>
+</tr>
+</tbody>
+</table>
+<h3 id="directories">Directories<a class="headerlink" href="#directories" title="Permanent link">¶</a></h3>
+<p>The Beetle VB core's directory name is 'Mednafen VB'</p>
+<p>The Beetle VB core saves/loads to/from these directories.</p>
+<p><strong>Frontend's Save directory</strong></p>
+<ul>
+<li>'content-name'.srm (Cartridge battery save)</li>
+</ul>
+<p><strong>Frontend's State directory</strong></p>
+<ul>
+<li>'content-name'.state# (State)</li>
+</ul>
+<h3 id="geometry-and-timing">Geometry and timing<a class="headerlink" href="#geometry-and-timing" title="Permanent link">¶</a></h3>
+<ul>
+<li>The Beetle VB core's core provided FPS is 50.27</li>
+<li>The Beetle VB core's core provided sample rate is 44100 Hz</li>
+<li>The Beetle VB core's core provided aspect ratio is 12/7</li>
+</ul>
+<h2 id="core-options">Core options<a class="headerlink" href="#core-options" title="Permanent link">¶</a></h2>
+<p>The Beetle VB core has the following option(s) that can be tweaked from the core options menu. The default setting is bolded. </p>
+<p>Settings with (Restart) means that core has to be closed for the new setting to be applied on next launch.</p>
+<ul>
+<li>
+<p><strong>Anaglyph preset (restart)</strong> [vb_anaglyph_preset] (<strong>Off</strong>/red &amp; blue/red &amp; cyan/red &amp; electric cyan/red &amp; green/green &amp; magenta/yellow &amp; blue)</p>
+<p>Select anaglyph 3D mode.</p>
+</li>
+</ul>
+<p>!!! attention
+    These Analglyph preset screenshots have been taken with the Palette core option set to black &amp; red.</p>
+<p>??? note "Anaglyph preset - Off"
+    <img alt="" src="/image/core/beetle_vb/off.png" /></p>
+<p>??? note "Anaglyph preset - red &amp; blue"
+    <img alt="" src="/image/core/beetle_vb/red&amp;blue.png" /></p>
+<p>??? note "Anaglyph preset - red &amp; cyan"
+    <img alt="" src="/image/core/beetle_vb/red&amp;cyan.png" /></p>
+<p>??? note "Anaglyph preset - red &amp; electric cyan"
+    <img alt="" src="/image/core/beetle_vb/red&amp;electriccyan.png" /></p>
+<p>??? note "Anaglyph preset - red &amp; green"
+    <img alt="" src="/image/core/beetle_vb/red&amp;green.png" /></p>
+<p>??? note "Anaglyph preset - green &amp; magenta"
+    <img alt="" src="/image/core/beetle_vb/green&amp;magenta.png" /></p>
+<p>??? note "Anaglyph preset - yellow &amp; blue"
+    <img alt="" src="/image/core/beetle_vb/yellow&amp;blue.png" />  </p>
+<ul>
+<li>
+<p><strong>Palette (restart)</strong> [vb_color_mode] (<strong>black &amp; red</strong>/black &amp; white)</p>
+<p>Choose which color palette to use.</p>
+</li>
+</ul>
+<p>??? note "Palette - black &amp; red"
+    <img alt="" src="/image/core/beetle_vb/black&amp;red.png" /></p>
+<p>??? note "Palette - black &amp; white"
+    <img alt="" src="/image/core/beetle_vb/black&amp;white.png" /></p>
+<ul>
+<li>
+<p><strong>Right Analog to Digital</strong> [vb_right_analog_to_digital] (<strong>Off</strong>/On/invert x/invert y/invert both)</p>
+<p>Self-explanatory.</p>
+</li>
+</ul>
+<h2 id="controllers">Controllers<a class="headerlink" href="#controllers" title="Permanent link">¶</a></h2>
+<p>The Beetle VB core supports the following device type(s) in the controls menu, bolded device types are the default for the specified user(s):</p>
+<h3 id="user-1-device-types">User 1 device types<a class="headerlink" href="#user-1-device-types" title="Permanent link">¶</a></h3>
+<ul>
+<li>None - Doesn't disable input.</li>
+<li><strong>RetroPad</strong> - Joypad</li>
+<li>Retropad w/Analog - Joypad - There's no reason to switch to this.</li>
+</ul>
+<h3 id="controller-tables">Controller tables<a class="headerlink" href="#controller-tables" title="Permanent link">¶</a></h3>
+<h4 id="joypad">Joypad<a class="headerlink" href="#joypad" title="Permanent link">¶</a></h4>
+<p>!!! attention
+    The Right D-Pad X and Right D-Pad Y inputs are only active when the 'Right Analog to Digital' core option is set to anything other than Off.</p>
+<table>
+<thead>
+<tr>
+<th>User 1 Remap descriptors</th>
+<th>RetroPad Inputs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td><img alt="" src="/image/retropad/retro_b.png" /></td>
+</tr>
+<tr>
+<td>Select</td>
+<td><img alt="" src="/image/retropad/retro_select.png" /></td>
+</tr>
+<tr>
+<td>Start</td>
+<td><img alt="" src="/image/retropad/retro_start.png" /></td>
+</tr>
+<tr>
+<td>Left D-Pad Up</td>
+<td><img alt="" src="/image/retropad/retro_dpad_up.png" /></td>
+</tr>
+<tr>
+<td>Left D-Pad Down</td>
+<td><img alt="" src="/image/retropad/retro_dpad_down.png" /></td>
+</tr>
+<tr>
+<td>Left D-Pad Left</td>
+<td><img alt="" src="/image/retropad/retro_dpad_left.png" /></td>
+</tr>
+<tr>
+<td>Left D-Pad Right</td>
+<td><img alt="" src="/image/retropad/retro_dpad_right.png" /></td>
+</tr>
+<tr>
+<td>A</td>
+<td><img alt="" src="/image/retropad/retro_a.png" /></td>
+</tr>
+<tr>
+<td>L</td>
+<td><img alt="" src="/image/retropad/retro_l1.png" /></td>
+</tr>
+<tr>
+<td>R</td>
+<td><img alt="" src="/image/retropad/retro_r1.png" /></td>
+</tr>
+<tr>
+<td>Right D-Pad Up</td>
+<td><img alt="" src="/image/retropad/retro_l2.png" /></td>
+</tr>
+<tr>
+<td>Right D-Pad Left</td>
+<td><img alt="" src="/image/retropad/retro_r2.png" /></td>
+</tr>
+<tr>
+<td>Right D-Pad Down</td>
+<td><img alt="" src="/image/retropad/retro_l3.png" /></td>
+</tr>
+<tr>
+<td>Right D-Pad Right</td>
+<td><img alt="" src="/image/retropad/retro_r3.png" /></td>
+</tr>
+<tr>
+<td>Right D-Pad X</td>
+<td><img alt="" src="/image/retropad/retro_right_stick.png" /> X</td>
+</tr>
+<tr>
+<td>Right D-Pad Y</td>
+<td><img alt="" src="/image/retropad/retro_right_stick.png" /> Y</td>
+</tr>
+</tbody>
+</table>
+<h2 id="compatibility">Compatibility<a class="headerlink" href="#compatibility" title="Permanent link">¶</a></h2>
+<p>Awaiting description.</p>
+<h2 id="external-links">External Links<a class="headerlink" href="#external-links" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://mednafen.github.io/">Official Mednafen Website</a></li>
+<li><a href="https://mednafen.github.io/releases/">Official Mednafen Downloads</a></li>
+<li><a href="https://mednafen.github.io/documentation/vb.html">Official Mednafen Virtual Boy Documentation</a></li>
+<li><a href="https://github.com/libretro/libretro-super/blob/master/dist/info/mednafen_vb_libretro.info">Libretro Beetle VB Core info file</a></li>
+<li><a href="https://github.com/libretro/beetle-vb-libretro">Libretro Beetle VB Github Repository</a></li>
+<li><a href="https://github.com/libretro/beetle-vb-libretro/issues">Report Libretro Beetle VB Core Issues Here</a></li>
+</ul>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#background">Background</a></li>
+      <ul>
+    
+      <li><a href="#authorlicense">Author/License</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#extensions">Extensions</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#databases">Databases</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#features">Features</a></li>
+      <ul>
+    
+      <li><a href="#directories">Directories</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#geometry-and-timing">Geometry and timing</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#core-options">Core options</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#controllers">Controllers</a></li>
+      <ul>
+    
+      <li><a href="#user-1-device-types">User 1 device types</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#controller-tables">Controller tables</a></li>
+      <ul>
+    
+      <li><a href="#joypad">Joypad</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#compatibility">Compatibility</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#external-links">External Links</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../snes9x/" title="previous chapter">
+        Nintendo - SNES / Famicom (Snes9x)
+      </a></li>
+    
+    
+      <li>Next: <a href="../compatibility/pcfx/" title="next chapter">
+        NEC - PC-FX Compatibility List
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:10
+  -->
+</body>
+</html>

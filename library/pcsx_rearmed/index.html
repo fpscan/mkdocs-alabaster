@@ -1,0 +1,975 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Sony - PlayStation (PCSX ReARMed) &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="sony-playstation-pcsx-rearmed">Sony - PlayStation (PCSX ReARMed)<a class="headerlink" href="#sony-playstation-pcsx-rearmed" title="Permanent link">¶</a></h1>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">¶</a></h2>
+<p>PCSX ReARMed is a fork of PCSX Reloaded. It differs from the latter in that it has special optimizations for systems that have an ARM architecture-based CPU.</p>
+<p>The PCSX ReARMed core has been authored by</p>
+<ul>
+<li>PCSX Team</li>
+<li>notaz</li>
+<li>Exophase</li>
+</ul>
+<p>The PCSX ReARMed core is licensed under</p>
+<ul>
+<li><a href="https://github.com/libretro/pcsx_rearmed/blob/master/COPYING">GPLv2</a></li>
+</ul>
+<p>A summary of the licenses behind RetroArch and its cores have found <a href="https://docs.libretro.com/tech/licenses/">here</a>.</p>
+<h2 id="bios">BIOS<a class="headerlink" href="#bios" title="Permanent link">¶</a></h2>
+<p>Required or optional firmware files go in the frontend's system directory.</p>
+<p>!!! attention
+    In case the PCSX ReARMed core can find no BIOS files named like this in RetroArch's system directory, it will default to a High-Level Emulation BIOS. This decreases the level of compatibility of the emulator, so it is recommended that you always supply valid BIOS images inside the system directory.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Filename</th>
+<th align="center">Description</th>
+<th align="center">md5sum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">scph101.bin</td>
+<td align="center">Version 4.4 03/24/00 A</td>
+<td align="center">6E3735FF4C7DC899EE98981385F6F3D0</td>
+</tr>
+<tr>
+<td align="center">scph7001.bin</td>
+<td align="center">Version 4.1 12/16/97 A</td>
+<td align="center">1e68c231d0896b7eadcad1d7d8e76129</td>
+</tr>
+<tr>
+<td align="center">scph5501.bin</td>
+<td align="center">Version 3.0 11/18/96 A</td>
+<td align="center">490f666e1afb15b7362b406ed1cea246</td>
+</tr>
+<tr>
+<td align="center">scph1001.bin</td>
+<td align="center">Version 2.0 05/07/95 A</td>
+<td align="center">dc2b9bf8da62ec93e868cfd29f0d067d</td>
+</tr>
+</tbody>
+</table>
+<p>In the event that none of the above is found, PCSX_ReARMed will search for filenames starting with "scph" and use that instead.
+It doesnt seem to matter whatever bios version is used and from what region as long as its from a retail psx/ps-one.
+If no compatible bios is found, PCSX_ReARMed will revert to use HLE bios, which can have compatibility issues (e.g. memcard issues in Suikoden games and some games just going into black screens...)</p>
+<h2 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">¶</a></h2>
+<p>Content that can be loaded by the PCSX ReARMed core have the following file extensions:</p>
+<ul>
+<li>.bin</li>
+<li>.cue</li>
+<li>.img</li>
+<li>.mdf</li>
+<li>.pbp</li>
+<li>.toc</li>
+<li>.cbn</li>
+<li>.m3u</li>
+<li>.ccd</li>
+</ul>
+<p>RetroArch database(s) that are associated with the PCSX ReARMed core:</p>
+<ul>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Sony%20-%20PlayStation.rdb">Sony - PlayStation</a></li>
+</ul>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h2>
+<p>Frontend-level settings or features that the PCSX ReARMed core respects.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th align="center">Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Restart</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Saves</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>States</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Rewind</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Netplay</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Core Options</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>RetroAchievements</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>RetroArch Cheats</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Native Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Controls</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Remapping</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Multi-Mouse</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Rumble</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Sensors</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Location</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Subsystem</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td><a href="https://docs.libretro.com/guides/softpatching/">Softpatching</a></td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Disk Control</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Username</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Language</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Crop Overscan</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>LEDs</td>
+<td align="center">✕</td>
+</tr>
+</tbody>
+</table>
+<h2 id="directories">Directories<a class="headerlink" href="#directories" title="Permanent link">¶</a></h2>
+<p>The PCSX ReARMed core's library name is 'PCSX-ReARMed'</p>
+<p>The PCSX ReARMed core saves/loads to/from these directories.</p>
+<p><strong>Frontend's Save directory</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">File</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">*.srm</td>
+<td align="center">Memory card slot 0</td>
+</tr>
+<tr>
+<td align="center">pcsx-card2.mcd</td>
+<td align="center">Memory card slot 1 (if enabled, default to disabled)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Frontend's State directory</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">File</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">*.state#</td>
+<td align="center">State</td>
+</tr>
+</tbody>
+</table>
+<h2 id="geometry-and-timing">Geometry and timing<a class="headerlink" href="#geometry-and-timing" title="Permanent link">¶</a></h2>
+<ul>
+<li>The PCSX ReARMed core's core provided FPS is 60 for NTSC games. 50 for PAL games.</li>
+<li>The PCSX ReARMed core's core provided sample rate is 44100 Hz</li>
+<li>The PCSX ReARMed core's base width is 320</li>
+<li>The PCSX ReARMed core's base height is 240</li>
+<li>The PCSX ReARMed core's max width is 1024</li>
+<li>The PCSX ReARMed core's max height is 512</li>
+<li>The PCSX ReARMed core's core provided aspect ratio is 4/3</li>
+</ul>
+<h2 id="loading-content">Loading content<a class="headerlink" href="#loading-content" title="Permanent link">¶</a></h2>
+<p>PCSX ReARMed needs a cue-sheet that points to an image file. A cue sheet, or cue file, is a metadata file which describes how the tracks of a CD or DVD are laid out.</p>
+<p>If you have e.g. <code>foo.bin</code>, you should create a text file and save it as <code>foo.cue</code>. Most PS1 games are single-track, so the cue file contents should look like this:</p>
+<p><code>foobin.cue</code></p>
+<pre><code> FILE &quot;foo.bin&quot; BINARY
+  TRACK 01 MODE1/2352
+   INDEX 01 00:00:00
+</code></pre>
+
+<p>After that, you can load the <code>foo.cue</code> file in RetroArch with the PCSX ReARMed core.</p>
+<p>!!! attention
+    Certain PS1 games are multi-track, so their .cue files might be more complicated.</p>
+<h2 id="playing-pal-copy-protected-games">Playing PAL copy protected games<a class="headerlink" href="#playing-pal-copy-protected-games" title="Permanent link">¶</a></h2>
+<p>PAL copy protected games need a SBI Subchannel file next to the bin/cue files in order to get past the copy protection.</p>
+<ul>
+<li>Ape Escape (Europe).bin</li>
+<li>Ape Escape (Europe).cue</li>
+<li><strong>Ape Escape (Europe).sbi</strong></li>
+</ul>
+<h2 id="multiple-disk-games">Multiple-disk games<a class="headerlink" href="#multiple-disk-games" title="Permanent link">¶</a></h2>
+<p>If foo is a multiple-disk game, you should have .cue files for each one, e.g. <code>foo (Disc 1).cue</code>, <code>foo (Disc 2).cue</code>, <code>foo (Disc 3).cue</code>.</p>
+<p>To take advantage of PCSX ReARMed's Disk Control feature for disk swapping, an index file (a m3u file) should be made.</p>
+<p>Create a text file and save it as <code>foo.m3u</code>. Then enter your game's .cue files on it. The m3u file contents should look something like this:</p>
+<p><code>foo.m3u</code></p>
+<pre><code>foo (Disc 1).cue
+foo (Disc 2).cue
+foo (Disc 3).cue
+</code></pre>
+
+<p>After that, you can load the <code>foo.m3u</code> file in RetroArch with the PCSX ReARMed core.</p>
+<p>Here's a m3u example done with Valkryie Profile</p>
+<p><code>Valkyrie Profile (USA).m3u</code></p>
+<pre><code>Valkyrie Profile (USA) (Disc 1).cue
+Valkyrie Profile (USA) (Disc 2).cue
+</code></pre>
+
+<p><img alt="" src="/image/core/beetle_psx_hwm3u.png" /></p>
+<p>!!! attention
+    Adding multi-track games to a RetroArch playlist is recommended. (Manually add an entry a playlist that points to <code>foo.m3u</code>)</p>
+<h2 id="swapping-disks">Swapping disks<a class="headerlink" href="#swapping-disks" title="Permanent link">¶</a></h2>
+<p>Swapping disks follows this procedure</p>
+<ol>
+<li>
+<p>Open tray (Disk Cycle Tray Status)</p>
+</li>
+<li>
+<p>Change the Disk Index to the disk you want to swap to. </p>
+</li>
+<li>
+<p>Close tray (Disk Cycle Tray Status)</p>
+</li>
+<li>
+<p>Return to the game and wait a few seconds to let it take effect</p>
+</li>
+</ol>
+<h2 id="pbp">PBP<a class="headerlink" href="#pbp" title="Permanent link">¶</a></h2>
+<p>Alternatively to using cue sheets with .bin/.iso files, you can convert your games to .pbp (Playstation Portable update file).</p>
+<p>A recommended .pbp convert tool is PSX2PSP.</p>
+<p>If converting a multiple-disk game, all disks should be added to the same .pbp file, rather than making a .m3u file for them.</p>
+<p>Most conversion tools will want a single .bin file for each disk. If your game uses multiple .bin files (tracks) per disk, you will have to mount the cue sheet to a virtual drive and re-burn the images onto a single track before conversion.</p>
+<p>!!! attention
+    RetroArch does not currently have .pbp database due to variability in users' conversion methods. All .pbp games will have to be added to playlists manually.</p>
+<h2 id="saves">Saves<a class="headerlink" href="#saves" title="Permanent link">¶</a></h2>
+<p>For game savedata storage, the PSX console used memory cards. The PSX console had two slots for memory cards.</p>
+<p>The PCSX ReARMed core defaults to only support the first memory card slot.
+Second memory card slot can be enabled via the <code>pcsx_rearmed_memcard2</code> option.</p>
+<p>In this doc, the first memory card slot will be referred to as 'Memcard slot 0'.
+The second memory card slot will be referred to as 'Memcard slot 1'.</p>
+<p>For memory card functionality and usage, the PCSX ReARMed core will the Libretro savedata format.</p>
+<p><center></p>
+<table>
+<thead>
+<tr>
+<th>Libretro savedata format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gamename.srm</td>
+</tr>
+<tr>
+<td>pcsx-card2.mcd</td>
+</tr>
+</tbody>
+</table>
+<p></center></p>
+<p><strong>By default</strong>, the filename of the Memcard slot 0 savedata will match the loaded cue or m3u or pbp filename, like this:</p>
+<p><strong>By default</strong>, the filename of the Memcard slot 1 savedata (if enabled) will be
+<code>pcsx-card2.mcd</code>. This basically means that all games in the same folder share
+the same nemory card in slot 1.</p>
+<ul>
+<li>
+<p>Loaded content: Breath of Fire III (USA).cue</p>
+</li>
+<li>
+<p><strong>Memcard slot 0: Breath of Fire III (USA).srm</strong></p>
+</li>
+</ul>
+<p>or</p>
+<ul>
+<li>
+<p>Loaded content: Final Fantasy VII (USA).m3u</p>
+</li>
+<li>
+<p><strong>Memcard slot 0: Final Fantasy VII (USA).srm</strong></p>
+</li>
+</ul>
+<p>or</p>
+<ul>
+<li>
+<p>Loaded content: Wild Arms 2 (USA).pbp</p>
+</li>
+<li>
+<p><strong>Memcard slot 0: `Wild Arms 2 (USA).srm</strong></p>
+</li>
+</ul>
+<p>!!! attention
+    To import your old memory cards from other emulators, you need to rename them to the Libretro savedata format.</p>
+<p>!!! warning
+    Keep in mind that save states also include the state of the memory card; carelessly loading an old save state will <strong>OVEWRITE</strong> the memory card, potentially resulting in lost saved games. <strong>You can set the 'Don't overwrite SaveRAM on loading savestate' option in RetroArch's Saving settings to On to prevent this.</strong></p>
+<h2 id="core-options">Core options<a class="headerlink" href="#core-options" title="Permanent link">¶</a></h2>
+<p>The PCSX ReARMed core has the following option(s) that can be tweaked from the core options menu. The default setting is bolded. </p>
+<p>Settings with (Restart) means that core has to be closed for the new setting to be applied on next launch.</p>
+<ul>
+<li>
+<p><strong>Frameskip</strong> [pcsx_rearmed_frameskip] (<strong>0</strong>|1|2|3)</p>
+<p>Choose how much frames should be skipped to improve performance at the expense of visual smoothness.</p>
+</li>
+<li>
+<p><strong>Use BIOS</strong> [pcsx_rearmed_bios] (<strong>auto</strong>|HLE)</p>
+<p>Allows you to use real bios file (if available) or emulated bios (HLE).</p>
+<p><strong>HLE</strong> - Forces core to use built-in bios emulation</p>
+<p><strong>auto</strong> - Tries to search for compatible bios file, falls back to use HLE if none is found.</p>
+</li>
+<li>
+<p><strong>Region</strong> [pcsx_rearmed_region] (<strong>auto</strong>|NTSC|PAL)</p>
+<p>Choose what region the system is from.</p>
+</li>
+<li>
+<p><strong>Enable second memory card</strong> [pcsx_rearmed_memcard2] (<strong>disabled</strong>|enabled)</p>
+<p>Enables or disabled second memory card (Memcard 2 slot). When enabled, 
+Memcard 2 slot's save data will be loaded and saved as
+<code>pcsx-card2.mcd</code> file in the saves directory.
+All games will share the same second memory card.</p>
+</li>
+<li>
+<p><strong>Pad 1 Type</strong> [pcsx_rearmed_pad1type] (<strong>standard</strong>|analog|dualshock|negcon|none)</p>
+<p>Choose the Pad Type for User 1.</p>
+<p>With the none setting, input is disabled.</p>
+<p>With the standard setting, a standard <a href="https://en.wikipedia.org/wiki/PlayStation_Controller">PlayStation Controller</a> is emulated.</p>
+<p>With the analog setting, a <a href="https://en.wikipedia.org/wiki/PlayStation_Analog_Joystick">PlayStation Analog Joystick</a> or <a href="https://en.wikipedia.org/wiki/Dual_Analog_Controller">Dual Analog Controller</a> with the green led on is emulated.</p>
+<p>With the dualshock setting, a <a href="https://en.wikipedia.org/wiki/Dual_Analog_Controller">Dual Analog Controller</a> with the red led on or <a href="https://en.wikipedia.org/wiki/DualShock">DualShock</a> is emulated.</p>
+<p>With the negcon setting, a <a href="https://en.wikipedia.org/wiki/NeGcon">neGcon Controller</a> is emulated.</p>
+</li>
+<li>
+<p><strong>Pad 2 Type</strong> [pcsx_rearmed_pad2type] (<strong>standard</strong>|analog|dualshock|negcon|none)</p>
+<p>Choose the Pad Type for User 2.</p>
+<p>With the none setting, input is disabled.</p>
+<p>With the standard setting, a standard <a href="https://en.wikipedia.org/wiki/PlayStation_Controller">PlayStation Controller</a> is emulated.</p>
+<p>With the analog setting, a <a href="https://en.wikipedia.org/wiki/PlayStation_Analog_Joystick">PlayStation Analog Joystick</a> or <a href="https://en.wikipedia.org/wiki/Dual_Analog_Controller">Dual Analog Controller</a> with the green led on is emulated.</p>
+<p>With the dualshock setting, a <a href="https://en.wikipedia.org/wiki/Dual_Analog_Controller">Dual Analog Controller</a> with the red led on or <a href="https://en.wikipedia.org/wiki/DualShock">DualShock</a> is emulated.</p>
+<p>With the negcon setting, a <a href="https://en.wikipedia.org/wiki/NeGcon">neGcon Controller</a> is emulated.</p>
+</li>
+<li>
+<p><strong>Pad 3 Type</strong> [pcsx_rearmed_pad3type] (<strong>none</strong>|standard|analog|dualshock|negcon)</p>
+<p>Choose the Pad Type for User 3.</p>
+<p>With the none setting, input is disabled.</p>
+<p>With the standard setting, a standard <a href="https://en.wikipedia.org/wiki/PlayStation_Controller">PlayStation Controller</a> is emulated.</p>
+<p>With the analog setting, a <a href="https://en.wikipedia.org/wiki/PlayStation_Analog_Joystick">PlayStation Analog Joystick</a> or <a href="https://en.wikipedia.org/wiki/Dual_Analog_Controller">Dual Analog Controller</a> with the green led on is emulated.</p>
+<p>With the dualshock setting, a <a href="https://en.wikipedia.org/wiki/Dual_Analog_Controller">Dual Analog Controller</a> with the red led on or <a href="https://en.wikipedia.org/wiki/DualShock">DualShock</a> is emulated.</p>
+<p>With the negcon setting, a <a href="https://en.wikipedia.org/wiki/NeGcon">neGcon Controller</a> is emulated.</p>
+</li>
+<li>
+<p><strong>Pad 4 Type</strong> [pcsx_rearmed_pad4type] (<strong>none</strong>|standard|analog|dualshock|negcon)</p>
+<p>Choose the Pad Type for User 4.</p>
+<p>With the none setting, input is disabled.</p>
+<p>With the standard setting, a standard <a href="https://en.wikipedia.org/wiki/PlayStation_Controller">PlayStation Controller</a> is emulated.</p>
+<p>With the analog setting, a <a href="https://en.wikipedia.org/wiki/PlayStation_Analog_Joystick">PlayStation Analog Joystick</a> or <a href="https://en.wikipedia.org/wiki/Dual_Analog_Controller">Dual Analog Controller</a> with the green led on is emulated.</p>
+<p>With the dualshock setting, a <a href="https://en.wikipedia.org/wiki/Dual_Analog_Controller">Dual Analog Controller</a> with the red led on or <a href="https://en.wikipedia.org/wiki/DualShock">DualShock</a> is emulated.</p>
+<p>With the negcon setting, a <a href="https://en.wikipedia.org/wiki/NeGcon">neGcon Controller</a> is emulated.</p>
+</li>
+<li>
+<p><strong>Pad 5 Type</strong> [pcsx_rearmed_pad5type] (<strong>none</strong>|standard|analog|dualshock|negcon)</p>
+<p>Choose the Pad Type for User 5.</p>
+<p>With the none setting, input is disabled.</p>
+<p>With the standard setting, a standard <a href="https://en.wikipedia.org/wiki/PlayStation_Controller">PlayStation Controller</a> is emulated.</p>
+<p>With the analog setting, a <a href="https://en.wikipedia.org/wiki/PlayStation_Analog_Joystick">PlayStation Analog Joystick</a> or <a href="https://en.wikipedia.org/wiki/Dual_Analog_Controller">Dual Analog Controller</a> with the green led on is emulated.</p>
+<p>With the dualshock setting, a <a href="https://en.wikipedia.org/wiki/Dual_Analog_Controller">Dual Analog Controller</a> with the red led on or <a href="https://en.wikipedia.org/wiki/DualShock">DualShock</a> is emulated.</p>
+<p>With the negcon setting, a <a href="https://en.wikipedia.org/wiki/NeGcon">neGcon Controller</a> is emulated.</p>
+</li>
+<li>
+<p><strong>Pad 6 Type</strong> [pcsx_rearmed_pad6type] (<strong>none</strong>|standard|analog|dualshock|negcon)</p>
+<p>Choose the Pad Type for User 6.</p>
+<p>With the none setting, input is disabled.</p>
+<p>With the standard setting, a standard <a href="https://en.wikipedia.org/wiki/PlayStation_Controller">PlayStation Controller</a> is emulated.</p>
+<p>With the analog setting, a <a href="https://en.wikipedia.org/wiki/PlayStation_Analog_Joystick">PlayStation Analog Joystick</a> or <a href="https://en.wikipedia.org/wiki/Dual_Analog_Controller">Dual Analog Controller</a> with the green led on is emulated.</p>
+<p>With the dualshock setting, a <a href="https://en.wikipedia.org/wiki/Dual_Analog_Controller">Dual Analog Controller</a> with the red led on or <a href="https://en.wikipedia.org/wiki/DualShock">DualShock</a> is emulated.</p>
+<p>With the negcon setting, a <a href="https://en.wikipedia.org/wiki/NeGcon">neGcon Controller</a> is emulated.</p>
+</li>
+<li>
+<p><strong>Pad 7 Type</strong> [pcsx_rearmed_pad7type] (<strong>none</strong>|standard|analog|dualshock|negcon)</p>
+<p>Choose the Pad Type for User 7.</p>
+<p>With the none setting, input is disabled.</p>
+<p>With the standard setting, a standard <a href="https://en.wikipedia.org/wiki/PlayStation_Controller">PlayStation Controller</a> is emulated.</p>
+<p>With the analog setting, a <a href="https://en.wikipedia.org/wiki/PlayStation_Analog_Joystick">PlayStation Analog Joystick</a> or <a href="https://en.wikipedia.org/wiki/Dual_Analog_Controller">Dual Analog Controller</a> with the green led on is emulated.</p>
+<p>With the dualshock setting, a <a href="https://en.wikipedia.org/wiki/Dual_Analog_Controller">Dual Analog Controller</a> with the red led on or <a href="https://en.wikipedia.org/wiki/DualShock">DualShock</a> is emulated.</p>
+<p>With the negcon setting, a <a href="https://en.wikipedia.org/wiki/NeGcon">neGcon Controller</a> is emulated.</p>
+</li>
+<li>
+<p><strong>Pad 8 Type</strong> [pcsx_rearmed_pad8type] (<strong>none</strong>|standard|analog|dualshock|negcon)</p>
+<p>Choose the Pad Type for User 8.</p>
+<p>With the none setting, input is disabled.</p>
+<p>With the standard setting, a standard <a href="https://en.wikipedia.org/wiki/PlayStation_Controller">PlayStation Controller</a> is emulated.</p>
+<p>With the analog setting, a <a href="https://en.wikipedia.org/wiki/PlayStation_Analog_Joystick">PlayStation Analog Joystick</a> or <a href="https://en.wikipedia.org/wiki/Dual_Analog_Controller">Dual Analog Controller</a> with the green led on is emulated.</p>
+<p>With the dualshock setting, a <a href="https://en.wikipedia.org/wiki/Dual_Analog_Controller">Dual Analog Controller</a> with the red led on or <a href="https://en.wikipedia.org/wiki/DualShock">DualShock</a> is emulated.</p>
+<p>With the negcon setting, a <a href="https://en.wikipedia.org/wiki/NeGcon">neGcon Controller</a> is emulated.</p>
+</li>
+<li>
+<p><strong>Multitap 1</strong> [pcsx_rearmed_multitap1] (<strong>auto</strong>|disabled|enabled)</p>
+<p>Enables/Disables <a href="https://en.wikipedia.org/wiki/PlayStation_Multitap">multitap</a> functionality on port 1, allowing 3-8 player support in games that permit it.</p>
+<p><strong>auto</strong> - Enables multitap 1 when Pad 3-8 is not set to none.</p>
+<p><strong>enabled/disabled</strong> - Forces multitap 1 to be enabled or disabled regardless if pads 3-8 is used.</p>
+</li>
+<li>
+<p><strong>Multitap 2</strong> [pcsx_rearmed_multitap2] (<strong>auto</strong>|disabled|enabled)</p>
+<p>Enables/Disables <a href="https://en.wikipedia.org/wiki/PlayStation_Multitap">multitap</a> functionality on port 2, allowing 3-8 player support in games that permit it.</p>
+<p><strong>auto</strong> - Enables multitap 2 when Pad 5-8 is not set to none.</p>
+<p><strong>enabled/disabled</strong> - Forces multitap 2 to be enabled or disabled regardless if pads 5-8 is used.</p>
+</li>
+<li>
+<p><strong>NegCon Twist Deadzone (percent)</strong> [pcsx_rearmed_negcon_deadzone] (<strong>0</strong>|5|10|15|20|25|30)</p>
+<p>Sets the deadzone of the RetroPad left analog stick when simulating the 'twist' action of emulated <a href="https://en.wikipedia.org/wiki/NeGcon">neGcon Controllers</a>. Used to eliminate drift/unwanted input.</p>
+</li>
+</ul>
+<p>!!! attention
+    Most (all?) negCon compatible titles provide in-game options for setting a 'twist' deadzone value. To avoid loss of precision, the in-game deadzone should <em>always</em> be set to zero. Any analog stick drift should instead be accounted for by configuring the 'NegCon Twist Deadzone' core option. This is particularly important when 'NegCon Twist Response' is set to 'quadratic' or 'cubic'.</p>
+<pre><code>Xbox gamepads typically require a deadzone of 15-20%. Many Android-compatible bluetooth gamepads have an internal 'hardware' deadzone, allowing the deadzone value here to be set to 0%.
+
+For convenience, it is recommended to make use of the 'Options → Analog Setting 1P' menu of [Gran Turismo](https://en.wikipedia.org/wiki/Gran_Turismo_(video_game)) when calibrating the 'NegCon Twist Deadzone'. This provides a clear and precise representation of 'real' controller input values.
+</code></pre>
+<ul>
+<li>
+<p><strong>NegCon Twist Response</strong> [pcsx_rearmed_negcon_response] (<strong>linear</strong>|quadratic|cubic)</p>
+<p>Specifies the analog response when using a RetroPad left analog stick to simulate the 'twist' action of emulated <a href="https://en.wikipedia.org/wiki/NeGcon">neGcon Controllers</a>.</p>
+<p>'linear': Analog stick displacement is mapped linearly to negCon rotation angle.
+Recommended when using racing wheel peripherals.</p>
+<p>'quadratic': Analog stick displacement is mapped quadratically to negCon rotation angle. This allows for greater precision when making small movements with the analog stick.
+Optimal setting for gamepads.</p>
+<p>'cubic': Analog stick displacement is mapped cubically to negCon rotation angle. This allows for even greater precision when making small movements with the analog stick, but 'exaggerates' larger movements.
+Enables precise control but difficult to use.</p>
+</li>
+</ul>
+<p>!!! attention
+    A linear response is not recommended when using standard gamepad devices. The negCon 'twist' mechanism is substantially different from conventional analog sticks; linear mapping over-amplifies small displacements of the stick, impairing fine control. A linear response is only appropriate when using racing wheel peripherals.</p>
+<pre><code>In most cases, the 'quadratic' option should be selected. This provides effective compensation for the physical differences between real/emulated hardware, enabling smooth/precise analog input.
+</code></pre>
+<ul>
+<li>
+<p><strong>Enable Vibration</strong> [pcsx_rearmed_vibration] (<strong>enabled</strong>|disabled)</p>
+<p>Enables Rumble. Look at the <a href="https://docs.libretro.com/library/pcsx_rearmed#rumble-support">Rumble section</a> for more information.</p>
+</li>
+<li>
+<p><strong>Enable Dithering</strong> [pcsx_rearmed_dithering] (<strong>enabled</strong>|disabled)</p>
+<p>If Off, disables the dithering pattern the PSX applies to combat color banding.</p>
+</li>
+</ul>
+<p>??? note "Enable Dithering - On"
+    <img alt="" src="/image/core/pcsx_rearmeddither_on.png" /></p>
+<p>??? note "Enable Dithering - Off"
+    <img alt="" src="/image/core/pcsx_rearmeddither_off.png" /></p>
+<ul>
+<li>
+<p><strong>Frame duping</strong> [pcsx_rearmed_duping_enable] (<strong>enabled</strong>|disabled)</p>
+<p>A speedup, redraws/reuses the last frame if there was no new data.</p>
+</li>
+<li>
+<p><strong>Show Bios Bootlogo(Breaks some games)</strong> [pcsx_rearmed_show_bios_bootlogo] (<strong>disabled</strong>|enabled)</p>
+<p>Show the BIOS bootlogo.</p>
+</li>
+</ul>
+<p>??? note "Skip BIOS - Off"
+    <img alt="" src="/image/core/beetle_psx_hwbios.png" /></p>
+<ul>
+<li>
+<p><strong>Sound: Reverb</strong> [pcsx_rearmed_spu_reverb] (<strong>enabled</strong>|disabled)</p>
+<p>Enable sound reverb.</p>
+</li>
+<li>
+<p><strong>Sound: Interpolation</strong> [pcsx_rearmed_spu_interpolation] (<strong>simple</strong>|gaussian|cubic|off)</p>
+<p>Modify sound interpolation.</p>
+</li>
+<li>
+<p><strong>Parasite Eve 2/Vandal Hearts 1/2 Fix</strong> [pcsx_rearmed_pe2_fix] (<strong>disabled</strong>|enabled)</p>
+<p>Enable this to fit Parasite Eve 2 and Vandal Hearts 1/2</p>
+</li>
+<li>
+<p><strong>InuYasha Sengoku Battle Fix</strong> [pcsx_rearmed_inuyasha_fix] (<strong>disabled</strong>|enabled)</p>
+<p>Enable this to fix InuYasha.</p>
+</li>
+<li>
+<p><strong>Additional core options for DynaRec (Dynamic recompiler) builds:</strong></p>
+</li>
+<li>
+<p><strong>Dynamic recompiler</strong> [pcsx_rearmed_drc] (<strong>enabled</strong>|disabled)</p>
+<p>Enables core to use dynamic recompiler or interpreter (slower) cpu instructions.</p>
+</li>
+<li>
+<p><strong>PSX cpu clock</strong> [pcsx_rearmed_psxclock] (30 - 100, <strong>default 57</strong>)</p>
+<p>Overclock or underclock the PSX, default is 57.</p>
+<p>Lower value = less work for the emu, may be faster in some cases.</p>
+<p>Causes compatibility issues, so modify only for games that needs it, leave at default for most games.</p>
+</li>
+<li>
+<p><strong>Additional core options for devices using NEON-compatible CPU:</strong></p>
+</li>
+<li>
+<p><strong>Enable interlacing mode(s)</strong> [pcsx_rearmed_neon_interlace_enable] (<strong>disabled</strong>|enabled)</p>
+<p>Enables fake scanlines effect.</p>
+</li>
+<li>
+<p><strong>Enhanced resolution (slow)</strong> [pcsx_rearmed_neon_enhancement_enable] (<strong>disabled</strong>|enabled)</p>
+<p>Renders in double resolution at the cost of lower performance</p>
+<p>Not available for high resolution games.</p>
+</li>
+<li>
+<p><strong>Enhanced resolution speed hack</strong> [pcsx_rearmed_neon_enhancement_no_main] (<strong>disabled</strong>|enabled)</p>
+<p>Speed hack for above option.</p>
+<p>Causes game glitches.   </p>
+</li>
+</ul>
+<h2 id="rumble">Rumble<a class="headerlink" href="#rumble" title="Permanent link">¶</a></h2>
+<p>Rumble only works in the PCSX ReARMed core when</p>
+<ul>
+<li>The content being ran has rumble support.</li>
+<li>The frontend being used has rumble support.</li>
+<li>The joypad device being used has rumble support.</li>
+<li>The <a href="https://docs.libretro.com/library/pcsx_rearmed#core-options">'Enable Vibration' core option</a> is set to On</li>
+<li>The corresponding user's Pad Type is set to <strong>analog</strong></li>
+</ul>
+<h2 id="multitap">Multitap<a class="headerlink" href="#multitap" title="Permanent link">¶</a></h2>
+<p>Activating multitap support in compatible games can be configured by the <a href="https://docs.libretro.com/library/pcsx_rearmed#core-options">'Multitap 1' and 'Multitap 2' core options</a>.</p>
+<h2 id="joypad">Joypad<a class="headerlink" href="#joypad" title="Permanent link">¶</a></h2>
+<p><img alt="" src="/image/controller/psx.png" /></p>
+<table>
+<thead>
+<tr>
+<th>RetroPad Inputs</th>
+<th>User 1 - 8 input descriptors</th>
+<th>standard</th>
+<th>analog</th>
+<th>negcon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="/image/retropad/retro_b.png" /></td>
+<td>Cross</td>
+<td>Cross</td>
+<td>Cross</td>
+<td>Analog Button I</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_y.png" /></td>
+<td>Square</td>
+<td>Square</td>
+<td>Square</td>
+<td>Analog Button II</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_select.png" /></td>
+<td>Select</td>
+<td>Select</td>
+<td>Select</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_start.png" /></td>
+<td>Start</td>
+<td>Start</td>
+<td>Start</td>
+<td>Start</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_dpad_up.png" /></td>
+<td>D-Pad Up</td>
+<td>D-Pad Up</td>
+<td>D-Pad Up</td>
+<td>D-Pad Up</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_dpad_down.png" /></td>
+<td>D-Pad Down</td>
+<td>D-Pad Down</td>
+<td>D-Pad Down</td>
+<td>D-Pad Down</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_dpad_left.png" /></td>
+<td>D-Pad Left</td>
+<td>D-Pad Left</td>
+<td>D-Pad Left</td>
+<td>D-Pad Left</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_dpad_right.png" /></td>
+<td>D-Pad Right</td>
+<td>D-Pad Right</td>
+<td>D-Pad Right</td>
+<td>D-Pad Right</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_a.png" /></td>
+<td>Circle</td>
+<td>Circle</td>
+<td>Circle</td>
+<td>A</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_x.png" /></td>
+<td>Triangle</td>
+<td>Triangle</td>
+<td>Triangle</td>
+<td>B</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_l1.png" /></td>
+<td>L1</td>
+<td>L1</td>
+<td>L1</td>
+<td>Left Shoulder Button (analog)</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_r1.png" /></td>
+<td>R1</td>
+<td>R1</td>
+<td>R1</td>
+<td>Right Shoulder Button (digital)</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_l2.png" /></td>
+<td>L2</td>
+<td>L2</td>
+<td>L2</td>
+<td>Analog Button II</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_r2.png" /></td>
+<td>R2</td>
+<td>R2</td>
+<td>R2</td>
+<td>Analog Button I</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_l3.png" /></td>
+<td>L3</td>
+<td></td>
+<td>L3</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_r3.png" /></td>
+<td>R3</td>
+<td></td>
+<td>R3</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_left_stick.png" /> X</td>
+<td>Left Analog X</td>
+<td></td>
+<td>Left Analog X</td>
+<td>Twist</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_left_stick.png" /> Y</td>
+<td>Left Analog Y</td>
+<td></td>
+<td>Left Analog Y</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_right_stick.png" /> X</td>
+<td>Right Analog X</td>
+<td></td>
+<td>Right Analog X</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_right_stick.png" /> Y</td>
+<td>Right Analog Y</td>
+<td></td>
+<td>Right Analog Y</td>
+<td>Up: Analog Button I / Down: Analog Button II</td>
+</tr>
+</tbody>
+</table>
+<h2 id="compatibility">Compatibility<a class="headerlink" href="#compatibility" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Game</th>
+<th>Issue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jumping Flash 2</td>
+<td>Graphics glitches. Geometry issues.</td>
+</tr>
+<tr>
+<td>Tobal 2</td>
+<td>Graphics glitch. Garbled Dream Factory intro sequence.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="external-links">External Links<a class="headerlink" href="#external-links" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="http://notaz.gp2x.de/pcsx_rearmed.php">Official PCSX ReARMed Website</a></li>
+<li><a href="https://github.com/notaz/pcsx_rearmed">Official PCSX ReARMed Github Repository</a></li>
+<li><a href="https://github.com/libretro/libretro-super/blob/master/dist/info/pcsx_rearmed_libretro.info">Libretro PCSX ReARMed Core info file</a></li>
+<li><a href="https://github.com/libretro/pcsx_rearmed">Libretro PCSX ReARMed Github Repository</a></li>
+<li><a href="https://github.com/libretro/pcsx_rearmed/issues">Report Libretro PCSX ReARMed Core Issues Here</a></li>
+</ul>
+<h2 id="psx">PSX<a class="headerlink" href="#psx" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://docs.libretro.com/library/beetle_psx/">Sony - PlayStation (Beetle PSX)</a></li>
+<li><a href="https://docs.libretro.com/library/beetle_psx_hw/">Sony - PlayStation (Beetle PSX HW)</a></li>
+</ul>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#background">Background</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#bios">BIOS</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#extensions">Extensions</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#features">Features</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#directories">Directories</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#geometry-and-timing">Geometry and timing</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#loading-content">Loading content</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#playing-pal-copy-protected-games">Playing PAL copy protected games</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#multiple-disk-games">Multiple-disk games</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#swapping-disks">Swapping disks</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#pbp">PBP</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#saves">Saves</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#core-options">Core options</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#rumble">Rumble</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#multitap">Multitap</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#joypad">Joypad</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#compatibility">Compatibility</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#external-links">External Links</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#psx">PSX</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../beetle_psx_hw/" title="previous chapter">
+        Sony - PlayStation (Beetle PSX HW)
+      </a></li>
+    
+    
+      <li>Next: <a href="../ppsspp/" title="next chapter">
+        Sony - PlayStation Portable (PPSSPP)
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:11
+  -->
+</body>
+</html>

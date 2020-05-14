@@ -1,0 +1,440 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>RGUI Interface &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="rgui-retroarch-menu-interface">RGUI RetroArch Menu Interface<a class="headerlink" href="#rgui-retroarch-menu-interface" title="Permanent link">¶</a></h1>
+<p>RGUI is a simple built-in GUI for RetroArch. It was originally introduced in the Wii port of RetroArch in order to provide the console experience, where everything is controlled from a joypad. RGUI was later refitted for PC and mobile ports.</p>
+<p><img alt="RGUI startup screen" src="/image/retroarch/rgui/rgui.jpg" /></p>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h2>
+<p>While RGUI cannot configure absolutely everything, it can do the most common things you would want to do while using RetroArch.</p>
+<ul>
+<li>Selecting libretro core</li>
+<li>Load a game</li>
+<li>Tweak per-libretro core options (e.g. colorization in GameBoy)</li>
+<li>Load game from history (previous games played)</li>
+<li>Save/load savestates</li>
+<li>Configure shaders</li>
+<li>Configure aspect ratios</li>
+<li>Configure integer scale</li>
+<li>Toggle fullscreen</li>
+<li>Swap disk images (needed for PlayStation, see notes below!)</li>
+<li>Take screenshots</li>
+<li>Enable/disable real-time rewind</li>
+<li>Simple input configuration</li>
+<li>Mute/unmute audio</li>
+<li>Exit RetroArch</li>
+</ul>
+<h2 id="config-file">Config file<a class="headerlink" href="#config-file" title="Permanent link">¶</a></h2>
+<p>By default, RetroArch looks for a config in various places depending on OS:</p>
+<ul>
+<li><strong>Linux/OSX</strong>: <code>$XDG_CONFIG_HOME/retroarch/retroarch.cfg</code>, then <code>~/.config/retroarch/retroarch.cfg</code>, then <code>~/.retroarch.cfg</code>, and finally, as a fallback, <code>/etc/retroarch.cfg</code>.</li>
+<li><strong>Windows</strong>: <code>retroarch.cfg</code> in same folder as <code>retroarch.exe</code>, then <code>%APPDATA%\retroarch.cfg</code>.</li>
+</ul>
+<p>To override this, use <code>retroarch --config customconfig.cfg</code>. If you have some special options you want to store in separate config files you can use <code>retroarch --config baseconfig.cfg --appendconfig specialconfig.cfg</code>. See man-page and/or <code>--help</code> for detail.</p>
+<h3 id="warning">Warning<a class="headerlink" href="#warning" title="Permanent link">¶</a></h3>
+<p>While you are changing settings in runtime, they are not saved to disk afterwards on PC by default. If you want RetroArch to automatically write back the config, either set <code>config_save_on_exit = true</code> in config, or enable this under Settings -&gt; Config Save On Exit from within RGUI.</p>
+<p>By design, the config file is considered immutable as it is likely maintained by the user, and should not be overwritten behind the users back. This is not the case on consoles however, where looking at the config manually isn't really an option for most users.</p>
+<h2 id="entering-the-menu">Entering the menu<a class="headerlink" href="#entering-the-menu" title="Permanent link">¶</a></h2>
+<ul>
+<li>By default on PC, the F1 button will enter the menu.</li>
+<li>To exit the menu, use F1 or <code>Resume Game</code>.</li>
+<li>To start immediately in RGUI without any game or core loaded, use the <code>--menu</code> command line option. As a special case, if no arguments are received, it is treated the same as running <code>retroarch --menu</code>.</li>
+</ul>
+<p>Menu toggle button can be mapped to joypad as well, see option <code>input_menu_toggle</code> option in <code>retroarch.cfg</code>.</p>
+<h2 id="navigating-the-menu">Navigating the menu<a class="headerlink" href="#navigating-the-menu" title="Permanent link">¶</a></h2>
+<p>RGUI is controlled like any other libretro core. Regular input binds will apply, and binds here are defined in terms of the RetroPad, RetroArch's joypad abstraction.</p>
+<ul>
+<li><strong>A button</strong> (Default PC: X): Accept/OK</li>
+<li><strong>B button</strong> (Default PC: Z): Back/Cancel</li>
+<li><strong>Start</strong> (Default PC: Return): Go to main settings menu</li>
+<li><strong>Select</strong> (Default PC: Right shift): Set a setting to default</li>
+<li><strong>Up/Down D-pad</strong> (Default PC: Up/Down keys): Browse settings/files</li>
+<li><strong>Left/Right D-pad</strong> (Default PC: Left/Right keys): Toggle settings, or browse several items at once in file browser.</li>
+</ul>
+<h3 id="searching-through-lists-with-keyboard">Searching through lists with keyboard<a class="headerlink" href="#searching-through-lists-with-keyboard" title="Permanent link">¶</a></h3>
+<p>When using a keyboard, it can be slow to navigate a large list using gamepad-like controls. To help this, you can type <code>/</code> (forward slash) at any time to bring up a search-box. Type a search string and hit return. The cursor should jump to the first entry that matches. The search will match mid-path strings. However, if a match is found at the beginning of the path, like when searching for first letter, the start-of-path match will take priority.</p>
+<p>The forward slash is recognized on character basis, not on the key itself. This allows e.g. norwegian layouts to type forward slash using shift + 7. Characters which are outside the ASCII set are recognized but ignored as RGUI cannot render such characters anyways.</p>
+<h3 id="thumbnails">Thumbnails<a class="headerlink" href="#thumbnails" title="Permanent link">¶</a></h3>
+<p>RGUI thumbnail support requires the use of playlist files and thumbnail image packs, as described in <a href="../guides/roms-playlists-thumbnails/">ROMs, Playlists, and Thumbnails</a>.</p>
+<p>To view existing playlists choose <code>Load Content</code> from the top menu, then <code>Collections</code>. Select a playlist, and while browsing its contents use the RetroPad <strong>Y button</strong> to toggle the display of the thumbnail associated with the currently highlighted entry:</p>
+<p><em>Thumbnails off:</em></p>
+<p><center> <img alt="" src="/image/retroarch/rgui/thumbnails_off.png" /> </center></p>
+<p><em>Thumbnails on:</em></p>
+<p><center> <img alt="" src="/image/retroarch/rgui/thumbnails_on.png" /> </center></p>
+<p>Note that it is possible to navigate up and down through a playlist while thumbnails are being shown.</p>
+<p>To choose which type of thumbnail will be displayed, from the top menu select <code>Settings &gt; User Interface &gt; Appearance</code> and set the <code>Thumbnails</code> option to one of:</p>
+<ul>
+<li>
+<p>Screenshots</p>
+</li>
+<li>
+<p>Title Screens</p>
+</li>
+<li>
+<p>Boxarts</p>
+</li>
+</ul>
+<p>Any thumbnail image larger than 320x240 will be downscaled automatically to fit the screen. Three downscaling methods are provided, allowing a choice between performance and quality. To switch between them, from the top menu select <code>Settings &gt; User Interface &gt; Appearance</code> and set the <code>Thumbnail Downscaling Method</code> option to one of:</p>
+<ul>
+<li>
+<p><strong>Nearest Neighbour (Fast)</strong>: Simple (pixelated) nearest neighbour scaling. Has a very low impact on performance, and should be usable on any hardware.</p>
+</li>
+<li>
+<p><strong>Bilinear</strong>: Smooth (although potentially blurry) resampling. Slower than nearest neighbour, but should be usable on most hardware.</p>
+</li>
+<li>
+<p><strong>Sinc/Lanczos3 (Slow)</strong>: High quality resampling (although sometimes generates artefacts when source image contains dithering). May cause lag on very low end devices, but has no discernable performance impact on desktop-class hardware.</p>
+</li>
+</ul>
+<h2 id="starting-a-game">Starting a game<a class="headerlink" href="#starting-a-game" title="Permanent link">¶</a></h2>
+<ul>
+<li>To load a game you need a libretro core to use, and a ROM.</li>
+<li>Selecting <code>Core</code> from top menu, you can browse for a libretro implementation.</li>
+<li>Where the browser starts depends on your <code>libretro_path</code> config.</li>
+<li>If blank, it will start in root (tedious to browse). If <code>libretro_path</code> is a directory, RGUI will use that as top folder. If <code>libretro_path</code> is a full path, it will start in the folder where the file is.</li>
+</ul>
+<p>After loading a libretro core, you will see the name and version of the core in lower part of screen. You can then browse for a ROM with <code>Load Game</code>. To control where RGUI starts to browse for roms, set <code>rgui_browser_directory</code> in config. If not set, it'll start in root.</p>
+<p>The browser will filter out extensions for the last core set in <code>Core</code>, and use that core when a ROM is loaded. If <code>libretro_path</code> in config is set with a full path to a core, this core is automatically selected once RGUI boots up (but you can still change the core afterwards).</p>
+<h2 id="applying-shaders">Applying shaders<a class="headerlink" href="#applying-shaders" title="Permanent link">¶</a></h2>
+<p>See the <a href="../shaders/">shaders user guide</a>.</p>
+<h2 id="configuring-input">Configuring input<a class="headerlink" href="#configuring-input" title="Permanent link">¶</a></h2>
+<p>Currently you can configure two settings per player (on PC):</p>
+<ul>
+<li><strong>Device</strong>: Picks which gamepad to use for player N. The name of the pad is available.</li>
+<li><strong>Device Type</strong>: Picks which device type to use. This is relevant for the libretro core itself, and mostly useful for PlayStation, which needs to know if you're using a DualAnalog device or not.</li>
+</ul>
+<h3 id="configuring-joypad-input">Configuring joypad input<a class="headerlink" href="#configuring-joypad-input" title="Permanent link">¶</a></h3>
+<p>Configuring joypad input is supported from within RGUI.
+Normal gameplay binds as well as RGUI hotkey binding is supported. It is possible to bind everything in succession for convenience.</p>
+<h3 id="configuring-keyboard-input">Configuring keyboard input<a class="headerlink" href="#configuring-keyboard-input" title="Permanent link">¶</a></h3>
+<p>Configuring keyboard input is currently not supported. To configure keyboard binds, it must be done outside RGUI.</p>
+<h2 id="playstation-disk-swapping">PlayStation disk swapping<a class="headerlink" href="#playstation-disk-swapping" title="Permanent link">¶</a></h2>
+<p>Some PlayStation games require disk swapping. To manage disks, libretro has a concept of a disk index (like a multi-disk CD player, remember those? :P). If a PlayStation core is loaded, <code>Disk Index</code> and <code>Disk Image Append</code> options are added to main menu.</p>
+<p>In Mednafen PSX, multi-CD images are typically handled with an .m3u playlist. In this case, you can swap disks by cycling through the Disk Index setting. If you don't or can't use a playlist, you can append a disk image on the fly using <code>Disk Image Append</code>. In this case, you browse for a disk image and append it to the internal disk image list. The <code>Disk Index</code> is updated appropriately and you are returned to the game.</p>
+<h3 id="workarounds">Workarounds<a class="headerlink" href="#workarounds" title="Permanent link">¶</a></h3>
+<p>Replacing the disk inside RGUI is "physically" speaking the same as ejecting, swapping disks and closing the tray instantanously. Some games will not work with this approach, notably Metal Gear Solid because they need to detect an actual eject taking place.</p>
+<p>To work around this, set <code>Disk Index</code> to <code>No Disk</code>, and exit RGUI. The game will pick up that the tray has been ejected/missing disk after half a second or so. Now you can go back to RGUI, pick the correct disk index and return to the game.</p>
+<h2 id="themes">Themes<a class="headerlink" href="#themes" title="Permanent link">¶</a></h2>
+<p>The visual appearance of RGUI may altered by choosing one of 32 inbuilt color themes. From the top menu select <code>Settings &gt; User Interface &gt; Appearance</code> and cycle through the various <code>Menu Color Theme</code> options:</p>
+<p><center> <img alt="" src="/image/retroarch/rgui/rgui_color_theme.jpg" /> </center></p>
+<p>Setting <code>Menu Color Theme</code> to <code>Custom</code> allows for an even greater degree of personalisation via the use of custom menu theme presets. A number of examples are provided in the RetroArch assets package, which may be downloaded by selecting from the top menu <code>Online Updater &gt; Update Assets</code>. To choose one of these examples, go to <code>Settings &gt; User Interface &gt; Appearance</code> and select the <code>Custom Menu Theme Preset</code> option. In the file browser that opens, navigate to the <code>rgui</code> directory and select a <code>.cfg</code> file.</p>
+<p><center> <img alt="" src="/image/retroarch/rgui/rgui_custom_theme_preset.jpg" /> </center></p>
+<h3 id="creating-custom-menu-theme-presets">Creating Custom Menu Theme Presets<a class="headerlink" href="#creating-custom-menu-theme-presets" title="Permanent link">¶</a></h3>
+<p>A custom menu theme preset is a plain text configuration file (e.g. <code>my_theme.cfg</code>) with the following contents:</p>
+<pre><code>rgui_entry_normal_color = "0xAARRGGBB"
+rgui_entry_hover_color = "0xAARRGGBB"
+rgui_title_color = "0xAARRGGBB"
+rgui_bg_dark_color = "0xAARRGGBB"
+rgui_bg_light_color = "0xAARRGGBB"
+rgui_border_dark_color = "0xAARRGGBB"
+rgui_border_light_color = "0xAARRGGBB"
+rgui_wallpaper = "wallpaper_file.png"
+</code></pre>
+<ul>
+<li>
+<p><strong>rgui_entry_normal_color</strong>: Specifies the color of all 'normal' text displayed in any list.</p>
+</li>
+<li>
+<p><strong>rgui_entry_hover_color</strong>: Specifies the color of the currently selected entry, along with the core name and clock displayed at the bottom of the screen.</p>
+</li>
+<li>
+<p><strong>rgui_bg_dark/light_color</strong>: Specifies the menu background color. Setting <code>rgui_bg_dark_color</code> and <code>rgui_bg_light_color</code> to different values creates a chequerboard effect. Also used for the background of message boxes, and the title text when displaying thumbnails.</p>
+</li>
+<li>
+<p><strong>rgui_border_dark/light_color</strong>: Specifies the color of the border 'frame' drawn around the perimeter of the menu. Setting <code>rgui_border_dark_color</code> and <code>rgui_border_light_color</code> to different values creates a chequerboard effect. Also used for the frame of message boxes.</p>
+</li>
+<li>
+<p><strong>rgui_wallpaper</strong>: The relative file path to an optional wallpaper image. If this entry is omitted or left empty, no wallpaper is used.</p>
+</li>
+</ul>
+<h4 id="color-selection">Color Selection<a class="headerlink" href="#color-selection" title="Permanent link">¶</a></h4>
+<p>All color values are given in 0xAARRGGBB 8-digit hex code format - i.e. the first two digits correspond to the alpha (transparency) value, while the remaining 6 are a normal <a href="https://en.wikipedia.org/wiki/Web_colors#Hex_triplet">hex triplet</a>. For example: fully opaque red would correspond to <code>0xFFFF0000</code>; 50% transparent green would correspond (approximately) to <code>0x7F00FF00</code>.</p>
+<p>For maximum legibility, the alpha value for all text colors should be set to <code>FF</code> (fully opaque). For the background and border, setting partial transparency allows the currently loaded content to be seen 'through' the menu when opening it while running a game. Note, however, that setting partial transparency causes colors to appear darker than expected, so careful tuning of the <a href="https://en.wikipedia.org/wiki/Web_colors#Hex_triplet">hex triplet</a> values is required. Appropriate transparency values are as follows:</p>
+<ul>
+<li>
+<p>When creating a dark theme <em>without wallpaper</em>, the border/bg alpha component should be set to <code>C0</code>.</p>
+</li>
+<li>
+<p>When creating a light theme <em>without wallpaper</em>, the border/bg alpha component should be set to <code>E0</code>.</p>
+</li>
+<li>
+<p>When creating a theme <em>with wallpaper</em>, the border/bg alpha component should be set to <code>FF</code>. (This is because it is very difficult to create a semi-transparent wallpaper image with proper colors, and so it is most practical to make everything fully opaque when using wallpapers)</p>
+</li>
+</ul>
+<h4 id="creating-wallpaper-images">Creating Wallpaper Images<a class="headerlink" href="#creating-wallpaper-images" title="Permanent link">¶</a></h4>
+<p>RGUI wallpapers must have the following properties:</p>
+<ul>
+<li>
+<p>A resolution of exactly 320x240.</p>
+</li>
+<li>
+<p>A color depth of 4 bits per pixel. (This is not <em>strictly</em> required, but using an image with greater color depth will not produce expected results)</p>
+</li>
+</ul>
+<p>Wallpapers should be generated in <a href="https://en.wikipedia.org/wiki/Portable_Network_Graphics">PNG</a> format.</p>
+<p>To produce a suitable image, the user should first create a regular 320x240 <a href="https://en.wikipedia.org/wiki/Portable_Network_Graphics">PNG</a> file via any means at their disposal. <a href="https://inkscape.org/">Inkscape</a> users may find the following simple template beneficial: <a href="../rgui_wallpaper_template.svg">rgui_wallpaper_template.svg</a></p>
+<p>Once the image is complete, it is necessary to reduce its color depth. This may be done via one of two methods:</p>
+<p><em>1) pngquant (recommended):</em></p>
+<p><a href="https://pngquant.org/">pngquant</a> is a command-line utility for lossy compression of PNG files. It supports very high quality conversion of images to <a href="https://en.wikipedia.org/wiki/Indexed_color">indexed</a> color, in a manner appropriate for <em>most</em> kinds of wallpaper.</p>
+<p>Download/compile/install the latest version, then use the following command to process a wallpaper source file:</p>
+<pre><code>&gt; pngquant --posterize=4 --force -o "WALLPAPER_NAME_indexed.png" "WALLPAPER_SOURCE.png"
+</code></pre>
+<p>Open the output <code>WALLPAPER_NAME_indexed.png</code> file and check that colors/gradients appear correct. In most cases, the result will be agreeable. If odd 'speckles' are apparent, it may be necessary to adjust the colors in the source image (this is a black art, and beyond the scope of this document). If the image has unacceptable, uncorrectable dithering then the <code>WALLPAPER_NAME_indexed.png</code> file should be discarded, and the following alternate method used instead:</p>
+<p><em>2) GIMP:</em></p>
+<p><a href="https://www.gimp.org/">GIMP</a> is a well known image editor. In general it produces lower quality color reduction than <a href="https://pngquant.org/">pngquant</a>, but it can handle certain gradients and patterns that cause <a href="https://pngquant.org/">pngquant</a> to stumble. Download/install the latest version, then:</p>
+<ul>
+<li>
+<p>Open the wallpaper source file</p>
+</li>
+<li>
+<p>From the menu, select <code>Image &gt; Mode &gt; Indexed...</code></p>
+</li>
+<li>
+<p>In the <code>Indexed Color Conversion</code> pop-up, select:</p>
+<ul>
+<li>
+<p><code>Generate optimum palette</code></p>
+</li>
+<li>
+<p><code>Maximum number of colors:</code> <code>16</code></p>
+</li>
+<li>
+<p><code>Color dithering:</code> EITHER <code>Floyd-Steinberg (normal)</code> OR <code>Floyd-Steinberg (reduced color bleeding</code> (use whichever looks best, but the other options here will not work)</p>
+</li>
+<li>
+<p>Press <code>Convert</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Inspect the result. Some manual touch-up may be required. (If the image is disagreeable at this stage, then the wallpaper probably isn't going to work - so start over...)</p>
+</li>
+<li>
+<p>If all is well, select from the menu <code>File &gt; Export As...</code> and name the file <code>WALLPAPER_NAME_indexed.png</code></p>
+</li>
+<li>
+<p>In the <code>Export Image as PNG</code> pop-up, untick <code>Save color values from transparent pixels</code> and click <code>Export</code></p>
+</li>
+</ul>
+<p>Whether <a href="https://pngquant.org/">pngquant</a> or <a href="https://www.gimp.org/">GIMP</a> is used to create <code>WALLPAPER_NAME_indexed.png</code>, a final stage of optimisation should be applied to generate a 'clean' output wallpaper. This can be done using <a href="http://optipng.sourceforge.net/">OptiPNG</a>. Download/compile/install the latest version, then run the following command:</p>
+<pre><code>&gt; optipng -o7 -strip=all -force -clobber -out `WALLPAPER_NAME.png` `WALLPAPER_NAME_indexed.png`
+</code></pre>
+<p>Edit the custom menu theme preset configuration file such that <code>rgui_wallpaper</code> points to the resultant <code>WALLPAPER_NAME.png</code> image. Once appropriate text/background/border colors have been set, the theme is complete.</p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#features">Features</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#config-file">Config file</a></li>
+      <ul>
+    
+      <li><a href="#warning">Warning</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#entering-the-menu">Entering the menu</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#navigating-the-menu">Navigating the menu</a></li>
+      <ul>
+    
+      <li><a href="#searching-through-lists-with-keyboard">Searching through lists with keyboard</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#thumbnails">Thumbnails</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#starting-a-game">Starting a game</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#applying-shaders">Applying shaders</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#configuring-input">Configuring input</a></li>
+      <ul>
+    
+      <li><a href="#configuring-joypad-input">Configuring joypad input</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#configuring-keyboard-input">Configuring keyboard input</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#playstation-disk-swapping">PlayStation disk swapping</a></li>
+      <ul>
+    
+      <li><a href="#workarounds">Workarounds</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#themes">Themes</a></li>
+      <ul>
+    
+      <li><a href="#creating-custom-menu-theme-presets">Creating Custom Menu Theme Presets</a></li>
+      <ul>
+    
+      <li><a href="#color-selection">Color Selection</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#creating-wallpaper-images">Creating Wallpaper Images</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../roms-playlists-thumbnails/" title="previous chapter">
+        Playlists and Thumbnails
+      </a></li>
+    
+    
+      <li>Next: <a href="../ai-service/" title="next chapter">
+        AI Service
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

@@ -1,0 +1,996 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>RetroAchievements &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="retroachievements-in-retroarch">RetroAchievements In RetroArch<a class="headerlink" href="#retroachievements-in-retroarch" title="Permanent link">¶</a></h1>
+<h2 id="what-are-retroachievements"><strong>What are RetroAchievements?</strong><a class="headerlink" href="#what-are-retroachievements" title="Permanent link">¶</a></h2>
+<p><a href="https://retroachievements.org/">retroachievements.org</a> is a service that provides a trophies unlocking mechanism similar to modern consoles, for Retro games.</p>
+<p>!!! Warning
+    The service is not maintained by RetroArch or the Libretro team.</p>
+<p>!!! Note
+    If you want to contribute, please update RetroArch and cores to get the latest fixes on the RetroAchievements feature;
+    then in order to propose improvements to this document, <a href="https://github.com/libretro/docs/tree/master/docs/guides/retroachievements.md">do it via GitHub</a> using "Pull Requests"</p>
+<h2 id="how-to-setup-achievements"><strong>How to setup achievements</strong><a class="headerlink" href="#how-to-setup-achievements" title="Permanent link">¶</a></h2>
+<ol>
+<li>Register an account on <a href="https://retroachievements.org/">retroachievements.org</a> (don't forget to confirm your account creation with the email they send to you).</li>
+<li>Open Retroarch and go to Settings-&gt;Achievements</li>
+<li>Enable the functionality and fill your retroachievements credentials</li>
+</ol>
+<p>!!! note
+    The hardcore mode prevents you from using emulation features like savestates, slow motion and cheats.
+    <strong>BUT</strong> gives you double points.</p>
+<p><img alt="" src="../../image/retroarch/retroachievements/achievements_settings.jpg" /></p>
+<h2 id="check-your-connection-to-the-service"><strong>Check your connection to the service</strong><a class="headerlink" href="#check-your-connection-to-the-service" title="Permanent link">¶</a></h2>
+<p><strong>You need an active Internet connection.</strong></p>
+<p>In this example, we are using the game Chrono Trigger (USA) with the Snes9x core.</p>
+<p>Launch the game and trigger the Quick Menu.</p>
+<p>Go to Achievements and you should see a list of the unlockable trophies for this game.</p>
+<p><img alt="" src="../../image/retroarch/retroachievements/achievements_list.png" /></p>
+<h2 id="check-your-progress"><strong>Check your progress</strong><a class="headerlink" href="#check-your-progress" title="Permanent link">¶</a></h2>
+<p>On the retroachievements website, you can login and access your account page.</p>
+<p>You should be able to check your progress in the games and see which trophies you unlocked.</p>
+<p>Trophies unlocked in hardcore mode are marked with a special color.</p>
+<p>You can also check the progress of your friends and add comments on their trophies.</p>
+<p><img alt="" src="../../image/retroarch/retroachievements/achievements_progress.png" /></p>
+<h2 id="cores-compatibility"><strong>Cores Compatibility</strong><a class="headerlink" href="#cores-compatibility" title="Permanent link">¶</a></h2>
+<h3 id="arcade">Arcade<a class="headerlink" href="#arcade" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/FBNeo">FinalBurn Neo</a></td>
+<td align="center">✔</td>
+<td align="center">AES bios is required for NeoGeo achievements. AES Asia is English.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/mame">MAME</a></td>
+<td align="center">✕</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="atari-2600">Atari 2600<a class="headerlink" href="#atari-2600" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/stella-libretro">Stella</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/stella2014-libretro">Stella 2014</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="atari-7800">Atari 7800<a class="headerlink" href="#atari-7800" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/prosystem-libretro">ProSystem</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="atari-lynx">Atari Lynx<a class="headerlink" href="#atari-lynx" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/libretro-handy">Handy</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/beetle-lynx-libretro">Beetle Handy</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="wonderswan-wonderswan-color">Wonderswan / Wonderswan Color<a class="headerlink" href="#wonderswan-wonderswan-color" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/beetle-wswan-libretro">Beetle Cygne</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="colecovision">ColecoVision<a class="headerlink" href="#colecovision" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/blueMSX-libretro">blueMSX</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="pc-engine-pc-engine-cd">PC Engine / PC Engine CD<a class="headerlink" href="#pc-engine-pc-engine-cd" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/beetle-pce-fast-libretro">Beetle PCE FAST</a></td>
+<td align="center">✔</td>
+<td align="center">Does not support SuperGrafx games.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/beetle-pce-fast-libretro">Beetle PCE</a></td>
+<td align="center">✔</td>
+<td align="center">Slightly behind in updates.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/beetle-supergrafx-libretro">Beetle SGX</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="pc-8000-pc-8800">PC-8000 / PC-8800<a class="headerlink" href="#pc-8000-pc-8800" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/quasi88-libretro">QUASI88</a></td>
+<td align="center">✔</td>
+<td align="center">Some games may be difficult to play in Retroarch due to lack of complete keyboard access. Sets generally expect the MkIISR bios.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="nintendo-ds">Nintendo DS<a class="headerlink" href="#nintendo-ds" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/desmume">DeSmuME</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/desmume2015">DeSmuME 2015</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/melonDS">MelonDS</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="game-boy-game-boy-color">Game Boy / Game Boy Color<a class="headerlink" href="#game-boy-game-boy-color" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/gearboy">Gearboy</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/SameBoy">SameBoy</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/gambatte-libretro">Gambatte</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/vbam-libretro">VBA-M</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/mgba">mGBA</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/emux">Emux GB</a></td>
+<td align="center">✕</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/tgbdual-libretro">TGB Dual</a></td>
+<td align="center">✕</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="game-boy-advance">Game Boy Advance<a class="headerlink" href="#game-boy-advance" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/mgba">mGBA</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/vba-next">VBA Next</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/vbam-libretro">VBA-M</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/beetle-gba-libretro">Beetle GBA</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/gpsp">gpSP</a></td>
+<td align="center">✕</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/meteor-libretro">Meteor</a></td>
+<td align="center">✕</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="nes">NES<a class="headerlink" href="#nes" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/libretro-fceumm">FCEUmm</a></td>
+<td align="center">✔</td>
+<td align="center">Also supports FDS.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/QuickNES_Core">QuickNES</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/SourMesen/Mesen">Mesen</a></td>
+<td align="center">✔</td>
+<td align="center"><a href="https://github.com/SourMesen/Mesen/issues/642"><strong>Achievements utilizing SRAM will have issues</strong></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/nestopia">Nestopia UE</a></td>
+<td align="center">✕</td>
+<td align="center"><a href="https://github.com/libretro/docs/pull/10"><strong>Achievements are not fully supported yet</strong></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/bnes-libretro">bnes</a></td>
+<td align="center">✕</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/emux">Emux NES</a></td>
+<td align="center">✕</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="nintendo-64">Nintendo 64<a class="headerlink" href="#nintendo-64" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/mupen64plus-libretro">Mupen64Plus-Next</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/parallel-n64">ParaLLEl N64</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="pokemon-mini">Pokemon Mini<a class="headerlink" href="#pokemon-mini" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/PokeMini">PokeMini</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="snes">SNES<a class="headerlink" href="#snes" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/snes9x">Snes9x</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/snes9x2010">Snes9x 2010</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/snes9x2005">Snes9x 2005</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/snes9x2005">Snes9x 2005 Plus</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/snes9x2002">Snes9x 2002</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/beetle-bsnes-libretro">Beetle bsnes</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/bsnes-libretro">bsnes</a></td>
+<td align="center">✕</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/bsnes-libretro">bsnes 2014 Accuracy</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/bsnes-libretro">bsnes 2014 Balanced</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/bsnes-libretro">bsnes 2014 Performance</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/bsnes-mercury">bsnes-mercury Accuracy</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/bsnes-mercury">bsnes-mercury Balanced</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/bsnes-mercury">bsnes-mercury Performance</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/bsnes-libretro-cplusplus98">bsnes C++98 (v085)</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/SourMesen/Mesen-S">Mesen-S</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://gitlab.com/higan/higan">higan Accuracy</a></td>
+<td align="center">✕</td>
+<td align="center"><a href="https://forums.libretro.com/t/is-higan-105-accuracy-supposed-to-be-slow-on-a-3-ghz-ivy-bridge-i7/13405/7?u=esoptron">Achievement support isn't going to be added</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/nSide">nSide Balanced</a></td>
+<td align="center">✕</td>
+<td align="center"><a href="https://forums.libretro.com/t/is-higan-105-accuracy-supposed-to-be-slow-on-a-3-ghz-ivy-bridge-i7/13405/7?u=esoptron">Achievement support isn't going to be added</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="virtual-boy">Virtual Boy<a class="headerlink" href="#virtual-boy" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/beetle-vb-libretro">Beetle VB</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="master-system-megadrive-genesis">Master System / MegaDrive - Genesis<a class="headerlink" href="#master-system-megadrive-genesis" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/drhelius/Gearsystem">Gearsystem</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/Genesis-Plus-GX">Genesis Plus GX</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/picodrive">Picodrive</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/blastem">BlastEm</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/emux">Emux SMS</a></td>
+<td align="center">✕</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/smsplus-gx">SMS Plus GX</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="sega-32x">Sega 32X<a class="headerlink" href="#sega-32x" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/picodrive">Picodrive</a></td>
+<td align="center">✔</td>
+<td align="center">Support is extremely variable.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="game-gear">Game Gear<a class="headerlink" href="#game-gear" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/Genesis-Plus-GX">Genesis Plus GX</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/drhelius/Gearsystem">Gearsystem</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/smsplus-gx">SMS Plus GX</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="sg-1000">SG-1000<a class="headerlink" href="#sg-1000" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/Genesis-Plus-GX">Genesis Plus GX</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/drhelius/Gearsystem">Gearsystem</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/blueMSX-libretro/">blueMSX</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="sega-cd">Sega CD<a class="headerlink" href="#sega-cd" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/Genesis-Plus-GX">Genesis Plus GX</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/picodrive">Picodrive</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="sega-saturn">Sega Saturn<a class="headerlink" href="#sega-saturn" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/beetle-saturn-libretro">Beetle Saturn</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/yabause">Yabause</a></td>
+<td align="center">x</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/yabause">Yabasanshiro</a></td>
+<td align="center">x</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/yabause">Kronos</a></td>
+<td align="center">x</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="neo-geo-pocket-neo-geo-pocket-color">Neo Geo Pocket / Neo Geo Pocket Color<a class="headerlink" href="#neo-geo-pocket-neo-geo-pocket-color" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/beetle-ngp-libretro">Beetle NeoPop</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/RACE">RACE</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="sony-playstation">Sony Playstation<a class="headerlink" href="#sony-playstation" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Core</th>
+<th align="center">Supported</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/libretro/beetle-psx-libretro">Beetle PSX HW</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/beetle-psx-libretro">Beetle PSX</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><a href="https://github.com/libretro/pcsx_rearmed">PCSX ReARMed</a></td>
+<td align="center">✔</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#what-are-retroachievements">What are RetroAchievements?</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#how-to-setup-achievements">How to setup achievements</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#check-your-connection-to-the-service">Check your connection to the service</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#check-your-progress">Check your progress</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#cores-compatibility">Cores Compatibility</a></li>
+      <ul>
+    
+      <li><a href="#arcade">Arcade</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#atari-2600">Atari 2600</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#atari-7800">Atari 7800</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#atari-lynx">Atari Lynx</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#wonderswan-wonderswan-color">Wonderswan / Wonderswan Color</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#colecovision">ColecoVision</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#pc-engine-pc-engine-cd">PC Engine / PC Engine CD</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#pc-8000-pc-8800">PC-8000 / PC-8800</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#nintendo-ds">Nintendo DS</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#game-boy-game-boy-color">Game Boy / Game Boy Color</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#game-boy-advance">Game Boy Advance</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#nes">NES</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#nintendo-64">Nintendo 64</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#pokemon-mini">Pokemon Mini</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#snes">SNES</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#virtual-boy">Virtual Boy</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#master-system-megadrive-genesis">Master System / MegaDrive - Genesis</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#sega-32x">Sega 32X</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#game-gear">Game Gear</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#sg-1000">SG-1000</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#sega-cd">Sega CD</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#sega-saturn">Sega Saturn</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#neo-geo-pocket-neo-geo-pocket-color">Neo Geo Pocket / Neo Geo Pocket Color</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#sony-playstation">Sony Playstation</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../netplay-faq/" title="previous chapter">
+        Netplay Getting Started / FAQ
+      </a></li>
+    
+    
+      <li>Next: <a href="../softpatching/" title="next chapter">
+        Softpatching ROMs
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

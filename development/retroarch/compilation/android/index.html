@@ -1,0 +1,323 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Android &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+    <link rel="stylesheet" href="../../../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="compiling-for-android">Compiling for Android<a class="headerlink" href="#compiling-for-android" title="Permanent link">¶</a></h1>
+<h2 id="compiling-from-windows">Compiling from Windows<a class="headerlink" href="#compiling-from-windows" title="Permanent link">¶</a></h2>
+<p>You need a complete Android development environment, including the <strong>Android SDK</strong> and <strong>Android NDK</strong>.</p>
+<p><strong>Other dependencies:</strong></p>
+<ul>
+<li>Cygwin (base settings for Bash scripts)</li>
+<li>Git</li>
+</ul>
+<h3 id="installing-openjdk-or-oracle-jdk">Installing OpenJDK or Oracle JDK<a class="headerlink" href="#installing-openjdk-or-oracle-jdk" title="Permanent link">¶</a></h3>
+<h3 id="installing-cygwin">Installing cygwin<a class="headerlink" href="#installing-cygwin" title="Permanent link">¶</a></h3>
+<p>Download the setup tool from the official webpage and install the base distribution.</p>
+<h3 id="installing-git">Installing git<a class="headerlink" href="#installing-git" title="Permanent link">¶</a></h3>
+<p>You can install Windows git or add the cygwin git version from the cygwin installer.</p>
+<h3 id="next-step-from-here-follow-the-instructions-for-compiling-android-from-linux">Next step: From here, follow the instructions for compiling Android from Linux.<a class="headerlink" href="#next-step-from-here-follow-the-instructions-for-compiling-android-from-linux" title="Permanent link">¶</a></h3>
+<h2 id="compiling-from-linux">Compiling from Linux<a class="headerlink" href="#compiling-from-linux" title="Permanent link">¶</a></h2>
+<p>You need a complete android development environment ready to develop native apps. That means you have:</p>
+<ul>
+<li><a href="http://developer.android.com/sdk/index.html">Android SDK</a></li>
+<li><a href="https://developer.android.com/tools/sdk/ndk/index.html">Android NDK</a></li>
+</ul>
+<p>Use Google to figure out how to install that and make sure the appropriate executables from the above are in your path variable. </p>
+<p>These instructions have been tested under Linux (Fedora 20 and Ubuntu 18.04). They may also work in windows with cygwin.</p>
+<h3 id="getting-the-code">Getting the code<a class="headerlink" href="#getting-the-code" title="Permanent link">¶</a></h3>
+<pre><code>git clone https://github.com/libretro/libretro-super.git
+cd libretro-super
+./libretro-fetch.sh
+</code></pre>
+<p><code>./libretro-fetch.sh</code> can fail on <code>fork()</code> calls, repeat until all are up to date. For <code>./libretro-build-android-mk.sh</code>, some cores may fail to compile (g++ "Argument list too long" error).</p>
+<h3 id="building-the-cores">Building the cores<a class="headerlink" href="#building-the-cores" title="Permanent link">¶</a></h3>
+<p>For the core building portion of this tutorial, you'll need to put at least your NDK dir in the PATH variable for the build script to work. Just for the heck of it, I also like to throw in the tools folder from SDK as well as the build-tools (adjust to your situation):</p>
+<pre><code>export PATH=/home/boo/Android/Sdk/ndk-bundle/build:/home/boo/Android/Sdk/tools:/home/boo/Android/Sdk/build-tools/28.0.3:$PATH
+</code></pre>
+<h3 id="run-build-script-read-notes-below-before-running-the-script">Run build script ( read notes below before running the script):<a class="headerlink" href="#run-build-script-read-notes-below-before-running-the-script" title="Permanent link">¶</a></h3>
+<pre><code>NOCLEAN=1 ./libretro-build-android-mk.sh
+</code></pre>
+<p>You can omit <code>NOCLEAN=1</code> if you'd like to perform make clean on every core's repo before building each.</p>
+<p>For a variety of reasons, some of the cores may not be compiled by the script. These reasons can range from: core folder doesn't have a libretro/jni folder setup yet, core's libretro/jni folder is in a place that the script does not expect, core has been recently added to project and has not yet been added to script or you're missing some essential dependencies and the build script failed. Some cores (like snes9x2002) need an older NDK. Some core don't use jni but use make or cmake instead.</p>
+<p>In the event you are missing a core that you want, you can build it in most cases by going to its subfolder (libretro-corename) and performing this series of commands:</p>
+<pre><code>#for example
+cd libretro-flycast
+
+#get corename for later
+corename=$(echo ${PWD##*/}|cut -d "-" -f 2)
+
+#now try to find the libretro/jni folder
+cd $(find . -iname "jni" -type d | grep --color=NEVER "libretro/jni")
+
+#if it exists and you don't get an error, build the core:
+ndk-build
+
+#if it succeeds, do this to copy built .so files to dist folder:
+for arch in "arm64-v8a" "armeabi-v7a" "x86" "x86_64"; do if [ -f "$arch/libretro.so" ]; then cp -v  $arch/libretro.so $SRC/dist/android/$arch/"$corename"_libretro_android.so; else echo "$arch" build HAS FAILED!; fi; done
+</code></pre>
+<p>You may also want to check this repo for a list of dependencies needed to build the cores:</p>
+<pre><code>https://github.com/libretro/libretro-deps/
+
+#these deps can usually be installed via apt-get install (don't forget to append -dev at the end). for example:
+
+sudo apt-get install libfaac-dev
+</code></pre>
+<p>more info about core building can be had here:</p>
+<pre><code>https://github.com/thebunnyrules/docs/blob/master/docs/development/cores/developing-cores.md
+</code></pre>
+<h3 id="building-retroarch">Building RetroArch<a class="headerlink" href="#building-retroarch" title="Permanent link">¶</a></h3>
+<h3 id="prep-work">PREP WORK<a class="headerlink" href="#prep-work" title="Permanent link">¶</a></h3>
+<p>The RetroArch repo is fetched into the libretro-super folder by <code>./libretro-fetch.sh</code> above.</p>
+<p>You first need to fetch the submodules for it.</p>
+<pre><code>cd retroarch
+git submodule update --init
+</code></pre>
+<p>Now go to the project folder:</p>
+<pre><code>cd pkg/android/phoenix
+</code></pre>
+<p>Within this folder, edit <code>local.properties</code> to point to the location of your sdk and ndk directories by adding lines that look like this: </p>
+<pre><code>ndk.dir=/complete/path/to/android-ndk-r20
+sdk.dir=/complete/path/to/Sdk
+</code></pre>
+<p>Eg. if you have Android Studio, your dirs should be in :</p>
+<pre><code>ndk.dir=/home/yourUSERNAME/Android/Sdk/ndk-bundle
+sdk.dir=/home/yourUSERNAME/Android/Sdk
+</code></pre>
+<p>If you want to build a release apk (aka an apk with none of the debug layers), you'll have to self sign it. Make a file called <code>keystore.properties</code> with the following content:</p>
+<pre><code>storePassword=YOURPASS
+keyPassword=YOURPASS
+keyAlias=KEY_ALIAS
+storeFile=/full/path/to/keystore-file_NO_RELATIVE_PATHS.jks
+</code></pre>
+<p>Next, generate a keystore file and be sure to put it where <code>keystore.properties</code> says it is:</p>
+<pre><code>keytool -genkey -alias KEY_ALIS -keyalg RSA -keypass YOURPASS -keystore keystore-file.jks
+</code></pre>
+<p>Now all the generated release apk will be automatically signed by gradle. </p>
+<p>Next, copy the cores, assets and overlays to an assets folder you create here:</p>
+<pre><code>mkdir -p assets/cores
+mkdir assets/overlays
+cp ../../../../dist/android/arm64-v8a/* assets/cores/ #replace arm64-v8a here by the  archetecture of the device you will be using. Google your phone's specs.
+cp -r ../../../../dist/info/ assets/
+cp -r ../../../../retroarch/media/overlays/* assets/overlays/
+</code></pre>
+<p>Optionally, you may want to include the assets for the front-end (menu icons, fonts, images etc), shader caches, dbs, cheats, etc... These assets can be downloaded at any time during run time via the updater but if you want to bundle them into the build you may do so by downloading bundle.zip / cheats.zip and extracting them to assets folder: </p>
+<pre><code>    wget https://buildbot.libretro.com/assets/frontend/bundle.zip
+    unzip -n bundle.zip -d assets
+    wget https://buildbot.libretro.com/assets/frontend/cheats.zip
+    mkdir assets/cheats
+    unzip cheats.zip -d assets/cheats
+</code></pre>
+<p><em>NOTE ABOUT BUNDLED ASSETS AND CORES</em> </p>
+<p>I've sometimes noticed a bug where the built apk does not unpack the bundled assets and cores on first install. My workaround was to re-install the apk a second time. On the second install, the assets and cores get unpacked. This is a bug in 1.7.7 and 1.7.8. </p>
+<h3 id="build">BUILD<a class="headerlink" href="#build" title="Permanent link">¶</a></h3>
+<p>Now run gradlew and let it configure and sync itself and download all it's dependencies:</p>
+<pre><code>./gradlew
+</code></pre>
+<p>Optionally: You can get a list of available tasks by doing:</p>
+<pre><code> ./gradlew tasks
+</code></pre>
+<p>Now, if all went smoothly with config step, you can proceed to build the apk</p>
+<pre><code> #Builds release variants: Normal, ra32 and aarch64
+ ./gradlew assembleRelease
+
+ #Build debug variants:
+ ./gradlew assembleDebug
+
+ #Builds all variants
+./gradlew buildNeeded
+</code></pre>
+<p>If all goes well, this will spit out an .apk. For example <code>build/outputs/apk/normal/debug/phoenix-normal-debug.apk</code>. Put it on your device with</p>
+<pre><code>adb install -r build/outputs/apk/normal/debug/phoenix-normal-debug.apk
+</code></pre>
+<p>You can find all the apks built by gradle with this command (execute from the same dir as gradlew)"</p>
+<pre><code>find . -iname "*.apk"
+</code></pre>
+<p>This should give you a list of all the outputted apks. </p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../../../..">
+      <img class="logo" src="../../../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#compiling-from-windows">Compiling from Windows</a></li>
+      <ul>
+    
+      <li><a href="#installing-openjdk-or-oracle-jdk">Installing OpenJDK or Oracle JDK</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#installing-cygwin">Installing cygwin</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#installing-git">Installing git</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#next-step-from-here-follow-the-instructions-for-compiling-android-from-linux">Next step: From here, follow the instructions for compiling Android from Linux.</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#compiling-from-linux">Compiling from Linux</a></li>
+      <ul>
+    
+      <li><a href="#getting-the-code">Getting the code</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#building-the-cores">Building the cores</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#run-build-script-read-notes-below-before-running-the-script">Run build script ( read notes below before running the script):</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#building-retroarch">Building RetroArch</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#prep-work">PREP WORK</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#build">BUILD</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../ios/" title="previous chapter">
+        iOS
+      </a></li>
+    
+    
+      <li>Next: <a href="../linux-and-bsd/" title="next chapter">
+        Overview for Linux/BSD
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

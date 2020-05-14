@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Coding Standards &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="libretro-coding-standards">Libretro Coding Standards<a class="headerlink" href="#libretro-coding-standards" title="Permanent link">¶</a></h1>
+<p>!!! Note "Scope"
+    These standards are intended to apply to frontends, cores, and other projects that are maintained as part of the Libretro organization. These standards are not enforced on independent projects making use of the Libretro API or other open technologies.</p>
+<h2 id="standards-for-retroarch">Standards for RetroArch<a class="headerlink" href="#standards-for-retroarch" title="Permanent link">¶</a></h2>
+<h3 id="c89-compatibility">C89 Compatibility<a class="headerlink" href="#c89-compatibility" title="Permanent link">¶</a></h3>
+<p>All code contributed to RetroArch must be compliant with the "C89" coding standard established by <a href="https://web.archive.org/web/20110306044509/http://flash-gordon.me.uk/ansi.c.txt">ANSI X3.159-1989</a>.</p>
+<h4 id="variable-declaration">Variable declaration<a class="headerlink" href="#variable-declaration" title="Permanent link">¶</a></h4>
+<p>To maintain C89 compatibility, declare all local variables at the beginning of their respective scope blocks, rather than inline at the time of their first use.</p>
+<h4 id="comments">Comments<a class="headerlink" href="#comments" title="Permanent link">¶</a></h4>
+<p>To maintain C89 compatibility, comments should be written in legacy using <code>/*</code> at the beginning and <code>*/</code> and the end.</p>
+<p>Each new line of a multiline comment should begin with a space and an asterisk:</p>
+<pre><code class="c">/* Sometimes it is useful to incorporate a lengthy comment in source.
+ * For example:
+ *    - providing specifications for a function preceeding its declaration
+ *    - to explain a complex or unintuitive algorithm
+ *    - to explain the history or special circumstances of a section of code
+ */
+</code></pre>
+
+<p>Comment headers for functions should use a maximum column width of 80 characters. </p>
+<h3 id="indentation">Indentation<a class="headerlink" href="#indentation" title="Permanent link">¶</a></h3>
+<p>Indentation is three spaces.</p>
+<h3 id="braces">Braces<a class="headerlink" href="#braces" title="Permanent link">¶</a></h3>
+<p>Brace usage follows "Allman style". The brace associated with a control statement is placed on the following line, indented to the same level as the control statement. Statements within the braces are indented to the next level.</p>
+<pre><code class="c">while (x == y)
+{
+   something();
+   somethingelse();
+}
+
+finalthing();
+</code></pre>
+
+<h3 id="single-line-if-conditional-statements">Single-line <code>if</code> conditional statements<a class="headerlink" href="#single-line-if-conditional-statements" title="Permanent link">¶</a></h3>
+<p><code>if</code> and <code>else</code> conditionals with single-line statements should be spaced with the conditional on one line and the statement below it, indented, with no braces:</p>
+<pre><code class="c">if (time &gt; launch_date)
+   initiate_probe_communication();
+else
+   generate_prelaunch_report();
+</code></pre>
+
+<h3 id="whitespace-and-alignment">Whitespace and alignment<a class="headerlink" href="#whitespace-and-alignment" title="Permanent link">¶</a></h3>
+<p>When possible, use whitespace to improve the readability of code that makes many assignment statements in a row, uses complex conditionals, or passes a large number of paramters to a function.</p>
+<p><strong>Example of aligning successive assignment statements</strong>:</p>
+<pre><code class="c">if (seq == 1157460427127406720ULL)
+{
+   content_ctx_info_t content_info;
+   content_info.argc                   = 0;
+   content_info.argv                   = NULL;
+   content_info.args                   = NULL;
+   content_info.environ_get            = NULL;
+
+   ...
+}
+</code></pre>
+
+<p><strong>Example of aligning a complex parameter list</strong>:</p>
+<pre><code class="c">if (recording_driver_get_data_ptr())
+{
+   runloop_msg_queue_push(
+         msg_hash_to_str(MSG_RESTARTING_RECORDING_DUE_TO_DRIVER_REINIT),
+         2, 180, false,
+         NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+
+   command_event(CMD_EVENT_RECORD_DEINIT, NULL);
+   command_event(CMD_EVENT_RECORD_INIT, NULL);
+}
+</code></pre>
+
+<h3 id="vim-configuration-for-libretro-style">vim configuration for Libretro style<a class="headerlink" href="#vim-configuration-for-libretro-style" title="Permanent link">¶</a></h3>
+<p>Coders who use the <strong>vim</strong> editor can create a <code>vimrc</code> configuration file with the following settings in order to pre-set RetroArch indentation style.</p>
+<pre><code>set tabstop=3
+set shiftwidth=3
+set expandtab
+set textwidth=80
+</code></pre>
+
+<h2 id="standards-for-libretro-cores">Standards for Libretro cores<a class="headerlink" href="#standards-for-libretro-cores" title="Permanent link">¶</a></h2>
+<p>Cores and other projects that are maintained by the Libretro organization can be considered as three categories:</p>
+<ul>
+<li>New, original software</li>
+<li>Ports and enhancements of third-party software that is still maintained</li>
+<li>Ports and enhancements of third-party software that is not maintained</li>
+</ul>
+<p>New cores and other projects <strong>that are maintained by the Libretro organization</strong> should be coded as closely to the Libretro/RetroArch standard as possible based on the language used by the core. Cores that are based on existing software should generally conform to whatever standards and style were used in the orginal software, unless the original software is no longer maintained. In that case the coding style may be changed to Libretro/RetroArch at the discretion of the involved Libretro developers and leadership.</p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#standards-for-retroarch">Standards for RetroArch</a></li>
+      <ul>
+    
+      <li><a href="#c89-compatibility">C89 Compatibility</a></li>
+      <ul>
+    
+      <li><a href="#variable-declaration">Variable declaration</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#comments">Comments</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#indentation">Indentation</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#braces">Braces</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#single-line-if-conditional-statements">Single-line if conditional statements</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#whitespace-and-alignment">Whitespace and alignment</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#vim-configuration-for-libretro-style">vim configuration for Libretro style</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#standards-for-libretro-cores">Standards for Libretro cores</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../input-api/" title="previous chapter">
+        Input API
+      </a></li>
+    
+    
+      <li>Next: <a href="../licenses/" title="next chapter">
+        Licenses
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:08
+  -->
+</body>
+</html>

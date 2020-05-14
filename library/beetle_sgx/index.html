@@ -1,0 +1,689 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>NEC - PC Engine SuperGrafx (Beetle SGX) &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="nec-pc-engine-supergrafx-beetle-supergrafx">NEC - PC Engine SuperGrafx (Beetle SuperGrafx)<a class="headerlink" href="#nec-pc-engine-supergrafx-beetle-supergrafx" title="Permanent link">¶</a></h1>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">¶</a></h2>
+<p>Standalone port of Mednafen PCE Fast to libretro.</p>
+<p>The Beetle SuperGrafx core has been authored by</p>
+<ul>
+<li><a href="https://mednafen.github.io/">Mednafen Team</a></li>
+</ul>
+<p>The Beetle SuperGrafx core is licensed under</p>
+<ul>
+<li><a href="https://github.com/libretro/beetle-supergrafx-libretro/blob/master/COPYING">GPLv2</a></li>
+</ul>
+<p>A summary of the licenses behind RetroArch and its cores have found <a href="https://docs.libretro.com/tech/licenses/">here</a>.</p>
+<h2 id="bios">BIOS<a class="headerlink" href="#bios" title="Permanent link">¶</a></h2>
+<p>Required or optional firmware files go in RetroArch's system directory.</p>
+<p>!!! attention
+    Which PCE CD BIOS file the Beetle SuperGrafx core will use can be configured by the <a href="https://docs.libretro.com/library/beetle_sgx#core-options">'CD BIOS' core option</a>.</p>
+<p>!!! attention
+    Any CD-ROM System BIOS will work, but some of them are known to be incompatible with certain games.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Filename</th>
+<th align="center">Description</th>
+<th align="center">md5sum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">syscard3.pce</td>
+<td align="center">Super CD-ROM2 System V3.xx - Required</td>
+<td align="center">38179df8f4ac870017db21ebcbf53114</td>
+</tr>
+<tr>
+<td align="center">syscard2.pce</td>
+<td align="center">CD-ROM System V2.xx - Optional</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">syscard1.pce</td>
+<td align="center">CD-ROM System V1.xx - Optional</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">gexpress.pce</td>
+<td align="center">Game Express CD Card - Optional</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">¶</a></h2>
+<p>Content that can be loaded by the Beetle SuperGrafx core have the following file extensions:</p>
+<ul>
+<li>.pce</li>
+<li>.sgx</li>
+<li>.cue</li>
+<li>.ccd</li>
+<li>.chd</li>
+</ul>
+<p>RetroArch database(s) that are associated with the Beetle SuperGrafx core:</p>
+<ul>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/NEC%20-%20PC%20Engine%20-%20TurboGrafx%2016.rdb">NEC - PC Engine - TurboGrafx 16</a></li>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/NEC%20-%20PC%20Engine%20CD%20-%20TurboGrafx-CD.rdb">NEC - PC Engine CD - TurboGrafx-CD</a></li>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/NEC%20-%20PC%20Engine%20SuperGrafx.rdb">NEC - PC Engine SuperGrafx</a></li>
+</ul>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h2>
+<p>Frontend-level settings or features that the Beetle Saturn core respects.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th align="center">Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Restart</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Saves</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>States</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Rewind</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Netplay</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Core Options</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>RetroAchievements</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>RetroArch Cheats</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Native Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Controls</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Remapping</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Multi-Mouse</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Rumble</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Sensors</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Location</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Subsystem</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td><a href="https://docs.libretro.com/guides/softpatching/">Softpatching</a></td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Disk Control</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Username</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Language</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Crop Overscan</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>LEDs</td>
+<td align="center">✕</td>
+</tr>
+</tbody>
+</table>
+<h2 id="directories">Directories<a class="headerlink" href="#directories" title="Permanent link">¶</a></h2>
+<p>The Beetle SuperGrafx core's library name is 'Mednafen SuperGrafx'</p>
+<p>The Beetle SuperGrafx core saves/loads to/from these directories.</p>
+<p><strong>Frontend's Save directory</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">File</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">*.srm</td>
+<td align="center">Save</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Frontend's State directory</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">File</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">*.state#</td>
+<td align="center">State</td>
+</tr>
+</tbody>
+</table>
+<h2 id="geometry-and-timing">Geometry and timing<a class="headerlink" href="#geometry-and-timing" title="Permanent link">¶</a></h2>
+<ul>
+<li>The Beetle SuperGrafx core's core provided FPS is 59.82</li>
+<li>The Beetle SuperGrafx core's core provided sample rate is 44100 Hz</li>
+<li>The Beetle SuperGrafx core's base width is 512</li>
+<li>The Beetle SuperGrafx core's base height is dependent on the <a href="https://docs.libretro.com/library/beetle_sgx#core-options">'Initial scanline' and 'Last scanline' core options</a>.</li>
+<li>The Beetle SuperGrafx core's max width is 512</li>
+<li>The Beetle SuperGrafx core's max height is 243</li>
+<li>The Beetle SuperGrafx core's core provided aspect ratio is dependent on the <a href="https://docs.libretro.com/library/beetle_sgx#core-options">'Aspect Ratio' core option</a>.</li>
+</ul>
+<h2 id="loading-pc-engine-cd-content">Loading PC Engine CD content<a class="headerlink" href="#loading-pc-engine-cd-content" title="Permanent link">¶</a></h2>
+<p>To load PC Engine CD content, Beetle SuperGrafx needs a cue-sheet that points to an image file. A cue sheet, or cue file, is a metadata file which describes how the tracks of a CD or DVD are laid out.</p>
+<p>If you have e.g. <code>foo.bin</code>, you should create a text file and save it as <code>foo.cue</code>. If you're playing a single-track Saturn game, then the cue file contents should look like this:</p>
+<p><code>foobin.cue</code></p>
+<pre><code> FILE &quot;foo.bin&quot; BINARY
+  TRACK 01 MODE1/2352
+   INDEX 01 00:00:00
+</code></pre>
+
+<p>After that, you can load the <code>foo.cue</code> file in RetroArch with the Beetle SuperGrafx core.</p>
+<p>!!! warning ""
+    Certain PC Engine content are multi-track, so their .cue files might be more complicated.</p>
+<h2 id="chd">CHD<a class="headerlink" href="#chd" title="Permanent link">¶</a></h2>
+<p>Alternatively to using cue sheets with .bin/.iso files, you can convert your games to .chd (MAME Compressed Hunks of Data) to reduce file sizes and neaten up your game folder.</p>
+<p>To convert content to CHD format, use the chdman tool found inside the latest MAME distribution and point it to a .cue file, like so:</p>
+<pre><code>chdman createcd --input foo.cue --output foo.chd
+</code></pre>
+
+<h2 id="core-options">Core options<a class="headerlink" href="#core-options" title="Permanent link">¶</a></h2>
+<p>The Beetle SuperGrafx core has the following option(s) that can be tweaked from the core options menu. The default setting is bolded. </p>
+<p>Settings with (Restart) means that core has to be closed for the new setting to be applied on next launch.</p>
+<ul>
+<li>
+<p><strong>CD Image Cache (Restart)</strong> [sgx_cdimagecache] (<strong>disabled</strong>|enabled)</p>
+<p>Loads the complete image in memory at startup. Can potentially decrease loading times at the cost of increased startup time.</p>
+</li>
+<li>
+<p><strong>CD Bios (Restart)</strong> [sgx_cdbios] (<strong>System Card 3</strong>|Games Express|System Card 1|System Card 2)</p>
+<p>Select which PC Engine CD BIOS to use.</p>
+<p>Look at the <a href="https://docs.libretro.com/library/beetle_sgx/#core-options">BIOS section</a> for more information.</p>
+</li>
+<li>
+<p><strong>Force SuperGrafx Emulation (Restart)</strong> [sgx_forcesgx] (<strong>disabled</strong>|enabled)</p>
+<p>This is helpful to run homebrew games or isolate games that will not run in SuperGrafx mode. (like Space Harrier).</p>
+<p><strong>Savestates are not compatible with each mode. It's better to leave this option at default (Off) unless needed. Known Supergrafx games (like Dai-Makaimura, Aldyns) will automatically switch to SuperGrafx regardless of this option.</strong></p>
+</li>
+<li>
+<p><strong>No Sprite Limit</strong> [sgx_nospritelimit] (<strong>disabled</strong>|enabled)</p>
+<p>Remove 16-sprites-per-scanline hardware limit.</p>
+</li>
+<li>
+<p><strong>CPU Overclock Multiplier (Restart)</strong> [sgx_ocmultiplier] (<strong>1</strong>|2|3|4|5|6|7|8|9|10|20|30|40|50)</p>
+<p>Overclock the emulated CPU.</p>
+</li>
+<li>
+<p><strong>Horizontal Overscan (352 Width Mode Only)</strong> [sgx_hoverscan] (300 to 352 in increments of 2. <strong>352 in default</strong>.)</p>
+<p>Modify the horizontal overscan.</p>
+</li>
+<li>
+<p><strong>Initial scanline</strong> [sgx_initial_scanline] (0 to 40 in increments of 1. <strong>3 is default.</strong>)</p>
+<p>Adjust first display scanline.</p>
+</li>
+<li>
+<p><strong>Last scanline</strong> [sgx_last_scanline] (208 to 242 in increments of 1. <strong>242 is default.</strong>)</p>
+<p>Adjust last display scanline.</p>
+</li>
+<li>
+<p><strong>(CD) CDDA Volume %</strong> [sgx_cddavolume] (0 to 200 in increments of 10. <strong>100 is default</strong>.)</p>
+<p>Modify CDDA Volume %.</p>
+</li>
+<li>
+<p><strong>(CD) ADPCM Volume %</strong> [sgx_adpcmvolume] (0 to 200 in increments of 10. <strong>100 is default</strong>.)</p>
+<p>Modify ADPCM Volume %.</p>
+</li>
+<li>
+<p><strong>(CD) CD PSG Volume %;</strong> [sgx_cdpsgvolume] (0 to 200 in increments of 10. <strong>100 is default</strong>.)</p>
+<p>Modify CD PSG Volume %.</p>
+</li>
+<li>
+<p><strong>(CD) CD Speed</strong> [sgx_cdspeed] (<strong>1</strong>|2|4|8)</p>
+<p>Set the speed of the emulated CD drive.</p>
+</li>
+<li>
+<p><strong>Turbo Delay</strong> [sgx_turbo_delay] (<strong>3</strong>|4|5|6|7|8|9|10|11|12|13|14|15|30|60|2)</p>
+<p>Adjust turbo delay.</p>
+</li>
+<li>
+<p><strong>Turbo ON/OFF Toggle</strong> [sgx_turbo_toggle] (<strong>disabled</strong>|enabled)</p>
+<p>Enables Turbo ON/OFF inputs. </p>
+<p>Look at the <a href="https://docs.libretro.com/library/beetle_sgx/#joypad">Joypad section</a> for more information.</p>
+</li>
+<li>
+<p><strong>Alternate Turbo Hotkey</strong> [sgx_turbo_toggle_hotkey] (<strong>disabled</strong>|enabled)</p>
+<p>Enables Alternate Turbo ON/OFF inputs. </p>
+<p>You can avoid remapping Button III and IV when switching to 6-button gamepad mode with this. </p>
+<p>Look at the <a href="https://docs.libretro.com/library/beetle_sgx/#joypad">Joypad section</a> for more information.</p>
+</li>
+<li>
+<p><strong>Disable Soft Reset (RUN+SELECT)</strong> [sgx_disable_softreset] (<strong>disabled</strong>|enabled)</p>
+<p>Pressing RUN and SELECT simultaneously on PCE gamepad will SOFT RESET the console. This is a default hardware behaviour.</p>
+<p>Set this to enabled if you want the soft reset functionality turned off.</p>
+</li>
+<li>
+<p><strong>Allow Opposing Directions</strong> [sgx_up_down_allowed] (<strong>disabled</strong>|enabled)</p>
+<p>Enabling this will allow pressing / quickly alternating / holding both left and right (or up and down in some games) directions at the same time. </p>
+<p>This may cause movement based glitches to occur in certain games.</p>
+<p>It's best to keep this core option disabled.</p>
+</li>
+<li>
+<p><strong>Mouse Sensitivity</strong> [sgx_mouse_sensitivity] (1.00 to 5.00 in increments of 0.25. <strong>1.00 is default</strong>.)</p>
+<p>Configure the PCE Mouse device type's sensitivity.</p>
+</li>
+<li>
+<p><strong>Aspect Ratio</strong> [sgx_aspect_ratio] (<strong>auto</strong>|6:5|4:3)</p>
+<p>Select an auto (PAR) aspect ratio, or a 6:5 (Used to be default) aspect ratio, or a 4:3 TV aspect ratio.</p>
+<p><strong>When using games that constantly switches between 256 and 352 modes and using auto aspect, its best to set Horizontal width to 342 as to minimize resizing and extra black lines since this width is in ratio of 256-width mode(or something like that, just test with Asuka 100% which is one of the game that switches between these modes)</strong></p>
+</li>
+</ul>
+<h2 id="user-1-5-device-types">User 1 - 5 device types<a class="headerlink" href="#user-1-5-device-types" title="Permanent link">¶</a></h2>
+<p>The Beetle SuperGrafx core supports the following device type(s) in the controls menu, bolded device types are the default for the specified user(s):</p>
+<ul>
+<li>None - Input is disabled.</li>
+<li><strong>PCE Joypad</strong> - Joypad</li>
+<li>PCE Mouse - Mouse</li>
+</ul>
+<h2 id="joypad">Joypad<a class="headerlink" href="#joypad" title="Permanent link">¶</a></h2>
+<ul>
+<li>
+<p>Use the Mode Switch input to switch between button modes.</p>
+</li>
+<li>
+<p>The regular Turbo inputs for 2-button mode are only active when the <a href="https://docs.libretro.com/library/beetle_sgx#core-options">'Turbo ON/OFF Toggle' core option</a> is set to On.</p>
+</li>
+<li>
+<p>The Alternate Turbo inputs for 2-button mode are only active when the <a href="https://docs.libretro.com/library/beetle_sgx#core-options">'Turbo ON/OFF Toggle' core option</a> is set to On and the <a href="https://docs.libretro.com/library/beetle_sgx#core-options">'Alternate Turbo Hotkey' core option</a> is set to On.</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>RetroPad Inputs</th>
+<th>User 1 - 5 input descriptors</th>
+<th>PCE Joypad 2-button</th>
+<th>PCE Joypad 6-button</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="/image/retropad/retro_b.png" /></td>
+<td>II</td>
+<td>II</td>
+<td>II</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_y.png" /></td>
+<td>III</td>
+<td>II Turbo On/Off</td>
+<td>III</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_select.png" /></td>
+<td>Select</td>
+<td>Select</td>
+<td>Select</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_start.png" /></td>
+<td>Run</td>
+<td>Run</td>
+<td>Run</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_dpad_up.png" /></td>
+<td>D-Pad Up</td>
+<td>D-Pad Up</td>
+<td>D-Pad Up</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_dpad_down.png" /></td>
+<td>D-Pad Down</td>
+<td>D-Pad Down</td>
+<td>D-Pad Down</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_dpad_left.png" /></td>
+<td>D-Pad Left</td>
+<td>D-Pad Left</td>
+<td>D-Pad Left</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_dpad_right.png" /></td>
+<td>D-Pad Right</td>
+<td>D-Pad Right</td>
+<td>D-Pad Right</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_a.png" /></td>
+<td>I</td>
+<td>I</td>
+<td>I</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_x.png" /></td>
+<td>IV</td>
+<td>I Turbo On/Off</td>
+<td>IV</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_l1.png" /></td>
+<td>V</td>
+<td></td>
+<td>V</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_r1.png" /></td>
+<td>VI</td>
+<td></td>
+<td>VI</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_l2.png" /></td>
+<td>Mode Switch</td>
+<td>Mode Switch</td>
+<td>Mode Switch</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_l3.png" /></td>
+<td></td>
+<td>Alternate II Turbo On/Off</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_r3.png" /></td>
+<td></td>
+<td>Alternate I Turbo On/Off</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="mouse">Mouse<a class="headerlink" href="#mouse" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>RetroMouse Inputs</th>
+<th>PCE Mouse</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="/image/retromouse/retro_mouse.png" /> Mouse Cursor</td>
+<td>PCE Mouse Cursor</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retromouse/retro_left.png" /> Mouse 1</td>
+<td>PCE Mouse Left Button</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retromouse/retro_right.png" /> Mouse 2</td>
+<td>PCE Mouse Right Button</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retromouse/retro_middle.png" /> Mouse 3</td>
+<td>PCE Mouse Start Button</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_select.png" /></td>
+<td>Select (Joypad)</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_start.png" /></td>
+<td>Start (Joypad)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="external-links">External Links<a class="headerlink" href="#external-links" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://mednafen.github.io/">Official Mednafen Website</a></li>
+<li><a href="https://mednafen.github.io/releases/">Official Mednafen Downloads</a></li>
+<li><a href="https://github.com/libretro/libretro-super/blob/master/dist/info/mednafen_supergrafx_libretro.info">Libretro Beetle SuperGrafx Core info file</a></li>
+<li><a href="https://github.com/libretro/beetle-supergrafx-libretro">Libretro Beetle SuperGrafx Github Repository</a></li>
+<li><a href="https://github.com/libretro/beetle-supergrafx-libretro/issues">Report Libretro Beetle SuperGrafx Core Issues Here</a></li>
+</ul>
+<h2 id="tg-16">TG-16<a class="headerlink" href="#tg-16" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://docs.libretro.com/library/beetle_pce_fast/">NEC - PC Engine / CD (Beetle PCE FAST)</a></li>
+</ul>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#background">Background</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#bios">BIOS</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#extensions">Extensions</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#features">Features</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#directories">Directories</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#geometry-and-timing">Geometry and timing</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#loading-pc-engine-cd-content">Loading PC Engine CD content</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#chd">CHD</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#core-options">Core options</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#user-1-5-device-types">User 1 - 5 device types</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#joypad">Joypad</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#mouse">Mouse</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#external-links">External Links</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#tg-16">TG-16</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../neko_project_ii_kai/" title="previous chapter">
+        NEC - PC-98 (Neko Project II Kai)
+      </a></li>
+    
+    
+      <li>Next: <a href="../beetle_pce_fast/" title="next chapter">
+        NEC - PC Engine / CD (Beetle PCE FAST)
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:10
+  -->
+</body>
+</html>

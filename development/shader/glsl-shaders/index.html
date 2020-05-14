@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>GLSL Shader Development &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <link rel="stylesheet" href="../../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="developing-glsl-shaders">Developing GLSL Shaders<a class="headerlink" href="#developing-glsl-shaders" title="Permanent link">¶</a></h1>
+<p>Like Cg shaders, GLSL shaders represents a single pass, and requires a preset file to describe how multiple shaders are combined. The extension is <code>.glsl</code>.</p>
+<p>As GLSL shaders are normally placed in two different files (<code>vertex</code>, <code>fragment</code>), making it impractical to select in a menu. This is worked around by using compiler defines in order to be equivalent to Cg shaders.</p>
+<h2 id="example-glsl-shader">Example GLSL shader<a class="headerlink" href="#example-glsl-shader" title="Permanent link">¶</a></h2>
+<p>!!! Note
+    GLSL shaders must be modern style, and using ruby prefix is discouraged.</p>
+<pre><code class="c">varying vec2 tex_coord;
+#if defined(VERTEX)
+attribute vec2 TexCoord;
+attribute vec2 VertexCoord;
+uniform mat4 MVPMatrix;
+void main()
+{
+    gl_Position = MVPMatrix * vec4(VertexCoord, 0.0, 1.0);
+    tex_coord = TexCoord;
+}
+#elif defined(FRAGMENT)
+uniform sampler2D Texture;
+void main()
+{
+    gl_FragColor = texture2D(Texture, tex_coord);
+}
+#endif
+</code></pre>
+
+<h3 id="glsl-presets">GLSL presets<a class="headerlink" href="#glsl-presets" title="Permanent link">¶</a></h3>
+<p>Like Cg shaders, there is a GLSL preset format. Instead of <code>.cgp</code> extension, <code>.glslp</code> extension is used. The format is exactly the same, just replace <code>.cg</code> shaders with <code>.glsl</code>. To convert a <code>.cgp</code> preset, rename to <code>.glslp</code> and replace all references to <code>.cg</code> shaders with <code>.glsl</code>.</p>
+<h2 id="converting-from-cg-shaders">Converting from Cg shaders<a class="headerlink" href="#converting-from-cg-shaders" title="Permanent link">¶</a></h2>
+<p>GLSL shaders are mostly considered a compatibility format. It is possible to compile Cg shaders into GLSL shaders automatically using our <a href="https://github.com/libretro/RetroArch/blob/master/tools/cg2glsl.py">cg2glsl script</a>. It can convert single shaders as well as batch conversion. Shader converstion relies on nVidia's <code>cgc</code> tool found in the <code>nvidia-cg-toolkit</code> package.</p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../../..">
+      <img class="logo" src="../../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#example-glsl-shader">Example GLSL shader</a></li>
+      <ul>
+    
+      <li><a href="#glsl-presets">GLSL presets</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#converting-from-cg-shaders">Converting from Cg shaders</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../slang-shaders/" title="previous chapter">
+        Slang Shader Development
+      </a></li>
+    
+    
+      <li>Next: <a href="../cg-shaders/" title="next chapter">
+        Cg Shader Development (deprecated)
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

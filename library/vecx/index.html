@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>GCE - Vectrex (vecx) &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="vectrex-vecx">Vectrex (vecx)<a class="headerlink" href="#vectrex-vecx" title="Permanent link">¶</a></h1>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">¶</a></h2>
+<p>vecx is an emulator for the vector-display based Vectrex video game console.</p>
+<p>Author(s): Valavan Manohararajah|John Hawthorn|Nikita Zimin|Demeth</p>
+<h2 id="contribute-to-this-documentation">Contribute to this documentation<a class="headerlink" href="#contribute-to-this-documentation" title="Permanent link">¶</a></h2>
+<p>In order to propose improvements to this document, <a href="https://github.com/libretro/docs/tree/master/docs/library/vecx.md">visit it's corresponding source page on github</a>. Changes are proposed using "Pull Requests."</p>
+<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">¶</a></h2>
+<p>GPLv3</p>
+<h2 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">¶</a></h2>
+<p>bin|vec</p>
+<h2 id="bios">BIOS<a class="headerlink" href="#bios" title="Permanent link">¶</a></h2>
+<p>The vecx core does not feature BIOS use.</p>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th align="center">Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Saves</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>States</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Rewind</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Netplay</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>RetroAchievements</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>RetroArch Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Native Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Controllers</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Multi-Mouse</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Rumble</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Sensors</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Location</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Subsystem</td>
+<td align="center">✕</td>
+</tr>
+</tbody>
+</table>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link">¶</a></h2>
+<p>The vecx core has the following options that can be tweaked from the core options menu. The default setting is bolded.</p>
+<ul>
+<li><strong>Res Multiplier</strong> (<strong>1</strong>-4)</li>
+</ul>
+<p>??? note "<em>Res Multiplier - 1</em>"
+    <img alt="" src="/image/core/vecxres_multiplier_1.png" /></p>
+<p>??? note "<em>Res Multiplier - 4</em>"
+    <img alt="" src="/image/core/vecxres_multiplier_4.png" /></p>
+<h2 id="controllers">Controllers<a class="headerlink" href="#controllers" title="Permanent link">¶</a></h2>
+<p>The vecx core supports one controller setting:</p>
+<ul>
+<li>RetroPad</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>vecx</th>
+<th><a href="RetroPad">RetroPad</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td><img alt="RetroPad_B" src="/image/retropad/retro_b.png" /></td>
+</tr>
+<tr>
+<td>4</td>
+<td><img alt="RetroPad_Y" src="/image/retropad/retro_y.png" /></td>
+</tr>
+<tr>
+<td></td>
+<td><img alt="RetroPad_Select" src="/image/retropad/retro_select.png" /></td>
+</tr>
+<tr>
+<td></td>
+<td><img alt="RetroPad_Start" src="/image/retropad/retro_start.png" /></td>
+</tr>
+<tr>
+<td>D-pad</td>
+<td><img alt="RetroPad_Dpad" src="/image/retropad/retro_dpad.png" /></td>
+</tr>
+<tr>
+<td>1</td>
+<td><img alt="RetroPad_A" src="/image/retropad/retro_a.png" /></td>
+</tr>
+<tr>
+<td>3</td>
+<td><img alt="RetroPad_X" src="/image/retropad/retro_x.png" /></td>
+</tr>
+<tr>
+<td></td>
+<td><img alt="RetroPad_L1" src="/image/retropad/retro_l1.png" /></td>
+</tr>
+<tr>
+<td></td>
+<td><img alt="RetroPad_R1" src="/image/retropad/retro_r1.png" /></td>
+</tr>
+<tr>
+<td></td>
+<td><img alt="RetroPad_L2" src="/image/retropad/retro_l2.png" /></td>
+</tr>
+<tr>
+<td></td>
+<td><img alt="RetroPad_R2" src="/image/retropad/retro_r2.png" /></td>
+</tr>
+<tr>
+<td></td>
+<td><img alt="RetroPad_L3" src="/image/retropad/retro_l3.png" /></td>
+</tr>
+<tr>
+<td></td>
+<td><img alt="RetroPad_R3" src="/image/retropad/retro_r3.png" /></td>
+</tr>
+<tr>
+<td></td>
+<td><img alt="RetroPad_Left_Stick" src="/image/retropad/retro_left_stick.png" /></td>
+</tr>
+<tr>
+<td></td>
+<td><img alt="RetroPad_Right_Stick" src="/image/retropad/retro_right_stick.png" /></td>
+</tr>
+</tbody>
+</table>
+<h2 id="compatibility">Compatibility<a class="headerlink" href="#compatibility" title="Permanent link">¶</a></h2>
+<p>Unknown</p>
+<h2 id="external-links">External Links<a class="headerlink" href="#external-links" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://github.com/libretro/libretro-vecx">Libretro Repository</a></li>
+<li><a href="https://github.com/libretro/libretro-meta/issues">Report Core Issues Here</a></li>
+<li><a href="https://github.com/jhawthorn/vecx">Official GitHub Repository of the SDL port</a></li>
+</ul>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#background">Background</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#contribute-to-this-documentation">Contribute to this documentation</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#license">License</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#extensions">Extensions</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#bios">BIOS</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#features">Features</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#options">Options</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#controllers">Controllers</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#compatibility">Compatibility</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#external-links">External Links</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../dosbox/" title="previous chapter">
+        DOS (DOSBox)
+      </a></li>
+    
+    
+      <li>Next: <a href="../o2em/" title="next chapter">
+        Magnavox - Odyssey2 / Phillips Videopac+ (O2EM)
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:11
+  -->
+</body>
+</html>

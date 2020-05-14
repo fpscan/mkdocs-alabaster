@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Overrides: Content/Folder/Core-Specific Settings &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="using-content-folder-and-core-overrides-for-custom-settings">Using Content, Folder, and Core Overrides for Custom Settings<a class="headerlink" href="#using-content-folder-and-core-overrides-for-custom-settings" title="Permanent link">¶</a></h1>
+<p>There are various and comprehensive ways to save customized settings within the RetroArch menus. 99% of settings can be adjusted and saved from the menu but are only plain text files and can be adjusted manually with a text editor.</p>
+<ul>
+<li>Global settings can be overridden on a per core, per content directory, or per game basis using the config override system.</li>
+<li>Input settings are handled separately with the input core and game Remap system.</li>
+<li>Likewise, Shader Preset settings are also their own entity for per core and game settings</li>
+<li>A standalone file also saves the Option settings for all cores that support them. The settings in this file can be overridden on a per game basis.</li>
+</ul>
+<p>!!! tip
+    Please read the <a href="../install-windows/">Getting Started</a> guide.</p>
+<h2 id="logic">Logic<a class="headerlink" href="#logic" title="Permanent link">¶</a></h2>
+<h3 id="overrides-cfg-remaps-rmp">Overrides <em>(.cfg)</em> &amp; Remaps <em>(.rmp)</em><a class="headerlink" href="#overrides-cfg-remaps-rmp" title="Permanent link">¶</a></h3>
+<p>Overrides and Remaps are designed to be lightweight and easily maintained configuration methods. They save only settings that differ from the preceding settings files.</p>
+<p>For example if only one setting differs between your <code>retroarch.cfg</code> and a <code>core.cfg</code>, then the <code>core.cfg</code> file will only contain one setting.</p>
+<p>The hierarchy for loading is:</p>
+<ol>
+<li>Game settings -&gt; Applied when loading a particular game (content)</li>
+<li>Content directory settings -&gt; Applied when loading content from a particular directory</li>
+<li>Core settings -&gt; Applied when loading content with a specific core</li>
+<li>Default settings -&gt; The default settings from 'retroarch.cfg'</li>
+</ol>
+<p>The RetroArch loading process is:</p>
+<ul>
+<li>Load <code>retroarch.cfg</code><ul>
+<li>Apply <code>&lt;name-of-core&gt;.cfg</code> &amp; <code>&lt;name-of-core&gt;.rmp</code> override<ul>
+<li>Apply <code>&lt;name-of-content-directory&gt;.cfg</code> &amp; <code>&lt;name-of-content-directory&gt;.rmp</code> override<ul>
+<li>Apply <code>&lt;name-of-game&gt;.cfg</code> &amp; <code>&lt;name-of-game&gt;.rmp</code> override</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>!!! note
+    Core-specific or content directory-specific overrides that are not in game-specific overrides persist and will be loaded.
+    Also once you have created an override any future changes will need to be saved via the Quick Menu.</p>
+<h3 id="options-opt-shader-presets-cgpglslpslangp">Options <em>(.opt)</em> &amp; Shader Presets <em>(.cgp|.glslp|.slangp)</em><a class="headerlink" href="#options-opt-shader-presets-cgpglslpslangp" title="Permanent link">¶</a></h3>
+<p>Custom per game core options and shader presets work slightly differently. These are full configurations and are loaded instead of the base shader preset and core option settings.</p>
+<h2 id="configuration-files-location">Configuration Files &amp; Location<a class="headerlink" href="#configuration-files-location" title="Permanent link">¶</a></h2>
+<p>!!! note
+    Depending on your chosen platform the location of these files after installation may vary.</p>
+<p>!!! warning
+    Some settings cannot be saved in an override file from the menu. You can manually add settings to the override file to workaround most situations.</p>
+<p><strong>The default and global settings file</strong></p>
+<ul>
+<li><code>retroarch.cfg</code>  <em>(located in the base install path)</em></li>
+</ul>
+<p><strong>The global file for core option settings, for cores that support options</strong></p>
+<ul>
+<li><code>retroarch-core-options.cfg</code> <em>(located with the <code>retroarch.cfg</code>)</em></li>
+</ul>
+<h3 id="core-options">Core options<a class="headerlink" href="#core-options" title="Permanent link">¶</a></h3>
+<ul>
+<li><code>name-of-game.opt</code> <strong>If not found load</strong><ul>
+<li><code>retroarch-core-options.cfg</code></li>
+</ul>
+</li>
+</ul>
+<p>The options files list the settings found under <code>Quick Menu -&gt; Options</code>. The <code>retroarch-core-options.cfg</code> is created automatically on loading a core that supports Options.</p>
+<p>A game-specific options file is created when you select <code>Quick Menu -&gt; Options -&gt; Game-options file</code>. <em>(located in <code>/config/&lt;name-of-core&gt;/&lt;name-of-game&gt;.opt</code>. The path is set under <code>Settings-&gt;Directory-&gt;Config</code>)</em></p>
+<p>!!! attention
+    Load Content Specific Core Options Automatically must be set to On in RetroArch's Configuration settings in order for game-specific options to be automatically loaded upon content load.</p>
+<h3 id="override-configs">Override Configs<a class="headerlink" href="#override-configs" title="Permanent link">¶</a></h3>
+<p>The override system activates on loading of content. RetroArch applies config settings with the logic as <a href="./#logic">explained above</a>.</p>
+<p><strong>Per Core Override</strong></p>
+<ul>
+<li><code>/config/&lt;name-of-core&gt;/name-of-core.cfg</code> <em>(This path is set under <code>Settings -&gt; Directory -&gt; Config</code>)</em></li>
+</ul>
+<p>These settings files are created from the <code>Quick Menu -&gt; Save Core Overrides</code> option and contain ANY (supported) settings you have changed since loading content. These settings will be loaded every time you load content with that core.   </p>
+<p><strong>Per Content Directory Override</strong></p>
+<ul>
+<li><code>/config/&lt;name-of-core&gt;/name-of-content-directory.cfg</code> <em>(located with per core override)</em></li>
+</ul>
+<p>These settings files are created as above with the <code>Quick Menu -&gt; Save Content Directory Overrides</code>. The settings will take precedence over <code>name-of-core.cfg</code></p>
+<p><strong>Per Game Override</strong></p>
+<ul>
+<li><code>/config/&lt;name-of-core&gt;/name-of-game.cfg</code> <em>(located with per core override file)</em></li>
+</ul>
+<p>These settings files are created as above with the <code>Quick Menu -&gt; Save Game Overrides</code>. The settings will take precedence over <code>name-of-content-directory.cfg</code></p>
+<h3 id="input-remaps">Input Remaps<a class="headerlink" href="#input-remaps" title="Permanent link">¶</a></h3>
+<p>Input remaps use the same logic as core/directory/game overrides and use the <code>.rmp</code> extension. They can be adjusted and saved from: 
+- <code>Quick Menu -&gt; Controls -&gt; Save Core Remap File</code>
+- <code>Quick Menu -&gt; Controls -&gt; Save Content Directory Remap File</code> 
+- <code>Quick Menu -&gt; Controls -&gt; Save Game Remap File</code> </p>
+<p>Set the save directory in <code>Settings -&gt; Directory -&gt; Input Remapping</code> <em>(by default they will save to <code>/config/remaps/&lt;name-of-core&gt;/</code>)</em></p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#logic">Logic</a></li>
+      <ul>
+    
+      <li><a href="#overrides-cfg-remaps-rmp">Overrides (.cfg) &amp; Remaps (.rmp)</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#options-opt-shader-presets-cgpglslpslangp">Options (.opt) &amp; Shader Presets (.cgp|.glslp|.slangp)</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#configuration-files-location">Configuration Files &amp; Location</a></li>
+      <ul>
+    
+      <li><a href="#core-options">Core options</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#override-configs">Override Configs</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#input-remaps">Input Remaps</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../shaders/" title="previous chapter">
+        Shaders
+      </a></li>
+    
+    
+      <li>Next: <a href="../cheat-codes/" title="next chapter">
+        Cheat/Rumble Codes
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Ubuntu &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+    <link rel="stylesheet" href="../../../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="ubuntu-compilation-development-guide">Ubuntu Compilation / Development Guide<a class="headerlink" href="#ubuntu-compilation-development-guide" title="Permanent link">¶</a></h1>
+<h2 id="environment-configuration">Environment configuration<a class="headerlink" href="#environment-configuration" title="Permanent link">¶</a></h2>
+<p>The easiest route to get into building RetroArch and libretro cores on Ubuntu linux is to use libretro's PPA.
+For stable releases you can add the PPA like this:</p>
+<pre><code># add-apt-repository ppa:libretro/stable
+# apt-get update
+</code></pre>
+<p>For development work we recommend the testing PPA instead:</p>
+<pre><code># add-apt-repository ppa:libretro/testing
+# apt-get update
+</code></pre>
+<p>You will need <strong>git</strong> and a few build tools at least to proceed which you can install by issuing the following command:</p>
+<pre><code># apt-get install git build-essential
+</code></pre>
+<h2 id="retroarch-compilation">RetroArch Compilation<a class="headerlink" href="#retroarch-compilation" title="Permanent link">¶</a></h2>
+<h3 id="building-retroarch">Building RetroArch<a class="headerlink" href="#building-retroarch" title="Permanent link">¶</a></h3>
+<p>The first step is to obtain RetroArch's source tree.</p>
+<pre><code>$ git clone https://github.com/libretro/RetroArch.git retroarch
+</code></pre>
+<p>You can get RetroArch's dependenencies by running the following command:</p>
+<pre><code># apt-get build-dep retroarch
+</code></pre>
+<p>!!! Note
+    Depending on your configuration you may need to uncomment the <em>deb-src</em> repositories in <em>/etc/apt/sources.list</em>, <em>/etc/apt/sources.list.d/libretro-ubuntu-testing-$version.list</em> and then run <strong>apt-get update</strong> before running <strong>apt-get build-dep</strong></p>
+<p>For subsequent builds you will need to pull the changes from the repo</p>
+<pre><code>$ cd retroarch
+$ git pull
+</code></pre>
+<p>To compile RetroArch run the following commands inside RetroArch's source tree:</p>
+<pre><code>$ ./configure
+$ make clean
+$ make -j4
+</code></pre>
+<p>For development purposes you might want to run a debug build instead. In such case use the following commands:</p>
+<pre><code>$ ./configure
+$ make clean
+$ make DEBUG=1 GL_DEBUG=1 -j4
+</code></pre>
+<p>You can then start RetroArch by running:</p>
+<pre><code>$ ./retroarch
+</code></pre>
+<p>!!! tip
+    If you're building frequently you may want to add <strong>ccache</strong> to the mix to speed up the build process. 
+    Install ccache via apt and the prepend the ccache symlink directory to your build environment path as shown below. </p>
+<pre><code>For further instructions check the [documentation](https://ccache.samba.org/manual.html#_run_modes)
+</code></pre>
+<p>Install <strong>ccache</strong>:</p>
+<pre><code># apt-get install ccache
+</code></pre>
+<p>Configure paths:</p>
+<pre><code>$ export PATH=/usr/lib/ccache/bin/:$PATH
+</code></pre>
+<p>!!! tip
+    You can add that last line to your <em>~/.bashrc</em> to avoid having to type that every time you start your working environment.</p>
+<h2 id="core-compilation">Core Compilation<a class="headerlink" href="#core-compilation" title="Permanent link">¶</a></h2>
+<h3 id="fetching-cores">Fetching Cores<a class="headerlink" href="#fetching-cores" title="Permanent link">¶</a></h3>
+<p>You can find the cores on libretro's <a href="https://github.com/libretro/">GitHUB organization</a>. </p>
+<p>We have an all-in-one tool to fetch and compile cores which you can use to streamline the process.
+You can obtain the tool by using these commands:</p>
+<pre><code>$ git clone https://github.com/libretro/libretro-super.git
+$ cd libretro-super
+</code></pre>
+<p>Then you can fetch one or all the cores by using <strong>libretro-fetch.sh</strong></p>
+<p>Fetch all cores:</p>
+<pre><code>$ ./libretro-fetch.sh
+</code></pre>
+<p>Fetch one core:</p>
+<pre><code>$ ./libretro-fetch.sh *corename*
+</code></pre>
+<p>!!! Note
+     Replace <em>corename</em> with the name of the core you want to fetch, for example gambatte</p>
+<h3 id="building-cores">Building Cores<a class="headerlink" href="#building-cores" title="Permanent link">¶</a></h3>
+<h4 id="libretro-super">LibRetro Super<a class="headerlink" href="#libretro-super" title="Permanent link">¶</a></h4>
+<p>The easiest way to build all the cores is to use <strong>libretro-build.sh</strong> from within libretro-super's source tree:</p>
+<pre><code>$ ./libretro-build.sh
+</code></pre>
+<p>In case you only want to build one and/or more cores instead of all, you can specify the cores you want to build after the first command in no particular order:</p>
+<pre><code>$ ./libretro-build.sh snes9x2010 fceumm
+</code></pre>
+<p>Once compilation has finished, you can find the libretro cores inside <em>dist/unix</em>.</p>
+<h4 id="manual-fetching-and-compilation">Manual Fetching and Compilation<a class="headerlink" href="#manual-fetching-and-compilation" title="Permanent link">¶</a></h4>
+<p>Get the core's source tree. As an example we'll use <a href="https://github.com/libretro/libretro-fceumm/">fceumm</a></p>
+<pre><code>$ git clone https://github.com/libretro/libretro-fceumm.git
+</code></pre>
+<p>Then compile the core: </p>
+<pre><code>$ cd libretro-fceumm
+$ make -f Makefile.libretro
+</code></pre>
+<p>Optionally strip the build product:</p>
+<pre><code>$ strip fceumm_libretro.so
+</code></pre>
+<p>Most cores will build with these instructions. You might need to browse to a subdirectory in some cases.</p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../../../..">
+      <img class="logo" src="../../../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#environment-configuration">Environment configuration</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#retroarch-compilation">RetroArch Compilation</a></li>
+      <ul>
+    
+      <li><a href="#building-retroarch">Building RetroArch</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#core-compilation">Core Compilation</a></li>
+      <ul>
+    
+      <li><a href="#fetching-cores">Fetching Cores</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#building-cores">Building Cores</a></li>
+      <ul>
+    
+      <li><a href="#libretro-super">LibRetro Super</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#manual-fetching-and-compilation">Manual Fetching and Compilation</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../linux-and-bsd/" title="previous chapter">
+        Overview for Linux/BSD
+      </a></li>
+    
+    
+      <li>Next: <a href="../haiku/" title="next chapter">
+        Haiku
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

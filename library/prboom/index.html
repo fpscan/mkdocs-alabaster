@@ -1,0 +1,1227 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Doom (PrBoom) &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="doom-prboom">Doom (PrBoom)<a class="headerlink" href="#doom-prboom" title="Permanent link">¶</a></h1>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">¶</a></h2>
+<p>Port of prboom to libretro - plays Doom, Doom II, Final Doom and other Doom IWAD mods. </p>
+<p>The PrBoom core has been authored by</p>
+<ul>
+<li>Florian Schulze</li>
+</ul>
+<p>The PrBoom core is licensed under</p>
+<ul>
+<li><a href="https://github.com/libretro/libretro-prboom/blob/master/COPYING">GPLv2</a></li>
+</ul>
+<p>A summary of the licenses behind RetroArch and its cores have found <a href="https://docs.libretro.com/tech/licenses/">here</a>.</p>
+<h2 id="bios">BIOS<a class="headerlink" href="#bios" title="Permanent link">¶</a></h2>
+<p>Required or optional firmware files go in the frontend's system directory.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Filename</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><a href="https://github.com/libretro/libretro-prboom/blob/master/prboom.wad">prboom.wad</a></td>
+<td align="center">PrBoom requires data ROM 'prboom.wad' inside the ROM directory.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">¶</a></h2>
+<p>Content that can be loaded by the PrBoom core have the following file extensions:</p>
+<ul>
+<li>.wad</li>
+<li>.iwad</li>
+<li>.pwad</li>
+</ul>
+<p>RetroArch database(s) that are associated with the PrBoom core:</p>
+<ul>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/DOOM.rdb">DOOM</a></li>
+</ul>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h2>
+<p>Frontend-level settings or features that the PrBoom core respects.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th align="center">Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Restart</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Screenshots</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Saves</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>States</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Rewind</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Netplay</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Core Options</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>RetroAchievements</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>RetroArch Cheats</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Native Cheats</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Controls</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Remapping</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Multi-Mouse</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Rumble</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Sensors</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Location</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Subsystem</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td><a href="https://docs.libretro.com/guides/softpatching/">Softpatching</a></td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Disk Control</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Username</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Language</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Crop Overscan</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>LEDs</td>
+<td align="center">✕</td>
+</tr>
+</tbody>
+</table>
+<h3 id="directories">Directories<a class="headerlink" href="#directories" title="Permanent link">¶</a></h3>
+<p>The PrBoom core's library name is 'PrBoom'</p>
+<p>The PrBoom core saves/loads to/from these directories.</p>
+<p><strong>Frontend's Save directory</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">File</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">(content name)/*.dsg</td>
+<td align="center">Save</td>
+</tr>
+<tr>
+<td align="center">(content name)/prboom.cfg</td>
+<td align="center">DOOM Config</td>
+</tr>
+</tbody>
+</table>
+<h3 id="geometry-and-timing">Geometry and timing<a class="headerlink" href="#geometry-and-timing" title="Permanent link">¶</a></h3>
+<ul>
+<li>The PrBoom core's core provided FPS (by default) is 60</li>
+<li>The PrBoom core's core provided sample rate is 44100 Hz</li>
+<li>The PrBoom core's base width is dependent on the Internal resolution core option.</li>
+<li>The PrBoom core's base height is dependent on the Internal resolution core option.</li>
+<li>The PrBoom core's max width is dependent on the Internal resolution core option.</li>
+<li>The PrBoom core's max height is dependent on the Internal resolution core option.</li>
+<li>The PrBoom core's core provided aspect ratio is 4/3</li>
+</ul>
+<h2 id="loading-doom">Loading DOOM<a class="headerlink" href="#loading-doom" title="Permanent link">¶</a></h2>
+<p>PrBoom can load wad, iwad, and pwad files. The PrBoom core requires data ROM <a href="https://github.com/libretro/libretro-prboom/blob/master/prboom.wad">'prboom.wad'</a> inside the loaded content's directory.</p>
+<p>You must use a separate folder for each wad to be able to have all Dooms use their correct music</p>
+<p>An example folder structure would be like so:</p>
+<pre><code>└── roms/
+    └── ports/
+        ├── doom/
+        │   ├── doom.wad
+        │   ├── prboom.wad
+        │   └── doommusic.mp3
+        └── doom2/
+            ├── doom2.wad
+            ├── prboom.wad
+            └── doom2music.mp3
+</code></pre>
+
+<p>Game saves and internal configuration files will be created in the frontend-defined save directory, organised in folders matching the filenames of loaded content - for example:</p>
+<pre><code>└── saves/
+    └── PrBoom/
+        ├── doom/
+        │   ├── prbmsav0.dsg
+        │   ├── prbmsav1.dsg
+        │   └── prboom.cfg
+        └── doom2/
+            ├── prbmsav0.dsg
+            ├── prbmsav1.dsg
+            └── prboom.cfg
+</code></pre>
+
+<p>Game saves are numbered from 'prbmsav0.dsg' to 'prbmsav7.dsg'.</p>
+<h2 id="music">Music<a class="headerlink" href="#music" title="Permanent link">¶</a></h2>
+<p>The PrBoom core is not able to play the music files inside the wad files (they are in a proprietary midi format).</p>
+<p>To enable music in your Doom game(s) you need to copy MP3s with specific names into the same folder as your ROMs are located. You can find a list of names <a href="https://github.com/libretro/libretro-prboom/blob/master/src/m_misc.c#L605">here</a>: </p>
+<p>They follow the scheme e1m1.mp3, e1m2.mp3, ..., e2m1.mp, e2m2.mp3, ... . </p>
+<p>Tracks are freely available - find them by searching for "PSX Doom Music".</p>
+<p>If you are having trouble with the audio not playing after you have renamed all the MP3s, try clearing all the ID3 tag information for each of the MP3s.</p>
+<p>Below are the corresponding tracks if the MP3s are named:</p>
+<table>
+<thead>
+<tr>
+<th>File Name</th>
+<th>mp3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mus_e1m1</td>
+<td>"level 01 (hangar).mp3"</td>
+</tr>
+<tr>
+<td>mus_e1m2</td>
+<td>"level 02 (plant).mp3"</td>
+</tr>
+<tr>
+<td>mus_e1m3</td>
+<td>"level 03 (toxin refinery).mp3"</td>
+</tr>
+<tr>
+<td>mus_e1m4</td>
+<td>"level 04 (command control).mp3"</td>
+</tr>
+<tr>
+<td>mus_e1m5</td>
+<td>"level 05 (phobos lab).mp3"</td>
+</tr>
+<tr>
+<td>mus_e1m6</td>
+<td>"level 06 (central processing).mp3"</td>
+</tr>
+<tr>
+<td>mus_e1m7</td>
+<td>"level 07 (computer station).mp3"</td>
+</tr>
+<tr>
+<td>mus_e1m8</td>
+<td>"level 08 (phobos anomaly).mp3"</td>
+</tr>
+<tr>
+<td>mus_e1m9</td>
+<td>"level 06 (fistula).mp3"</td>
+</tr>
+<tr>
+<td>mus_e2m1</td>
+<td>"level 09 (deimos anomaly).mp3"</td>
+</tr>
+<tr>
+<td>mus_e2m2</td>
+<td>"level 10 (containment area).mp3"</td>
+</tr>
+<tr>
+<td>mus_e2m3</td>
+<td>"level 11 (refinery).mp3"</td>
+</tr>
+<tr>
+<td>mus_e2m4</td>
+<td>"level 12 (deimos lab).mp3"</td>
+</tr>
+<tr>
+<td>mus_e2m5</td>
+<td>"level 13 (command center).mp3"</td>
+</tr>
+<tr>
+<td>mus_e2m6</td>
+<td>"level 02 (plant).mp3"</td>
+</tr>
+<tr>
+<td>mus_e2m7</td>
+<td>"level 01 (hangar).mp3"</td>
+</tr>
+<tr>
+<td>mus_e2m8</td>
+<td>"level 03 (toxin refinery).mp3"</td>
+</tr>
+<tr>
+<td>mus_e2m9</td>
+<td>"level 02 (virgil).mp3"</td>
+</tr>
+<tr>
+<td>mus_e3m1</td>
+<td>"level 17 (hell keep).mp3"</td>
+</tr>
+<tr>
+<td>mus_e3m2</td>
+<td>"level 03 (canyon).mp3"</td>
+</tr>
+<tr>
+<td>mus_e3m3</td>
+<td>"level 18 (pandemonium).mp3"</td>
+</tr>
+<tr>
+<td>mus_e3m4</td>
+<td>"level 06 (central processing).mp3"</td>
+</tr>
+<tr>
+<td>mus_e3m5</td>
+<td>"level 20 (unholy cathedral).mp3"</td>
+</tr>
+<tr>
+<td>mus_e3m6</td>
+<td>"level 21 (mt erebus).mp3"</td>
+</tr>
+<tr>
+<td>mus_e3m7</td>
+<td>"level 22 (limbo).mp3"</td>
+</tr>
+<tr>
+<td>mus_e3m8</td>
+<td>"level 09 (nessus).mp3"</td>
+</tr>
+<tr>
+<td>mus_e3m9</td>
+<td>"level 10 (paradox).mp3"</td>
+</tr>
+<tr>
+<td>mus_inter</td>
+<td>"e2m3.mp3"</td>
+</tr>
+<tr>
+<td>mus_intro</td>
+<td>"track 02 title screen.mp3"</td>
+</tr>
+<tr>
+<td>mus_bunny</td>
+<td>"track 03 main menu.mp3"</td>
+</tr>
+<tr>
+<td>mus_victor</td>
+<td>"track 09 endgame.mp3"</td>
+</tr>
+<tr>
+<td>mus_introa</td>
+<td>"track 02 title screen.mp3"</td>
+</tr>
+<tr>
+<td>mus_runnin</td>
+<td>"level 01 (hangar).mp3"</td>
+</tr>
+<tr>
+<td>mus_stalks</td>
+<td>"level 10 (containment area).mp3"</td>
+</tr>
+<tr>
+<td>mus_countd</td>
+<td>"level 22 (limbo).mp3"</td>
+</tr>
+<tr>
+<td>mus_betwee</td>
+<td>"level 16 (hell gate).mp3"</td>
+</tr>
+<tr>
+<td>mus_doom</td>
+<td>"level 08 (phobos anomaly).mp3"</td>
+</tr>
+<tr>
+<td>mus_the_da</td>
+<td>"level 21 (mt erebus).mp3"</td>
+</tr>
+<tr>
+<td>mus_shawn</td>
+<td>"level 20 (unholy cathedral).mp3"</td>
+</tr>
+<tr>
+<td>mus_ddtblu</td>
+<td>"level 24 (hell beneath).mp3"</td>
+</tr>
+<tr>
+<td>mus_in_cit</td>
+<td>"level 11 (refinery).mp3"</td>
+</tr>
+<tr>
+<td>mus_dead</td>
+<td>"level 13 (command center).mp3"</td>
+</tr>
+<tr>
+<td>mus_stlks2</td>
+<td>"level 09 (deimos anomaly).mp3"</td>
+</tr>
+<tr>
+<td>mus_theda2</td>
+<td>"level 17 (hell keep).mp3"</td>
+</tr>
+<tr>
+<td>mus_doom2</td>
+<td>"level 08 (minos).mp3"</td>
+</tr>
+<tr>
+<td>mus_ddtbl2</td>
+<td>"level 16 (hell gate).mp3"</td>
+</tr>
+<tr>
+<td>mus_runni2</td>
+<td>"level 04 (combine).mp3"</td>
+</tr>
+<tr>
+<td>mus_dead2</td>
+<td>"level 18 (pandemonium).mp3"</td>
+</tr>
+<tr>
+<td>mus_stlks3</td>
+<td>"level 06 (central processing).mp3"</td>
+</tr>
+<tr>
+<td>mus_romero</td>
+<td>"level 05 (phobos lab).mp3"</td>
+</tr>
+<tr>
+<td>mus_shawn2</td>
+<td>"level 10 (containment area).mp3"</td>
+</tr>
+<tr>
+<td>mus_messag</td>
+<td>"level 01 (attack).mp3"</td>
+</tr>
+<tr>
+<td>mus_count2</td>
+<td>"level 02 (plant).mp3"</td>
+</tr>
+<tr>
+<td>mus_ddtbl3</td>
+<td>"level 03 (toxin refinery).mp3"</td>
+</tr>
+<tr>
+<td>mus_ampie</td>
+<td>"level 01 (hangar).mp3"</td>
+</tr>
+<tr>
+<td>mus_theda3</td>
+<td>"level 06 (fistula).mp3"</td>
+</tr>
+<tr>
+<td>mus_adrian</td>
+<td>"level 07 (computer station).mp3"</td>
+</tr>
+<tr>
+<td>mus_messg2</td>
+<td>"level 08 (phobos anomaly).mp3"</td>
+</tr>
+<tr>
+<td>mus_romer2</td>
+<td>"level 11 (refinery).mp3"</td>
+</tr>
+<tr>
+<td>mus_tense</td>
+<td>"level 07 (geryon).mp3"</td>
+</tr>
+<tr>
+<td>mus_shawn3</td>
+<td>"level 05 (catwalk).mp3"</td>
+</tr>
+<tr>
+<td>mus_openin</td>
+<td>"level 04 (command control).mp3"</td>
+</tr>
+<tr>
+<td>mus_evil</td>
+<td>"level 16 (hell gate).mp3"</td>
+</tr>
+<tr>
+<td>mus_ultima</td>
+<td>"level 03 (toxin refinery).mp3"</td>
+</tr>
+<tr>
+<td>mus_read_m</td>
+<td>"track 03 main menu.mp3"</td>
+</tr>
+<tr>
+<td>mus_dm2ttl</td>
+<td>"track 02 title screen.mp3"</td>
+</tr>
+<tr>
+<td>mus_dm2int</td>
+<td>"track 05 stats screen.mp3"</td>
+</tr>
+</tbody>
+</table>
+<h2 id="config">Config<a class="headerlink" href="#config" title="Permanent link">¶</a></h2>
+<p>PrBoom's internal game settings can be found in the 'prboom.cfg' file inside each game's save directory.</p>
+<p>Many of these settings may be changed from the in-game menu. A few notable options are as follows:</p>
+<ul>
+<li>
+<p>Options → General (page 1) → Framerate (35fps|40fps|50fps|<strong>60fps</strong>|70fps|72fps|75fps|90fps|100fps|
+119fps|120fps|140fps|144fps|240fps|244fps)</p>
+<p>Vanilla Doom has a native framerate of 35fps. This should be considered the 'correct' value, but it can lead to an irregular 'stuttering' effect on 60Hz LCD displays.</p>
+<p>All framerates should maintain the proper game speed.</p>
+</li>
+<li>
+<p>Options → General (page 1) → Gamma Correction (<strong>Off</strong>|Lv. 1|Lv. 2|Lv. 3|Lv. 4)</p>
+<p>Sets display brightness.</p>
+</li>
+<li>
+<p>Options → Screen Size (<strong>Low</strong>|High)</p>
+<p>When set to 'Low', the HUD is shown at the bottom of the screen.</p>
+<p>When set to 'High', the gameplay area fills the screen and no HUD is shown.</p>
+</li>
+<li>
+<p>Options → Mouse Sensitivity</p>
+<p>The 'horizontal' slider sets the movement speed when looking left/right with either the mouse or the gamepad right analog stick.</p>
+</li>
+</ul>
+<h2 id="core-options">Core options<a class="headerlink" href="#core-options" title="Permanent link">¶</a></h2>
+<p>The PrBoom core has the following option(s) that can be tweaked from the core options menu. The default setting is bolded. </p>
+<p>Settings with (Restart) means that core has to be closed for the new setting to be applied on next launch.</p>
+<ul>
+<li>
+<p><strong>Internal resolution (restart)</strong> [prboom-resolution] (<strong>320x200</strong>|640x400|960x600|1280x800|1600x1000|1920x1200)</p>
+<p>Configure the resolution. Requires a restart.</p>
+</li>
+</ul>
+<p>??? note "Internal resolution - 320x200"
+    <img alt="" src="/image/core/prboom320x200.png" /></p>
+<p>??? note "Internal resolution - 1920x1200"
+    <img alt="" src="/image/core/prboom1920x1200.png" />    </p>
+<ul>
+<li>
+<p><strong>Mouse active when using Gamepad</strong> [prboom-mouse_on] (<strong>disabled</strong>|enabled)</p>
+<p>Allows you to use mouse inputs even when User 1's device type isn't set to 'RetroKeyboard/Mouse'.</p>
+</li>
+<li>
+<p><strong>Look on parent folders for IWADs</strong> [prboom-find_recursive_on] (<strong>enabled</strong>|disabled)</p>
+<p>Scans parent folders for IWADs. NOTE: You need to disable this if you want to run SIGIL.</p>
+</li>
+<li>
+<p><strong>Analog Deadzone (percent)</strong> [prboom-analog_deadzone] (<strong>15</strong>|20|25|30|0|5|10)</p>
+<p>Sets the deadzone of the Gamepad analog sticks when the input device type is set to 'Gamepad Modern'.</p>
+</li>
+</ul>
+<h2 id="user-1-device-types">User 1 device types<a class="headerlink" href="#user-1-device-types" title="Permanent link">¶</a></h2>
+<p>The PrBoom core supports the following device type(s) in the controls menu, bolded device types are the default for the specified user(s):</p>
+<ul>
+<li>None - Input disabled.</li>
+<li><strong>Gamepad Classic</strong> - Joypad</li>
+<li><strong>Gamepad Modern</strong> - Joypad</li>
+<li><strong>RetroKeyboard/Mouse</strong> - Keyboard and Mouse - Switch to this for keyboard and mouse input. Has keymapper support.</li>
+</ul>
+<h2 id="joypad">Joypad<a class="headerlink" href="#joypad" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>User 1 input descriptors for 'Gamepad Classic' device type</th>
+<th>RetroPad Inputs</th>
+<th>PrBoom inputs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Use</td>
+<td><img alt="" src="/image/retropad/retro_b.png" /></td>
+<td>Use</td>
+</tr>
+<tr>
+<td>Run</td>
+<td><img alt="" src="/image/retropad/retro_y.png" /></td>
+<td>Run</td>
+</tr>
+<tr>
+<td>Show/Hide Map</td>
+<td><img alt="" src="/image/retropad/retro_select.png" /></td>
+<td>Show/Hide Map</td>
+</tr>
+<tr>
+<td>Show/Hide Menu</td>
+<td><img alt="" src="/image/retropad/retro_start.png" /></td>
+<td>Show/Hide Menu</td>
+</tr>
+<tr>
+<td>D-Pad Up</td>
+<td><img alt="" src="/image/retropad/retro_dpad_up.png" /></td>
+<td>D-Pad Up</td>
+</tr>
+<tr>
+<td>D-Pad Down</td>
+<td><img alt="" src="/image/retropad/retro_dpad_down.png" /></td>
+<td>D-Pad Down</td>
+</tr>
+<tr>
+<td>D-Pad Left</td>
+<td><img alt="" src="/image/retropad/retro_dpad_left.png" /></td>
+<td>D-Pad Left</td>
+</tr>
+<tr>
+<td>D-Pad Right</td>
+<td><img alt="" src="/image/retropad/retro_dpad_right.png" /></td>
+<td>D-Pad Right</td>
+</tr>
+<tr>
+<td>Fire</td>
+<td><img alt="" src="/image/retropad/retro_a.png" /></td>
+<td>Fire</td>
+</tr>
+<tr>
+<td>Strafe</td>
+<td><img alt="" src="/image/retropad/retro_x.png" /></td>
+<td>Strafe</td>
+</tr>
+<tr>
+<td>Strafe Left</td>
+<td><img alt="" src="/image/retropad/retro_l1.png" /></td>
+<td>Strafe Left</td>
+</tr>
+<tr>
+<td>Strafe Right</td>
+<td><img alt="" src="/image/retropad/retro_r1.png" /></td>
+<td>Strafe Right</td>
+</tr>
+<tr>
+<td>Previous Weapon</td>
+<td><img alt="" src="/image/retropad/retro_l2.png" /></td>
+<td>Previous Weapon</td>
+</tr>
+<tr>
+<td>Next Weapon</td>
+<td><img alt="" src="/image/retropad/retro_r2.png" /></td>
+<td>Next Weapon</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>User 1 input descriptors for 'Gamepad Modern' device type</th>
+<th>RetroPad Inputs</th>
+<th>PrBoom inputs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Menu Cancel</td>
+<td><img alt="" src="/image/retropad/retro_b.png" /></td>
+<td>Menu Cancel</td>
+</tr>
+<tr>
+<td>Quick Save</td>
+<td><img alt="" src="/image/retropad/retro_y.png" /></td>
+<td>Quick Save</td>
+</tr>
+<tr>
+<td>Show/Hide Map</td>
+<td><img alt="" src="/image/retropad/retro_select.png" /></td>
+<td>Show/Hide Map</td>
+</tr>
+<tr>
+<td>Show/Hide Menu</td>
+<td><img alt="" src="/image/retropad/retro_start.png" /></td>
+<td>Show/Hide Menu</td>
+</tr>
+<tr>
+<td>D-Pad Up</td>
+<td><img alt="" src="/image/retropad/retro_dpad_up.png" /></td>
+<td>D-Pad Up</td>
+</tr>
+<tr>
+<td>D-Pad Down</td>
+<td><img alt="" src="/image/retropad/retro_dpad_down.png" /></td>
+<td>D-Pad Down</td>
+</tr>
+<tr>
+<td>D-Pad Left</td>
+<td><img alt="" src="/image/retropad/retro_dpad_left.png" /></td>
+<td>D-Pad Left</td>
+</tr>
+<tr>
+<td>D-Pad Right</td>
+<td><img alt="" src="/image/retropad/retro_dpad_right.png" /></td>
+<td>D-Pad Right</td>
+</tr>
+<tr>
+<td>Menu Select</td>
+<td><img alt="" src="/image/retropad/retro_a.png" /></td>
+<td>Menu Select</td>
+</tr>
+<tr>
+<td>Quick Load</td>
+<td><img alt="" src="/image/retropad/retro_x.png" /></td>
+<td>Quick Load</td>
+</tr>
+<tr>
+<td>Previous Weapon</td>
+<td><img alt="" src="/image/retropad/retro_l1.png" /></td>
+<td>Previous Weapon</td>
+</tr>
+<tr>
+<td>Next Weapon</td>
+<td><img alt="" src="/image/retropad/retro_r1.png" /></td>
+<td>Next Weapon</td>
+</tr>
+<tr>
+<td>Use</td>
+<td><img alt="" src="/image/retropad/retro_l2.png" /></td>
+<td>Use</td>
+</tr>
+<tr>
+<td>Fire</td>
+<td><img alt="" src="/image/retropad/retro_r2.png" /></td>
+<td>Fire</td>
+</tr>
+<tr>
+<td>Toggle Run</td>
+<td><img alt="" src="/image/retropad/retro_l3.png" /></td>
+<td>Toggle Run</td>
+</tr>
+<tr>
+<td>180 Turn</td>
+<td><img alt="" src="/image/retropad/retro_r3.png" /></td>
+<td>180 Turn</td>
+</tr>
+<tr>
+<td></td>
+<td><img alt="" src="/image/retropad/retro_left_stick.png" /> X</td>
+<td>Strafe Left/Right</td>
+</tr>
+<tr>
+<td></td>
+<td><img alt="" src="/image/retropad/retro_left_stick.png" /> Y</td>
+<td>Move Forwards/Backwards</td>
+</tr>
+<tr>
+<td></td>
+<td><img alt="" src="/image/retropad/retro_right_stick.png" /> X</td>
+<td>Look Left/Right</td>
+</tr>
+</tbody>
+</table>
+<h2 id="keyboard-and-mouse">Keyboard and Mouse<a class="headerlink" href="#keyboard-and-mouse" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>RetroKeyboard/Mouse inputs</th>
+<th>Weapons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Keyboard 1</td>
+<td>Fist</td>
+</tr>
+<tr>
+<td>Keyboard 2</td>
+<td>Pistol</td>
+</tr>
+<tr>
+<td>Keyboard 3</td>
+<td>Shotgun</td>
+</tr>
+<tr>
+<td>Keyboard 4</td>
+<td>Chaingun</td>
+</tr>
+<tr>
+<td>Keyboard 5</td>
+<td>Rocket</td>
+</tr>
+<tr>
+<td>Keyboard 8</td>
+<td>Chainsaw</td>
+</tr>
+<tr>
+<td>Keyboard 0</td>
+<td>Best</td>
+</tr>
+<tr>
+<td>Keyboard Left Control</td>
+<td>Fire</td>
+</tr>
+<tr>
+<td>Keyboard Right Control</td>
+<td>Fire</td>
+</tr>
+<tr>
+<td>Wheel Up</td>
+<td>Next Weapon</td>
+</tr>
+<tr>
+<td>Wheel Down</td>
+<td>Previous Weapon</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retromouse/retro_left.png" /> Mouse 1</td>
+<td>Fire</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>RetroKeyboard/Mouse inputs</th>
+<th>Movement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Keyboard Up</td>
+<td>Forward</td>
+</tr>
+<tr>
+<td>Keyboard Down</td>
+<td>Backward</td>
+</tr>
+<tr>
+<td>Keyboard Left</td>
+<td>Turn Left</td>
+</tr>
+<tr>
+<td>Keyboard Right</td>
+<td>Turn Right</td>
+</tr>
+<tr>
+<td>Keyboard Left Shift</td>
+<td>Run</td>
+</tr>
+<tr>
+<td>Keyboard Right Shift</td>
+<td>Run</td>
+</tr>
+<tr>
+<td>Keyboard Less than &lt;</td>
+<td>Strafe Left</td>
+</tr>
+<tr>
+<td>Keyboard Greater than &gt;</td>
+<td>Strafe Right</td>
+</tr>
+<tr>
+<td>Keyboard Left Alt</td>
+<td>Strafe</td>
+</tr>
+<tr>
+<td>Keyboard Right Alt</td>
+<td>Strafe</td>
+</tr>
+<tr>
+<td>Keyboard Caps Lock</td>
+<td>Autorun</td>
+</tr>
+<tr>
+<td>Keyboard Slash /</td>
+<td>180 Turn</td>
+</tr>
+<tr>
+<td>Keyboard Space</td>
+<td>Use</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retromouse/retro_mouse.png" /> Mouse Cursor</td>
+<td>Turn Left/Right</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retromouse/retro_right.png" /> Mouse 2</td>
+<td>Strafe</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retromouse/retro_middle.png" /> Mouse 3</td>
+<td>Use</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retromouse/retro_middle.png" /> Mouse 3</td>
+<td>Forward</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>RetroKeyboard/Mouse inputs</th>
+<th>Game</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Keyboard F2</td>
+<td>Save</td>
+</tr>
+<tr>
+<td>Keyboard F3</td>
+<td>Load</td>
+</tr>
+<tr>
+<td>Keyboard F6</td>
+<td>Quicksave</td>
+</tr>
+<tr>
+<td>Keyboard F7</td>
+<td>Endgame</td>
+</tr>
+<tr>
+<td>Keyboard F9</td>
+<td>Quickload</td>
+</tr>
+<tr>
+<td>Keyboard F10</td>
+<td>Quit</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>RetroKeyboard/Mouse inputs</th>
+<th>Screen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Keyboard F1</td>
+<td>Help</td>
+</tr>
+<tr>
+<td>Keyboard Escape</td>
+<td>Menu</td>
+</tr>
+<tr>
+<td>Keyboard Home</td>
+<td>Setup</td>
+</tr>
+<tr>
+<td>Keyboard Pause</td>
+<td>Pause</td>
+</tr>
+<tr>
+<td>Keyboard Tab</td>
+<td>Automap</td>
+</tr>
+<tr>
+<td>Keyboard F4</td>
+<td>Sound Volume</td>
+</tr>
+<tr>
+<td>Keyboard F5</td>
+<td>HUD</td>
+</tr>
+<tr>
+<td>Keyboard F8</td>
+<td>Messages</td>
+</tr>
+<tr>
+<td>Keyboard F11</td>
+<td>Gamma Fix</td>
+</tr>
+<tr>
+<td>Keyboard F12</td>
+<td>Spy</td>
+</tr>
+<tr>
+<td>Keyboard Minus -</td>
+<td>Smaller View</td>
+</tr>
+<tr>
+<td>Keyboard Plus +</td>
+<td>Larger View</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>RetroKeyboard/Mouse inputs</th>
+<th>Automap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Keyboard f</td>
+<td>Follow Mode</td>
+</tr>
+<tr>
+<td>Keyboard Minus -</td>
+<td>Zoom in</td>
+</tr>
+<tr>
+<td>Keyboard Plus +</td>
+<td>Zoom out</td>
+</tr>
+<tr>
+<td>Keyboard m</td>
+<td>Mark Place</td>
+</tr>
+<tr>
+<td>Keyboard c</td>
+<td>Clear Marks</td>
+</tr>
+<tr>
+<td>Keyboard o</td>
+<td>Full/Zoom</td>
+</tr>
+<tr>
+<td>Keyboard g</td>
+<td>Grid</td>
+</tr>
+</tbody>
+</table>
+<h2 id="external-links">External Links<a class="headerlink" href="#external-links" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="http://prboom.sourceforge.net/">Official PrBoom Website</a></li>
+<li><a href="http://sourceforge.net/projects/prboom/">Official PrBoom SourceForge Repository</a></li>
+<li><a href="https://github.com/libretro/libretro-super/blob/master/dist/info/prboom_libretro.info">Libretro PrBoom Core info file</a></li>
+<li><a href="https://github.com/libretro/libretro-prboom">Libretro PrBoom Github Repository</a></li>
+<li><a href="https://github.com/libretro/libretro-prboom/issues">Report Libretro PrBoom Core Issues Here</a></li>
+</ul>
+<h2 id="id-software">id Software<a class="headerlink" href="#id-software" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://docs.libretro.com/library/tyrquake/">Quake 1 (TyrQuake)</a></li>
+</ul>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#background">Background</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#bios">BIOS</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#extensions">Extensions</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#features">Features</a></li>
+      <ul>
+    
+      <li><a href="#directories">Directories</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#geometry-and-timing">Geometry and timing</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#loading-doom">Loading DOOM</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#music">Music</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#config">Config</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#core-options">Core options</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#user-1-device-types">User 1 device types</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#joypad">Joypad</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#keyboard-and-mouse">Keyboard and Mouse</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#external-links">External Links</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#id-software">id Software</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../dinothawr/" title="previous chapter">
+        Dinothawr
+      </a></li>
+    
+    
+      <li>Next: <a href="../stone_soup/" title="next chapter">
+        Dungeon Crawl Stone Soup
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:11
+  -->
+</body>
+</html>

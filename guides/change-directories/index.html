@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Directory Configuration &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="directory-configuration">Directory configuration<a class="headerlink" href="#directory-configuration" title="Permanent link">¶</a></h1>
+<p>Next step you might want to consider is setting directories for RetroArch, this can help get the best experience possible.</p>
+<p>Although the defaults will suit most users, if you want to configure custom BIOS's or change the save location, you will have to change directories.</p>
+<h2 id="from-the-retroarch-settings">From the RetroArch settings:<a class="headerlink" href="#from-the-retroarch-settings" title="Permanent link">¶</a></h2>
+<ul>
+<li>Navigate to <strong>Settings</strong></li>
+<li>Navigate to <strong>Directories</strong></li>
+<li>Select the directory you want to changed</li>
+<li>Navigate to the desired location using the file browser</li>
+</ul>
+<h2 id="from-a-text-editor">From a text editor:<a class="headerlink" href="#from-a-text-editor" title="Permanent link">¶</a></h2>
+<ul>
+<li>Close RetroArch</li>
+<li>Find your retroarch config folder</li>
+</ul>
+<p>!!! tip
+    If you are having trouble locating your retroarch config folder, check back in the <strong>Directories</strong> setting, take a mental note of what appears on the <strong>Config</strong> directory, this should lead you to a <strong>retroarch</strong> folder. If all hope is lost do a system-wide search for <strong>retroarch.cfg</strong></p>
+<ul>
+<li>Open retroarch.cfg</li>
+<li>After the = sign, make changes then save.</li>
+</ul>
+<h2 id="paths-to-consider-changing">Paths to consider changing:<a class="headerlink" href="#paths-to-consider-changing" title="Permanent link">¶</a></h2>
+<h3 id="cores">Cores<a class="headerlink" href="#cores" title="Permanent link">¶</a></h3>
+<p>This is the location for all your cores. To <a href="../download-cores/#installing-cores-through-retroarch-interface">install them using the user interface</a>, this setting needs to point to a writeable directory. </p>
+<p>!!! note
+    The Ubuntu PPA does not point this to a user-writable directory because cores are modified by the package manager. If you want to change it manually, you might want to change this directory from "retroarch.cfg" with a text editor since the RetroArch file browser doesn't show hidden folders by default. <em>libretro_directory =</em> is what you need to change in the config file. Some distributions use <code>~/.config/retroarch/cores/</code></p>
+<h3 id="systembios">System/BIOS<a class="headerlink" href="#systembios" title="Permanent link">¶</a></h3>
+<p>This is where you specify the location for all your BIOS's, by default RetroArch looks for BIOS in your "Starting directory" folder. It is not suggested that you dump all BIOS files in the "Starting directory".</p>
+<p>!!! note
+    Some emulators <em>(Example: PS1 and PSP)</em> will require BIOS files to even function.</p>
+<p>It is suggested that this be changed to a folder named "system" under your retroarch config folder. If you can't be bothered to try and find this config folder (since it varies from OS), and you want to skip having to use a text editor, choose another location that the BIOS files will be.</p>
+<p>!!! note
+    You might want to change this directory from "retroarch.cfg" with a text editor since the RetroArch file browser doesn't show hidden folders by default. <em>system_directory =</em> is what you need to change in the config file.</p>
+<h3 id="file-browser">File Browser<a class="headerlink" href="#file-browser" title="Permanent link">¶</a></h3>
+<p>Another one you'll want to consider changing. This will be the starting directory when you select "Load Content" and it can be very handy to have this set to your ROM folder. Although this probably isn't needed since RetroArch has an import feature, it doesn't hurt to have this set anyway.</p>
+<h3 id="savefile-and-savestate">Savefile and Savestate<a class="headerlink" href="#savefile-and-savestate" title="Permanent link">¶</a></h3>
+<p>Last one you should consider changing are the save locations, by default it will place them in the same folder as your ROMS. If you care about organisation you should change these to another folder.</p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#from-the-retroarch-settings">From the RetroArch settings:</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#from-a-text-editor">From a text editor:</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#paths-to-consider-changing">Paths to consider changing:</a></li>
+      <ul>
+    
+      <li><a href="#cores">Cores</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#systembios">System/BIOS</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#file-browser">File Browser</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#savefile-and-savestate">Savefile and Savestate</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../download-cores/" title="previous chapter">
+        Installing Cores
+      </a></li>
+    
+    
+      <li>Next: <a href="../file-browser/" title="next chapter">
+        File Browser
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

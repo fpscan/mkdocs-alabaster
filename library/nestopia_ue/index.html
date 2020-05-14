@@ -1,0 +1,775 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Nintendo - NES / Famicom (Nestopia UE) &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="nintendo-nes-famicom-nestopia-ue">Nintendo - NES / Famicom (Nestopia UE)<a class="headerlink" href="#nintendo-nes-famicom-nestopia-ue" title="Permanent link">¶</a></h1>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">¶</a></h2>
+<p>Nestopia is a portable and cycle-accurate NES/Famicom emulator written in C++. Nestopia UE (Undead Edition) is a fork of the original source code, with enhancements from members of the emulation community. This includes support for new platforms, and bug fixes in the emulator core. </p>
+<h3 id="authorlicense">Author/License<a class="headerlink" href="#authorlicense" title="Permanent link">¶</a></h3>
+<p>The Nestopia UE core has been authored by</p>
+<ul>
+<li>Martin Freij</li>
+<li>R. Belmont</li>
+<li>R. Danbrook</li>
+</ul>
+<p>The Nestopia UE core is licensed under</p>
+<ul>
+<li><a href="https://github.com/libretro/nestopia/blob/master/COPYING">GPLv2</a></li>
+</ul>
+<p>A summary of the licenses behind RetroArch and its cores have found <a href="https://docs.libretro.com/tech/licenses/">here</a>.</p>
+<h2 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">¶</a></h2>
+<p>Content that can be loaded by the Nestopia UE core have the following file extensions:</p>
+<ul>
+<li>.nes</li>
+<li>.fds</li>
+<li>.unf</li>
+<li>.unif</li>
+</ul>
+<h2 id="databases">Databases<a class="headerlink" href="#databases" title="Permanent link">¶</a></h2>
+<p>RetroArch database(s) that are associated with the Nestopia UE core:</p>
+<ul>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Nintendo%20-%20Nintendo%20Entertainment%20System.rdb">Nintendo - Nintendo Entertainment System</a></li>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Nintendo%20-%20Family%20Computer%20Disk%20System.rdb">Nintendo - Family Computer Disk System</a></li>
+</ul>
+<h2 id="bios">BIOS<a class="headerlink" href="#bios" title="Permanent link">¶</a></h2>
+<p>Required or optional firmware files go in the frontend's system directory.</p>
+<p>!!! warning
+    Nestopia UE requires the NstDatabase.xml for general proper emulation. Make sure it's in RetroArch's system directory.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Filename</th>
+<th align="center">Description</th>
+<th align="center">md5sum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><a href="https://docs.libretro.com/library/nestopia_ue/index.html#nstdatabasexml">NstDatabase.xml</a></td>
+<td align="center">Nestopia UE Database file - Required</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">disksys.rom</td>
+<td align="center">Family Computer Disk System BIOS - Required for Famicom Disk System emulation</td>
+<td align="center">ca30b50f880eb660a320674ed365ef7a</td>
+</tr>
+</tbody>
+</table>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h2>
+<p>Frontend-level settings or features that the Nestopia UE core respects.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th align="center">Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Restart</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Screenshots</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Saves</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>States</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Rewind</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Netplay</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Core Options</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>RetroAchievements</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>RetroArch Cheats</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Native Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Controls</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Remapping</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Multi-Mouse</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Rumble</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Sensors</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Location</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Subsystem</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td><a href="https://docs.libretro.com/guides/softpatching/">Softpatching</a></td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Disk Control</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Username</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Language</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Crop Overscan</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>LEDs</td>
+<td align="center">✕</td>
+</tr>
+</tbody>
+</table>
+<h3 id="directories">Directories<a class="headerlink" href="#directories" title="Permanent link">¶</a></h3>
+<p>The Nestopia UE core's internal core name is 'Nestopia'</p>
+<p>The Nestopia UE core saves/loads to/from these directories.</p>
+<p><strong>Frontend's Save directory</strong></p>
+<ul>
+<li>'content-name'.srm (Cartridge battery save)</li>
+</ul>
+<p><strong>Frontend's State directory</strong></p>
+<ul>
+<li>'content-name'.state# (State)</li>
+</ul>
+<p><strong>Frontend's System directory</strong></p>
+<ul>
+<li>custom.pal (Custom palette file)</li>
+</ul>
+<h3 id="geometry-and-timing">Geometry and timing<a class="headerlink" href="#geometry-and-timing" title="Permanent link">¶</a></h3>
+<ul>
+<li>The Nestopia UE core's core provided FPS is (FPS)</li>
+<li>The Nestopia UE core's core provided sample rate is 44100 Hz</li>
+<li>The Nestopia UE core's core provided aspect ratio is dependent on the <a href="https://docs.libretro.com/library/nestopia_ue/#core-options">'Preferred aspect ratio' core option</a>.</li>
+</ul>
+<h3 id="nstdatabasexml">NstDatabase.xml<a class="headerlink" href="#nstdatabasexml" title="Permanent link">¶</a></h3>
+<p><strong>It is HIGHLY RECOMMENDED you have NstDatabase.xml in RetroArch's system directory, you can get it from <a href="https://github.com/0ldsk00l/nestopia">https://github.com/0ldsk00l/nestopia</a></strong></p>
+<p>The Nestopia UE core relies on the NstDatabase.xml database file for </p>
+<ul>
+<li>Games that support a custom mapper</li>
+<li>Games that support multitap accessories</li>
+<li>Games that support the Zapper</li>
+<li>ROM Hacks</li>
+<li>Famicom Disk System games</li>
+<li>General proper emulation of games</li>
+</ul>
+<p><strong>Many games will have issues if NstDatabase.xml is not present in RetroArch's system directory.</strong></p>
+<h3 id="custom-color-palettes">Custom color palettes<a class="headerlink" href="#custom-color-palettes" title="Permanent link">¶</a></h3>
+<p>To use custom color palettes in the Nestopia UE core, the custom color palette file you want to use must be in RetroArch's system directory. </p>
+<p>Make sure the custom palette file is named 'custom.pal'</p>
+<p>Also, the 'Palette' core option must be set to custom.</p>
+<p>Custom color palettes for the NES can be generated with either of these tools.</p>
+<ul>
+<li><a href="http://bisqwit.iki.fi/utils/nespalette.php">Bisqwit's NTSC NES palette generator</a></li>
+<li><a href="http://drag.wootest.net/misc/palgen.html">Drag's NTSC NES palette generator</a></li>
+</ul>
+<h2 id="core-options">Core options<a class="headerlink" href="#core-options" title="Permanent link">¶</a></h2>
+<p>The Nestopia UE core has the following option(s) that can be tweaked from the core options menu. The default setting is bolded. </p>
+<p>Settings with (Restart) means that core has to be closed for the new setting to be applied on next launch.</p>
+<ul>
+<li>
+<p><strong>Blargg NTSC filter</strong> [nestopia_blargg_ntsc_filter] (<strong>disabled</strong>|composite|svideo|rgb|monochrome)</p>
+<p>Enable Blargg NTSC filters.</p>
+</li>
+</ul>
+<p>!!! attention "Disclaimer"
+    These 'Blargg NTSC filter' core option screenshots have been taken with the 'Palette' core option set to cxa2025as.</p>
+<p>??? note "Blargg NTSC filter - Off"
+    <img alt="" src="/image/core/nestopia_ue/blargg_off.png" /></p>
+<p>??? note "Blargg NTSC filter - composite"
+    <img alt="" src="/image/core/nestopia_ue/blargg_composite.png" /></p>
+<p>??? note "Blargg NTSC filter - svideo"
+    <img alt="" src="/image/core/nestopia_ue/blargg_svideo.png" /></p>
+<p>??? note "Blargg NTSC filter - rgb"
+    <img alt="" src="/image/core/nestopia_ue/blargg_rgb.png" /></p>
+<p>??? note "Blargg NTSC filter - monochrome"
+    <img alt="" src="/image/core/nestopia_ue/blargg_monochrome.png" />  </p>
+<ul>
+<li>
+<p><strong>Palette</strong> [nestopia_palette] (<strong>cxa2025as</strong>|consumer|canonical|alternative|rgb|pal|composite-direct-fbx|pvm-style-d93-fbx|ntsc-hardware-fbx|nes-classic-fbx-fs|raw|custom)</p>
+<p>Choose which color palette is going to be used.</p>
+</li>
+</ul>
+<p>!!! attention "Disclaimer"
+    These 'Palette' core option screenshots have been taken with the 'Blargg NTSC filter' core option set to Off.</p>
+<p>??? note "Palette - cxa2025as"
+    <img alt="" src="/image/core/nestopia_ue/cxa2025as.png" /></p>
+<p>??? note "Palette - consumer"
+    <img alt="" src="/image/core/nestopia_ue/consumer.png" /></p>
+<p>??? note "Palette - canonical"
+    <img alt="" src="/image/core/nestopia_ue/canonical.png" /></p>
+<p>??? note "Palette - alternative"
+    <img alt="" src="/image/core/nestopia_ue/alternative.png" /></p>
+<p>??? note "Palette - rgb"
+    <img alt="" src="/image/core/nestopia_ue/rgb.png" /></p>
+<p>??? note "Palette - pal"
+    <img alt="" src="/image/core/nestopia_ue/pal.png" /></p>
+<p>??? note "Palette - composite-direct-fbx"
+    <img alt="" src="/image/core/nestopia_ue/composite_direct_fbx.png" /></p>
+<p>??? note "Palette - pvm-style-d93-fbx"
+    <img alt="" src="/image/core/nestopia_ue/pvm_style_d93_fbx.png" /></p>
+<p>??? note "Palette - ntsc-hardware-fbx"
+    <img alt="" src="/image/core/nestopia_ue/ntsc_hardware_fbx.png" /></p>
+<p>??? note "Palette - nes-classic-fbx-fs"
+    <img alt="" src="/image/core/nestopia_ue/nes_classic_fbx_fs.png" /></p>
+<p>??? note "Palette - raw"
+    <img alt="" src="/image/core/nestopia_ue/raw.png" /></p>
+<ul>
+<li>
+<p><strong>Remove 8-sprites-per-scanline hardware limit</strong> [nestopia_nospritelimit] (<strong>disabled</strong>|enabled)</p>
+<p>Self-explanatory.</p>
+</li>
+<li>
+<p><strong>CPU Speed (Overclock)</strong> [nestopia_overclock] (<strong>1x</strong>|2x)</p>
+<p>Overclock the emulated CPU.</p>
+</li>
+<li>
+<p><strong>4 Player Adapter</strong> [nestopia_select_adapter] (<strong>auto</strong>|ntsc|famicom)</p>
+<p>Manually select a 4 Player Adapter if needed. Some games will not recognize the adapter correctly through the NstDatabase.xml database, this option should help fix that.</p>
+</li>
+<li>
+<p><strong>Automatically insert first FDS disk on reset</strong> [nestopia_fds_auto_insert] (<strong>enabled</strong>|disabled)</p>
+<p>Self-explanatory.</p>
+</li>
+<li>
+<p><strong>Mask Overscan (Vertical)</strong> [nestopia_overscan_v] (<strong>enabled</strong>|disabled)</p>
+<p>Mask out (vertically) the potentially random glitchy video output that would have been hidden by the bezel around the edge of a standard-definition television screen.</p>
+</li>
+</ul>
+<p>??? note "Mask Overscan (Vertical) - On"
+    <img alt="" src="/image/core/nestopia_ue/vert_on.png" /></p>
+<p>??? note "Mask Overscan (Vertical) - Off"
+    <img alt="" src="/image/core/nestopia_ue/vert_off.png" />   </p>
+<ul>
+<li>
+<p><strong>Mask Overscan (Horizontal)</strong> [nestopia_overscan_h] (<strong>disabled</strong>|enabled)</p>
+<p>Mask out (horizontally) the potentially random glitchy video output that would have been hidden by the bezel around the edge of a standard-definition television screen.</p>
+</li>
+</ul>
+<p>??? note "Mask Overscan (Horizontal) - Off"
+    <img alt="" src="/image/core/nestopia_ue/horiz_off.png" /></p>
+<p>??? note "Mask Overscan (Horizontal) - On"
+    <img alt="" src="/image/core/nestopia_ue/horiz_on.png" />   </p>
+<ul>
+<li>
+<p><strong>Preferred aspect ratio</strong> [nestopia_aspect] (<strong>auto</strong>|ntsc|pal|4:3)</p>
+<p>Choose the preferred aspect ratio. RetroArch's aspect ratio must be set to Core provided in the Video seetings. 'auto' will use the <a href="https://docs.libretro.com/library/nestopia_ue/index.html#nstdatabasexml">NstDatabase.xml</a> database file for aspect ratio autodetection. If there is no database present it will default to NTSC for 'auto'.</p>
+</li>
+</ul>
+<p>??? note "Preferred aspect ratio - ntsc"
+    <img alt="" src="/image/core/nestopia_ue/ratio_ntsc.png" /></p>
+<p>??? note "Preferred aspect ratio - pal"
+    <img alt="" src="/image/core/nestopia_ue/ratio_pal.png" /></p>
+<p>??? note "Preferred aspect ratio - 4:3"
+    <img alt="" src="/image/core/nestopia_ue/ratio_4by3.png" /> </p>
+<ul>
+<li>
+<p><strong>Game Genie Sound Distortion</strong> [nestopia_genie_distortion] (<strong>disabled</strong>|enabled)</p>
+<p>The Game Genie cheat device could inadvertently introduce sound distortion in games. By enabling this, you can simulate the distortion it would add to a game's sound.</p>
+</li>
+<li>
+<p><strong>Favored System</strong> [nestopia_favored_system] (<strong>auto</strong>|ntsc|pal|famicom|dendy)</p>
+<p>Choose which region the system is from. 'auto' will use the <a href="https://docs.libretro.com/library/nestopia_ue/index.html#nstdatabasexml">NstDatabase.xml</a> database file for region autodetection. If there is no database present it will default to NTSC for 'auto'.</p>
+</li>
+<li>
+<p><strong>RAM Power-on State</strong> [nestopia_ram_power_state] (<strong>0x00</strong>|0xFF|random)</p>
+<p>Awaiting description.</p>
+</li>
+<li>
+<p><strong>Turbo Pulse Speed</strong> [nestopia_turbo_pulse] (<strong>2</strong>|3|4|5|6|7|8|9)</p>
+<p>Set the turbo pulse speed for the Turbo B and Turbo A buttons.</p>
+</li>
+</ul>
+<h2 id="controllers">Controllers<a class="headerlink" href="#controllers" title="Permanent link">¶</a></h2>
+<p>The Nestopia UE core supports the following device type(s) in the controls menu, bolded device types are the default for the specified user(s):</p>
+<h3 id="user-1-4-device-types">User 1 - 4 device types<a class="headerlink" href="#user-1-4-device-types" title="Permanent link">¶</a></h3>
+<ul>
+<li>None - Doesn't disable input. There's no reason to switch to this.</li>
+<li><strong>RetroPad</strong> - Joypad - Stay on this.</li>
+<li>RetroPad w/Analog - Joypad - Same as RetroPad. There's no reason to switch to this.</li>
+</ul>
+<h3 id="other-controllers">Other controllers<a class="headerlink" href="#other-controllers" title="Permanent link">¶</a></h3>
+<ul>
+<li>Zapper - Lightgun - The Nestopia UE core can emulate Zapper inputs but this is done automatically based off of the NstDatabase.xml Database file and cannot be manually selected a device type.</li>
+</ul>
+<h3 id="multitap-support">Multitap support<a class="headerlink" href="#multitap-support" title="Permanent link">¶</a></h3>
+<p>The Nestopia UE core uses the NstDatabase.xml database file to detect which games have multitap support.</p>
+<h3 id="controller-tables">Controller tables<a class="headerlink" href="#controller-tables" title="Permanent link">¶</a></h3>
+<h4 id="joypad">Joypad<a class="headerlink" href="#joypad" title="Permanent link">¶</a></h4>
+<p><img alt="" src="/image/controller/nes.png" /></p>
+<table>
+<thead>
+<tr>
+<th>User 1 Remap descriptors</th>
+<th>RetroPad Inputs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td><img alt="" src="/image/retropad/retro_b.png" /></td>
+</tr>
+<tr>
+<td>Turbo B</td>
+<td><img alt="" src="/image/retropad/retro_y.png" /></td>
+</tr>
+<tr>
+<td>Select</td>
+<td><img alt="" src="/image/retropad/retro_select.png" /></td>
+</tr>
+<tr>
+<td>Start</td>
+<td><img alt="" src="/image/retropad/retro_start.png" /></td>
+</tr>
+<tr>
+<td>D-Pad Up</td>
+<td><img alt="" src="/image/retropad/retro_dpad_up.png" /></td>
+</tr>
+<tr>
+<td>D-Pad Down</td>
+<td><img alt="" src="/image/retropad/retro_dpad_down.png" /></td>
+</tr>
+<tr>
+<td>D-Pad Left</td>
+<td><img alt="" src="/image/retropad/retro_dpad_left.png" /></td>
+</tr>
+<tr>
+<td>D-Pad Right</td>
+<td><img alt="" src="/image/retropad/retro_dpad_right.png" /></td>
+</tr>
+<tr>
+<td>A</td>
+<td><img alt="" src="/image/retropad/retro_a.png" /></td>
+</tr>
+<tr>
+<td>Turbo A</td>
+<td><img alt="" src="/image/retropad/retro_x.png" /></td>
+</tr>
+<tr>
+<td>(FDS) Disk Side Change</td>
+<td><img alt="" src="/image/retropad/retro_l1.png" /></td>
+</tr>
+<tr>
+<td>(FDS) Eject Disk</td>
+<td><img alt="" src="/image/retropad/retro_r1.png" /></td>
+</tr>
+<tr>
+<td>(VSSystem) Coin 1</td>
+<td><img alt="" src="/image/retropad/retro_l2.png" /></td>
+</tr>
+<tr>
+<td>(VSSystem) Coin 2</td>
+<td><img alt="" src="/image/retropad/retro_r2.png" /></td>
+</tr>
+<tr>
+<td>(Famicom) Microphone</td>
+<td><img alt="" src="/image/retropad/retro_l3.png" /></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>User 2 - 4 Remap descriptors</th>
+<th>RetroPad Inputs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td><img alt="" src="/image/retropad/retro_b.png" /></td>
+</tr>
+<tr>
+<td>Turbo B</td>
+<td><img alt="" src="/image/retropad/retro_y.png" /></td>
+</tr>
+<tr>
+<td>Select</td>
+<td><img alt="" src="/image/retropad/retro_select.png" /></td>
+</tr>
+<tr>
+<td>Start</td>
+<td><img alt="" src="/image/retropad/retro_start.png" /></td>
+</tr>
+<tr>
+<td>D-Pad Up</td>
+<td><img alt="" src="/image/retropad/retro_dpad_up.png" /></td>
+</tr>
+<tr>
+<td>D-Pad Down</td>
+<td><img alt="" src="/image/retropad/retro_dpad_down.png" /></td>
+</tr>
+<tr>
+<td>D-Pad Left</td>
+<td><img alt="" src="/image/retropad/retro_dpad_left.png" /></td>
+</tr>
+<tr>
+<td>D-Pad Right</td>
+<td><img alt="" src="/image/retropad/retro_dpad_right.png" /></td>
+</tr>
+<tr>
+<td>A</td>
+<td><img alt="" src="/image/retropad/retro_a.png" /></td>
+</tr>
+<tr>
+<td>Turbo A</td>
+<td><img alt="" src="/image/retropad/retro_x.png" /></td>
+</tr>
+<tr>
+<td>(FDS) Disk Side Change</td>
+<td><img alt="" src="/image/retropad/retro_l1.png" /></td>
+</tr>
+<tr>
+<td>(FDS) Eject Disk</td>
+<td><img alt="" src="/image/retropad/retro_r1.png" /></td>
+</tr>
+</tbody>
+</table>
+<h4 id="lightgun">Lightgun<a class="headerlink" href="#lightgun" title="Permanent link">¶</a></h4>
+<table>
+<thead>
+<tr>
+<th>RetroLightgun Inputs</th>
+<th>Zapper</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="/image/retromouse/retro_mouse.png" /> Gun Crosshair</td>
+<td>Zapper Crosshair</td>
+</tr>
+<tr>
+<td>Gun Trigger</td>
+<td>Zapper Trigger</td>
+</tr>
+<tr>
+<td>Gun Aux B</td>
+<td>Zapper Light On</td>
+</tr>
+</tbody>
+</table>
+<h2 id="compatibility">Compatibility<a class="headerlink" href="#compatibility" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Game</th>
+<th>Issue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Skull &amp; Crossbones</td>
+<td>Graphical glitches and screen shaking when in 2-player mode. (1)</td>
+</tr>
+</tbody>
+</table>
+<p>??? note "(1)"
+    <img alt="" src="/image/core/nestopia_ue/skull.png" /></p>
+<h2 id="external-links">External Links<a class="headerlink" href="#external-links" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="http://0ldsk00l.ca/nestopia/">Official Nestopia UE Website</a></li>
+<li><a href="https://github.com/0ldsk00l/nestopia">Official Nestopia UE Github Repository</a></li>
+<li><a href="https://github.com/libretro/libretro-super/blob/master/dist/info/nestopia_libretro.info">Libretro Nestopia UE Core info file</a></li>
+<li><a href="https://github.com/libretro/nestopia">Libretro Nestopia UE Github Repository</a></li>
+<li><a href="https://github.com/libretro/nestopia/issues">Report Libretro Nestopia UE Core Issues Here</a></li>
+</ul>
+<h3 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h3>
+<h4 id="nintendo-family-computer-disk-system">Nintendo - Family Computer Disk System<a class="headerlink" href="#nintendo-family-computer-disk-system" title="Permanent link">¶</a></h4>
+<ul>
+<li><a href="https://docs.libretro.com/library/fceumm/">Nintendo - NES / Famicom (FCEUmm)</a></li>
+<li><a href="https://docs.libretro.com/library/mesen/">Nintendo - NES / Famicom (Mesen)</a></li>
+</ul>
+<h4 id="nintendo-nintendo-entertainment-system">Nintendo - Nintendo Entertainment System<a class="headerlink" href="#nintendo-nintendo-entertainment-system" title="Permanent link">¶</a></h4>
+<ul>
+<li><a href="https://docs.libretro.com/library/bnes/">Nintendo - NES / Famicom (bnes)</a></li>
+<li><a href="https://docs.libretro.com/library/emux_nes/">Nintendo - NES / Famicom (Emux NES)</a></li>
+<li><a href="https://docs.libretro.com/library/fceumm/">Nintendo - NES / Famicom (FCEUmm)</a></li>
+<li><a href="https://docs.libretro.com/library/mesen/">Nintendo - NES / Famicom (Mesen)</a></li>
+<li><a href="https://docs.libretro.com/library/quicknes/">Nintendo - NES / Famicom (QuickNES)</a></li>
+</ul>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#background">Background</a></li>
+      <ul>
+    
+      <li><a href="#authorlicense">Author/License</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#extensions">Extensions</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#databases">Databases</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#bios">BIOS</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#features">Features</a></li>
+      <ul>
+    
+      <li><a href="#directories">Directories</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#geometry-and-timing">Geometry and timing</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#nstdatabasexml">NstDatabase.xml</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#custom-color-palettes">Custom color palettes</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#core-options">Core options</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#controllers">Controllers</a></li>
+      <ul>
+    
+      <li><a href="#user-1-4-device-types">User 1 - 4 device types</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#other-controllers">Other controllers</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#multitap-support">Multitap support</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#controller-tables">Controller tables</a></li>
+      <ul>
+    
+      <li><a href="#joypad">Joypad</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#lightgun">Lightgun</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#compatibility">Compatibility</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#external-links">External Links</a></li>
+      <ul>
+    
+      <li><a href="#see-also">See also</a></li>
+      <ul>
+    
+      <li><a href="#nintendo-family-computer-disk-system">Nintendo - Family Computer Disk System</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#nintendo-nintendo-entertainment-system">Nintendo - Nintendo Entertainment System</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../mesen/" title="previous chapter">
+        Nintendo - NES / Famicom (Mesen)
+      </a></li>
+    
+    
+      <li>Next: <a href="../quicknes/" title="next chapter">
+        Nintendo - NES / Famicom (QuickNES)
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:11
+  -->
+</body>
+</html>

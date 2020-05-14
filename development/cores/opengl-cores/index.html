@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>OpenGL Accelerated Cores &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <link rel="stylesheet" href="../../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="use-case-for-libretro-opengl-api">Use case for Libretro OpenGL API<a class="headerlink" href="#use-case-for-libretro-opengl-api" title="Permanent link">¶</a></h1>
+<h3 id="what-do-most-modern-platforms-have-in-common">What do most modern platforms have in common?<a class="headerlink" href="#what-do-most-modern-platforms-have-in-common" title="Permanent link">¶</a></h3>
+<p><strong>Answer</strong>: OpenGL or OpenGL ES.</p>
+<p>These APIs allow us to write 3D graphics-based applications:
+  * In a platform-agnostic way
+  * With hardware acceleration
+  * Using a standard language/API</p>
+<h3 id="what-do-these-platforms-not-have-in-common">What do these platforms not have in common?<a class="headerlink" href="#what-do-these-platforms-not-have-in-common" title="Permanent link">¶</a></h3>
+<ul>
+<li>Audio</li>
+<li>Input</li>
+<li>Shader</li>
+<li>Windowing implementations</li>
+<li>User interfaces</li>
+<li>Touchscreen overlays</li>
+<li>Camera</li>
+<li>Sensors</li>
+<li>Development environments</li>
+</ul>
+<h3 id="what-is-not-portable-about-opengl">What is not portable about OpenGL?<a class="headerlink" href="#what-is-not-portable-about-opengl" title="Permanent link">¶</a></h3>
+<ul>
+<li>Symbol wrapper lookup (necessary on Windows)</li>
+<li>Divergent subsets of API functionality (GLES 1/2/3, GL 1.5/2/3/4)</li>
+<li>Windowing interfacing context drivers per platform</li>
+<li>Display frontend for each platform</li>
+<li>Post-processing by way of shaders</li>
+</ul>
+<p>Libretro's OpenGL implementation is designed specifically to address the practicalities of extending OpenGL and OpenGL ES hardware acceleration to the wide variety of architectures and environments supported by the libretro ecosystem.</p>
+<h1 id="implementing-opengl-accelerated-cores">Implementing OpenGL accelerated cores<a class="headerlink" href="#implementing-opengl-accelerated-cores" title="Permanent link">¶</a></h1>
+<p>Libretro GL provides a portable solution for OpenGL-based hardware acceleration along with the rest of libretro's simple but comprehensive API. The Libretro API allows cores to use OpenGL (GL2+ or GLES2) directly in addition to frontend features, such as multi-pass shaders. This is accomplished by letting cores render to frame buffer objects (FBOs) instead of the back buffer.</p>
+<p>!!! important
+    GL drivers must support render-to-texture extensions for this to work.</p>
+<h2 id="application-model">Application model<a class="headerlink" href="#application-model" title="Permanent link">¶</a></h2>
+<p>Using OpenGL in a libretro context is somewhat different than when you use libraries like SDL, GLFW or SFML. In libretro, the frontend owns the OpenGL context. For an application using conventional libraries like SDL, the application will do this:</p>
+<ul>
+<li>Initialize, create a window of specific size</li>
+<li>Initialize OpenGL resources</li>
+<li>Per frame, handle window events (resize), handle input, render as desired, swap buffers</li>
+<li>Tear down context and window</li>
+</ul>
+<p>Using libretro API, platform specifics like managing windows, rendering surfaces and input are all handled by the frontend. The core will only deal with rendering to a surface. The core renders to an FBO of fixed size, determined by the core. The frontend takes this rendered data and stretches to screen as desired by the user. It can apply shaders, change aspect ratio, etc. This model is equivalent to software rendering where <code>retro_video_refresh_t_callback</code> is called.</p>
+<h2 id="using-opengl-in-libretro">Using OpenGL in libretro<a class="headerlink" href="#using-opengl-in-libretro" title="Permanent link">¶</a></h2>
+<ul>
+<li>Use <code>RETRO_ENVIRONMENT_SET_PIXEL_FORMAT</code> and request a 32-bit format. This is the format that the resulting framebuffer will have. In reality, RetroArch converts all 16-bit data (<code>RETRO_PIXEL_FORMAT_RGB565</code>) to 32-bit (<code>XRGB8888</code>) when running desktop GL for performance reasons. In GLES mode, this is not done, however. Do not rely on this behavior, and be explicit about it.</li>
+<li>Use <code>RETRO_ENVIRONMENT_SET_HW_RENDER</code> environment callback in <code>retro_load_game()</code>, notifying frontend that core is using hardware rendering. An OpenGL 2+ or GLES2 context can be specified here. If this is not supported the callback will return false, and you can fallback to software rendering or refuse to start.</li>
+<li>In <code>retro_get_system_av_info()</code>, as normal, <code>max_width</code> and <code>max_height</code> fields specify the maximum resolution the core will render to.</li>
+<li>When the frontend has created a context or reset the context, <code>retro_hw_context_reset_t</code> is called. Here, OpenGL resources can be initialized. The frontend can reset the context at will (e.g. when changing from fullscreen to windowed mode and vice versa). The core should take this into account. It will be notified when reinitialization needs to happen.</li>
+<li>A callback to grab OpenGL symbols is exposed via <code>retro_hw_get_proc_address_t</code>. Use this to retrieve symbols and extensions.</li>
+<li>In <code>retro_run()</code>, use <code>retro_hw_get_current_framebuffer_t</code> callback to get which FBO to render to, e.g. <code>glBindFramebuffer(GL_FRAMEBUFFER, get_current_framebuffer())</code>. This is your "backbuffer". Do not attempt to render to the real backbuffer. You must call this every frame as it can change every frame. The dimensions of this FBO are at least as big as declared in <code>max_width</code> and <code>max_height</code>. If desired, the FBO also has a depth buffer attached (see <code>RETRO_ENVIRONMENT_SET_HW_RENDER</code>).</li>
+<li>When done rendering, call <code>retro_video_refresh_t</code> with the macro <code>RETRO_HW_FRAMEBUFFER_VALID</code> as argument for buffer. Width and height should be specified as well, but pitch argument is irrelevant and will be ignored. If the frame is duped (see <code>RETRO_ENVIRONMENT_CAN_DUPE</code>), the buffer argument takes<code>NULL</code> as normal.</li>
+</ul>
+<h2 id="important-considerations-in-the-opengl-code">Important considerations in the OpenGL code<a class="headerlink" href="#important-considerations-in-the-opengl-code" title="Permanent link">¶</a></h2>
+<p>The frontend and libretro core share OpenGL context state. Some considerations have to be taken into account for this cooperation to work nicely.</p>
+<ul>
+<li>Don’t leave buffers and global objects bound when calling <code>retro_video_refresh_t</code>. Make sure to unbind everything, i.e. VAOs, VBOs, shader programs, textures, etc. Failing to do this could potentially hit strange bugs. The frontend will also follow this rule to avoid clashes. Being tidy here is considered good practice anyway.</li>
+<li>The GL viewport will be modified by frontend as well as libretro core. Set this every frame.</li>
+<li><code>glEnable()</code> state like depth testing, etc, is likely to be disabled in frontend as it's just rendering a quad to screen. Enable this per-frame if you use depth testing. There is no need to disable this before calling <code>retro_video_refresh_t</code>.</li>
+<li>Avoid VAOs. They tend to break on less-than-stellar drivers, such as AMD drivers on Windows as of 2013</li>
+<li>Try to write code which is GLES2 as well as GL2+ (w/ extensions) compliant. This ensures maximum target surface for the libretro core.</li>
+<li>Libretro treats top-left as origin. OpenGL treats bottom-left as origin. To be compatible with the libretro model, top-left semantics are preserved. Rendering normally will cause the image to be flipped vertically. To avoid this, simply scale the final projection matrix by <code>[1,− 1 , 1 ,1]</code>.</li>
+</ul>
+<h2 id="test-implementations">Test implementations<a class="headerlink" href="#test-implementations" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://github.com/libretro/libretro-samples/tree/master/video/opengl">Several OpenGL demonstrations are available in <code>libretro-samples</code></a></li>
+<li><a href="https://bitbucket.org/Themaister/libretro-gl">A demonstration OpenGL core is available</a> which uses instanced rendering of a textured cube, with FPS-style fly-by camera and libretro’s mouse API as well. It is valid GLES and GL2 at the same time.</li>
+</ul>
+<h2 id="building-a-libretro-core">Building a libretro core<a class="headerlink" href="#building-a-libretro-core" title="Permanent link">¶</a></h2>
+<p>Libretro is an interface, and not a utility library. Libretro cores are built as standalone dynamic or static libraries, and as they use GL symbols here,
+they must link against GL symbols themselves. An example of how this can be done is shown in <a href="https://github.com/Themaister/RetroArch/blob/master/libretro-test-gl/Makefile">the test implementation</a>.</p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../../..">
+      <img class="logo" src="../../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#what-do-most-modern-platforms-have-in-common">What do most modern platforms have in common?</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#what-do-these-platforms-not-have-in-common">What do these platforms not have in common?</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#what-is-not-portable-about-opengl">What is not portable about OpenGL?</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+    <ul>
+    
+      <li><a href="#application-model">Application model</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#using-opengl-in-libretro">Using OpenGL in libretro</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#important-considerations-in-the-opengl-code">Important considerations in the OpenGL code</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#test-implementations">Test implementations</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#building-a-libretro-core">Building a libretro core</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../dynamic-rate-control/" title="previous chapter">
+        Dynamic Rate Control for Emulators
+      </a></li>
+    
+    
+      <li>Next: <a href="../core-specific/dolphin/" title="next chapter">
+        Nintendo - GameCube/Wii (Dolphin)
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

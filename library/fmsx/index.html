@@ -1,0 +1,1151 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Microsoft - MSX (fMSX) &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="msx-fmsx">MSX (fMSX)<a class="headerlink" href="#msx-fmsx" title="Permanent link">¶</a></h1>
+<h2 id="contribute-to-this-documentation">Contribute to this documentation<a class="headerlink" href="#contribute-to-this-documentation" title="Permanent link">¶</a></h2>
+<p><strong>In order to propose improvements to this document, <a href="https://github.com/libretro/docs/tree/master/docs/library/fmsx.md">visit its corresponding source page on github</a>. Changes are proposed using "Pull Requests."</strong></p>
+<p><strong>There is a To-Do list for libretro/docs <a href="https://docs.libretro.com/docguide/todo/">here</a></strong></p>
+<p><strong>You can submit suggestions or issues regarding documentation at the <a href="https://github.com/libretro/docs/issues">libretro/docs issue tracker</a> or in our <a href="https://forums.libretro.com/t/wip-adding-pages-to-documentation-site/10078/">forum thread</a>.</strong></p>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">¶</a></h2>
+<p>fMSX is a program that emulates MSX, MSX2, and MSX2+ 8bit home computers.</p>
+<h3 id="why-use-this-core">Why use this core?<a class="headerlink" href="#why-use-this-core" title="Permanent link">¶</a></h3>
+<p>Awaiting description.</p>
+<h3 id="how-to-get-and-install-the-fmsx-core">How to get and install the fMSX core:<a class="headerlink" href="#how-to-get-and-install-the-fmsx-core" title="Permanent link">¶</a></h3>
+<ul>
+<li>Start up RetroArch. Inside the main menu, go to 'Online Updater'.</li>
+</ul>
+<p><center> <img alt="" src="/image/core/allupdater.png" /> </center></p>
+<ul>
+<li>Just to make sure we have the latest info files, select 'Update Core Info FIles'. Wait until this is done. Then, select 'Core Updater'.</li>
+</ul>
+<p><center> <img alt="" src="/image/core/allinfo.png" /> </center></p>
+<ul>
+<li>Browse through the list and select 'MSX (fMSX)'.</li>
+</ul>
+<p><center> <img alt="" src="/image/core/updaterfmsx.png" /> </center></p>
+<p>After this has finished downloading, the core should now be ready for use!</p>
+<h4 id="how-to-start-after-installation">How to start (after installation):<a class="headerlink" href="#how-to-start-after-installation" title="Permanent link">¶</a></h4>
+<ul>
+<li>Go back to RetroArch's main menu screen. Select 'Load Content'.</li>
+</ul>
+<p><center> <img alt="" src="/image/core/allload.png" /> </center></p>
+<ul>
+<li>
+<p>Browse to the folder that contains the content you want to run.</p>
+</li>
+<li>
+<p>Select the content that you want to run.</p>
+</li>
+</ul>
+<p><center> <img alt="" src="/image/core/allscreenshot_name.png" /> </center></p>
+<ul>
+<li>If you are asked which core to select, choose 'MSX (fMSX)'.</li>
+</ul>
+<p>The content should now start running!</p>
+<h3 id="authors">Authors<a class="headerlink" href="#authors" title="Permanent link">¶</a></h3>
+<ul>
+<li>Marat Fayzullin</li>
+</ul>
+<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
+<h3 id="msx">MSX<a class="headerlink" href="#msx" title="Permanent link">¶</a></h3>
+<ul>
+<li><a href="https://docs.libretro.com/library/bluemsx/">MSX/SVI/ColecoVision/SG-1000 (blueMSX)</a></li>
+</ul>
+<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">¶</a></h2>
+<p>A summary of the licenses behind RetroArch and its cores have found <a href="https://docs.libretro.com/tech/licenses/">here</a>.</p>
+<p>The fMSX core is licensed under</p>
+<ul>
+<li><a href="https://github.com/libretro/fmsx-libretro/blob/master/LICENSE">Non-commercial</a></li>
+</ul>
+<h2 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">¶</a></h2>
+<p>Content that can be loaded by the fMSX core have the following file extensions:</p>
+<ul>
+<li>.rom</li>
+<li>.mx1</li>
+<li>.mx2</li>
+<li>.dsk</li>
+<li>.cas</li>
+</ul>
+<h2 id="databases">Databases<a class="headerlink" href="#databases" title="Permanent link">¶</a></h2>
+<p>RetroArch database(s) that are associated with the fMSX core:</p>
+<ul>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Microsoft%20-%20MSX.rdb">Microsoft - MSX</a></li>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Microsoft%20-%20MSX2.rdb">Microsoft - MSX2</a></li>
+</ul>
+<h2 id="bios">BIOS<a class="headerlink" href="#bios" title="Permanent link">¶</a></h2>
+<p>Required or optional firmware files go in RetroArch's system directory.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Filename</th>
+<th align="center">Description</th>
+<th align="center">md5sum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">MSX.ROM</td>
+<td align="center">MSX BIOS - Required</td>
+<td align="center">364a1a579fe5cb8dba54519bcfcdac0d</td>
+</tr>
+<tr>
+<td align="center">MSX2.ROM</td>
+<td align="center">MSX2 BIOS - Required</td>
+<td align="center">ec3a01c91f24fbddcbcab0ad301bc9ef</td>
+</tr>
+<tr>
+<td align="center">MSX2EXT.ROM</td>
+<td align="center">MSX2 ExtROM - Required</td>
+<td align="center">2183c2aff17cf4297bdb496de78c2e8a</td>
+</tr>
+<tr>
+<td align="center">MSX2P.ROM</td>
+<td align="center">MSX2+ BIOS - Required</td>
+<td align="center">847cc025ffae665487940ff2639540e5</td>
+</tr>
+<tr>
+<td align="center">MSX2PEXT.ROM</td>
+<td align="center">MSX2+ ExtROM - Required</td>
+<td align="center">7c8243c71d8f143b2531f01afa6a05dc</td>
+</tr>
+<tr>
+<td align="center">DISK.ROM</td>
+<td align="center">DiskROM/BDOS (optional)</td>
+<td align="center">80dcd1ad1a4cf65d64b7ba10504e8190</td>
+</tr>
+<tr>
+<td align="center">FMPAC.ROM</td>
+<td align="center">FMPAC BIOS (optional)</td>
+<td align="center">6f69cc8b5ed761b03afd78000dfb0e19</td>
+</tr>
+<tr>
+<td align="center">MSXDOS2.ROM</td>
+<td align="center">MSX-DOS 2 (optional)</td>
+<td align="center">6418d091cd6907bbcf940324339e43bb</td>
+</tr>
+<tr>
+<td align="center">PAINTER.ROM</td>
+<td align="center">Yamaha Painter (optional)</td>
+<td align="center">403cdea1cbd2bb24fae506941f8f655e</td>
+</tr>
+<tr>
+<td align="center">KANJI.ROM</td>
+<td align="center">Kanji Font (optional)</td>
+<td align="center">febe8782b466d7c3b16de6d104826b34</td>
+</tr>
+</tbody>
+</table>
+<p>This list of compatible ROMS is not complete.</p>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h2>
+<p>RetroArch-level settings or features that the fMSX core respects.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th align="center">Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Restart</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Screenshots</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Saves</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>States</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Rewind</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Netplay</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Core Options</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>RetroAchievements</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>RetroArch Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Native Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Controls</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Remapping</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Multi-Mouse</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Rumble</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Sensors</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Location</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Subsystem</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td><a href="https://docs.libretro.com/guides/softpatching/">Softpatching</a></td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Disk Control</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Username</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Language</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Crop Overscan</td>
+<td align="center">✕</td>
+</tr>
+</tbody>
+</table>
+<h3 id="directories">Directories<a class="headerlink" href="#directories" title="Permanent link">¶</a></h3>
+<p>The fMSX core's directory name is 'fMSX'</p>
+<p>The fMSX core saves/loads to/from these directories.</p>
+<p><strong>RetroArch's State directory</strong></p>
+<ul>
+<li>'content-name'.state# (State)</li>
+</ul>
+<h3 id="geometry-and-timing">Geometry and timing<a class="headerlink" href="#geometry-and-timing" title="Permanent link">¶</a></h3>
+<ul>
+<li>The fMSX core's internal FPS is 60</li>
+<li>The fMSX core's internal sample rate is 48000 Hz</li>
+<li>The fMSX core's core provided aspect ratio is (Ratio)</li>
+</ul>
+<h2 id="core-options">Core options<a class="headerlink" href="#core-options" title="Permanent link">¶</a></h2>
+<p>The fMSX core has the following option(s) that can be tweaked from the core options menu. The default setting is bolded. </p>
+<p>Settings with (Restart) means that core has to be closed for the new setting to be applied on next launch.</p>
+<ul>
+<li>
+<p><strong>MSX Mode</strong> (<strong>MSX2+</strong>/MSX1/MSX2)</p>
+<p>Select MSX model.</p>
+</li>
+<li>
+<p><strong>MSX Video Mode</strong> (<strong>NTSC</strong>/PAL)</p>
+<p>Awaiting description.</p>
+</li>
+<li>
+<p><strong>MSX Mapper Type Mode</strong> (<strong>Guess Mapper Type A</strong>/Guess Mapper Type B)</p>
+<p>Awaiting description.</p>
+</li>
+<li>
+<p><strong>MSX Main Memory</strong> (<strong>Auto</strong>/64KB/128KB/256KB/512KB)</p>
+<p>Awaiting description.</p>
+</li>
+<li>
+<p><strong>MSX Video Memory</strong> (<strong>Auto</strong>/32KB/64KB/128KB/192KB)</p>
+<p>Awaiting description.</p>
+</li>
+</ul>
+<h2 id="controllers">Controllers<a class="headerlink" href="#controllers" title="Permanent link">¶</a></h2>
+<h3 id="device-types">Device types<a class="headerlink" href="#device-types" title="Permanent link">¶</a></h3>
+<p>The fMSX core supports the following device type(s) in the controls menu, bolded device types are the default for the specified user(s):</p>
+<h4 id="user-1-device-types">User 1 device types<a class="headerlink" href="#user-1-device-types" title="Permanent link">¶</a></h4>
+<ul>
+<li>None - Input disabled.</li>
+<li><strong>Joystick</strong> - Joypad</li>
+<li>Joystick + Emulated Keyboard - Joypad</li>
+<li>Emulated Keyboard - Joypad</li>
+<li>Keyboard - Keyboard - Has Keymapper support</li>
+</ul>
+<h4 id="user-2-device-types">User 2 device types<a class="headerlink" href="#user-2-device-types" title="Permanent link">¶</a></h4>
+<ul>
+<li>None - Input disabled.
+<strong>Joystick</strong> - Joypad</li>
+</ul>
+<h3 id="controller-tables">Controller tables<a class="headerlink" href="#controller-tables" title="Permanent link">¶</a></h3>
+<h4 id="joypad-and-analog-device-type-table">Joypad and analog device type table<a class="headerlink" href="#joypad-and-analog-device-type-table" title="Permanent link">¶</a></h4>
+<table>
+<thead>
+<tr>
+<th>User 1 - 2 Remap descriptors for 'Joystick device type'</th>
+<th>RetroPad Inputs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fire B</td>
+<td><img alt="" src="/image/retropad/retro_b.png" /></td>
+</tr>
+<tr>
+<td>Stick Up</td>
+<td><img alt="" src="/image/retropad/retro_dpad_up.png" /></td>
+</tr>
+<tr>
+<td>Stick Down</td>
+<td><img alt="" src="/image/retropad/retro_dpad_down.png" /></td>
+</tr>
+<tr>
+<td>Stick Left</td>
+<td><img alt="" src="/image/retropad/retro_dpad_left.png" /></td>
+</tr>
+<tr>
+<td>Stick Right</td>
+<td><img alt="" src="/image/retropad/retro_dpad_right.png" /></td>
+</tr>
+<tr>
+<td>Fire A</td>
+<td><img alt="" src="/image/retropad/retro_a.png" /></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>User 1 Remap descriptors for 'Joystick + Emulated Keyboard' device type</th>
+<th>RetroPad Inputs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fire B</td>
+<td><img alt="" src="/image/retropad/retro_b.png" /></td>
+</tr>
+<tr>
+<td>Spacebar</td>
+<td><img alt="" src="/image/retropad/retro_y.png" /></td>
+</tr>
+<tr>
+<td>F2</td>
+<td><img alt="" src="/image/retropad/retro_select.png" /></td>
+</tr>
+<tr>
+<td>F1</td>
+<td><img alt="" src="/image/retropad/retro_start.png" /></td>
+</tr>
+<tr>
+<td>Stick Up</td>
+<td><img alt="" src="/image/retropad/retro_dpad_up.png" /></td>
+</tr>
+<tr>
+<td>Stick Down</td>
+<td><img alt="" src="/image/retropad/retro_dpad_down.png" /></td>
+</tr>
+<tr>
+<td>Stick Left</td>
+<td><img alt="" src="/image/retropad/retro_dpad_left.png" /></td>
+</tr>
+<tr>
+<td>Stick Right</td>
+<td><img alt="" src="/image/retropad/retro_dpad_right.png" /></td>
+</tr>
+<tr>
+<td>Fire A</td>
+<td><img alt="" src="/image/retropad/retro_a.png" /></td>
+</tr>
+<tr>
+<td>F3</td>
+<td><img alt="" src="/image/retropad/retro_x.png" /></td>
+</tr>
+<tr>
+<td>F4</td>
+<td><img alt="" src="/image/retropad/retro_l1.png" /></td>
+</tr>
+<tr>
+<td>F5</td>
+<td><img alt="" src="/image/retropad/retro_r1.png" /></td>
+</tr>
+<tr>
+<td>Graph</td>
+<td><img alt="" src="/image/retropad/retro_l2.png" /></td>
+</tr>
+<tr>
+<td>Ctrl</td>
+<td><img alt="" src="/image/retropad/retro_r2.png" /></td>
+</tr>
+<tr>
+<td>Enter</td>
+<td><img alt="" src="/image/retropad/retro_l3.png" /></td>
+</tr>
+<tr>
+<td>Escape</td>
+<td><img alt="" src="/image/retropad/retro_r3.png" /></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>User 1 Remap descriptors for 'Emulated Keyboard' device type</th>
+<th>RetroPad Inputs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enter</td>
+<td><img alt="" src="/image/retropad/retro_b.png" /></td>
+</tr>
+<tr>
+<td>M</td>
+<td><img alt="" src="/image/retropad/retro_y.png" /></td>
+</tr>
+<tr>
+<td>F4</td>
+<td><img alt="" src="/image/retropad/retro_select.png" /></td>
+</tr>
+<tr>
+<td>F1</td>
+<td><img alt="" src="/image/retropad/retro_start.png" /></td>
+</tr>
+<tr>
+<td>Arrow Up</td>
+<td><img alt="" src="/image/retropad/retro_dpad_up.png" /></td>
+</tr>
+<tr>
+<td>Arrow Down</td>
+<td><img alt="" src="/image/retropad/retro_dpad_down.png" /></td>
+</tr>
+<tr>
+<td>Arrow Left</td>
+<td><img alt="" src="/image/retropad/retro_dpad_left.png" /></td>
+</tr>
+<tr>
+<td>Arrow Right</td>
+<td><img alt="" src="/image/retropad/retro_dpad_right.png" /></td>
+</tr>
+<tr>
+<td>Space</td>
+<td><img alt="" src="/image/retropad/retro_a.png" /></td>
+</tr>
+<tr>
+<td>N</td>
+<td><img alt="" src="/image/retropad/retro_x.png" /></td>
+</tr>
+<tr>
+<td>F2</td>
+<td><img alt="" src="/image/retropad/retro_l1.png" /></td>
+</tr>
+<tr>
+<td>F3</td>
+<td><img alt="" src="/image/retropad/retro_r1.png" /></td>
+</tr>
+<tr>
+<td>Graph</td>
+<td><img alt="" src="/image/retropad/retro_l2.png" /></td>
+</tr>
+<tr>
+<td>Ctrl</td>
+<td><img alt="" src="/image/retropad/retro_r2.png" /></td>
+</tr>
+<tr>
+<td>F5</td>
+<td><img alt="" src="/image/retropad/retro_l3.png" /></td>
+</tr>
+<tr>
+<td>Escape</td>
+<td><img alt="" src="/image/retropad/retro_r3.png" /></td>
+</tr>
+</tbody>
+</table>
+<h4 id="keyboard-device-type-table">Keyboard device type table<a class="headerlink" href="#keyboard-device-type-table" title="Permanent link">¶</a></h4>
+<table>
+<thead>
+<tr>
+<th>RetroKeyboard Inputs</th>
+<th>Keyboard</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Keyboard Backspace</td>
+<td>Backspace</td>
+</tr>
+<tr>
+<td>Keyboard Tab</td>
+<td>Tab</td>
+</tr>
+<tr>
+<td>Keyboard Return</td>
+<td>Enter</td>
+</tr>
+<tr>
+<td>Keyboard Pause</td>
+<td>Stop</td>
+</tr>
+<tr>
+<td>Keyboard Escape</td>
+<td>Escape</td>
+</tr>
+<tr>
+<td>Keyboard Space</td>
+<td>Space</td>
+</tr>
+<tr>
+<td>Keyboard !</td>
+<td>!</td>
+</tr>
+<tr>
+<td>Keyboard "</td>
+<td>"</td>
+</tr>
+<tr>
+<td>Keyboard #</td>
+<td>#</td>
+</tr>
+<tr>
+<td>Keyboard $</td>
+<td>$</td>
+</tr>
+<tr>
+<td>Keyboard &amp;</td>
+<td>&amp;</td>
+</tr>
+<tr>
+<td>Keyboard '</td>
+<td>`</td>
+</tr>
+<tr>
+<td>Keyboard (</td>
+<td>(</td>
+</tr>
+<tr>
+<td>Keyboard )</td>
+<td>)</td>
+</tr>
+<tr>
+<td>Keyboard *</td>
+<td>#</td>
+</tr>
+<tr>
+<td>Keyboard +</td>
+<td>+</td>
+</tr>
+<tr>
+<td>Keyboard ,</td>
+<td>,</td>
+</tr>
+<tr>
+<td>Keyboard .</td>
+<td>.</td>
+</tr>
+<tr>
+<td>Keyboard /</td>
+<td>/</td>
+</tr>
+<tr>
+<td>Keyboard 0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Keyboard 1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Keyboard 2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Keyboard 3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Keyboard 4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Keyboard 5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Keyboard 6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Keyboard 7</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Keyboard 8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Keyboard 9</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Keyboard :</td>
+<td>:</td>
+</tr>
+<tr>
+<td>Keyboard ;</td>
+<td>;</td>
+</tr>
+<tr>
+<td>Keyboard -</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Keyboard =</td>
+<td>=</td>
+</tr>
+<tr>
+<td>Keyboard &lt;</td>
+<td>&lt;</td>
+</tr>
+<tr>
+<td>Keyboard &gt;</td>
+<td>&gt;</td>
+</tr>
+<tr>
+<td>Keyboard ?</td>
+<td>?</td>
+</tr>
+<tr>
+<td>Keyboard @</td>
+<td>@</td>
+</tr>
+<tr>
+<td>Keyboard [</td>
+<td>[</td>
+</tr>
+<tr>
+<td>Keyboard \</td>
+<td>\</td>
+</tr>
+<tr>
+<td>Keyboard ]</td>
+<td>]</td>
+</tr>
+<tr>
+<td>Keyboard ^</td>
+<td>^</td>
+</tr>
+<tr>
+<td>Keyboard _</td>
+<td>_</td>
+</tr>
+<tr>
+<td>Keyboard `</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Keyboard a</td>
+<td>a</td>
+</tr>
+<tr>
+<td>Keyboard b</td>
+<td>b</td>
+</tr>
+<tr>
+<td>Keyboard c</td>
+<td>c</td>
+</tr>
+<tr>
+<td>Keyboard d</td>
+<td>d</td>
+</tr>
+<tr>
+<td>Keyboard e</td>
+<td>e</td>
+</tr>
+<tr>
+<td>Keyboard f</td>
+<td>f</td>
+</tr>
+<tr>
+<td>Keyboard g</td>
+<td>g</td>
+</tr>
+<tr>
+<td>Keyboard h</td>
+<td>h</td>
+</tr>
+<tr>
+<td>Keyboard i</td>
+<td>i</td>
+</tr>
+<tr>
+<td>Keyboard j</td>
+<td>j</td>
+</tr>
+<tr>
+<td>Keyboard k</td>
+<td>k</td>
+</tr>
+<tr>
+<td>Keyboard l</td>
+<td>l</td>
+</tr>
+<tr>
+<td>Keyboard m</td>
+<td>m</td>
+</tr>
+<tr>
+<td>Keyboard n</td>
+<td>n</td>
+</tr>
+<tr>
+<td>Keyboard o</td>
+<td>o</td>
+</tr>
+<tr>
+<td>Keyboard p</td>
+<td>p</td>
+</tr>
+<tr>
+<td>Keyboard q</td>
+<td>q</td>
+</tr>
+<tr>
+<td>Keyboard r</td>
+<td>r</td>
+</tr>
+<tr>
+<td>Keyboard s</td>
+<td>s</td>
+</tr>
+<tr>
+<td>Keyboard t</td>
+<td>t</td>
+</tr>
+<tr>
+<td>Keyboard u</td>
+<td>u</td>
+</tr>
+<tr>
+<td>Keyboard v</td>
+<td>v</td>
+</tr>
+<tr>
+<td>Keyboard w</td>
+<td>w</td>
+</tr>
+<tr>
+<td>Keyboard x</td>
+<td>x</td>
+</tr>
+<tr>
+<td>Keyboard y</td>
+<td>y</td>
+</tr>
+<tr>
+<td>Keyboard z</td>
+<td>z</td>
+</tr>
+<tr>
+<td>Keyboard Delete</td>
+<td>Delete</td>
+</tr>
+<tr>
+<td>Keyboard Numpad 0</td>
+<td>Numpad 0</td>
+</tr>
+<tr>
+<td>Keyboard Numpad 1</td>
+<td>Numpad 1</td>
+</tr>
+<tr>
+<td>Keyboard Numpad 2</td>
+<td>Numpad 2</td>
+</tr>
+<tr>
+<td>Keyboard Numpad 3</td>
+<td>Numpad 3</td>
+</tr>
+<tr>
+<td>Keyboard Numpad 4</td>
+<td>Numpad 4</td>
+</tr>
+<tr>
+<td>Keyboard Numpad 5</td>
+<td>Numpad 5</td>
+</tr>
+<tr>
+<td>Keyboard Numpad 6</td>
+<td>Numpad 6</td>
+</tr>
+<tr>
+<td>Keyboard Numpad 7</td>
+<td>Numpad 7</td>
+</tr>
+<tr>
+<td>Keyboard Numpad 8</td>
+<td>Numpad 8</td>
+</tr>
+<tr>
+<td>Keyboard Numpad 9</td>
+<td>Numpad 9</td>
+</tr>
+<tr>
+<td>Keyboard Up</td>
+<td>Up</td>
+</tr>
+<tr>
+<td>Keyboard Down</td>
+<td>Down</td>
+</tr>
+<tr>
+<td>Keyboard Right</td>
+<td>Right</td>
+</tr>
+<tr>
+<td>Keyboard Left</td>
+<td>Left</td>
+</tr>
+<tr>
+<td>Keyboard Insert</td>
+<td>Insert</td>
+</tr>
+<tr>
+<td>Keyboard Home</td>
+<td>Home</td>
+</tr>
+<tr>
+<td>Keyboard End</td>
+<td>Select</td>
+</tr>
+<tr>
+<td>Keyboard Page Up</td>
+<td>Country</td>
+</tr>
+<tr>
+<td>Keyboard F1</td>
+<td>F1</td>
+</tr>
+<tr>
+<td>Keyboard F2</td>
+<td>F2</td>
+</tr>
+<tr>
+<td>Keyboard F3</td>
+<td>F3</td>
+</tr>
+<tr>
+<td>Keyboard F4</td>
+<td>F4</td>
+</tr>
+<tr>
+<td>Keyboard F5</td>
+<td>F5</td>
+</tr>
+<tr>
+<td>Keyboard Caps Lock</td>
+<td>Caps Lock</td>
+</tr>
+<tr>
+<td>Keyboard Scroll Lock</td>
+<td>Shift</td>
+</tr>
+<tr>
+<td>Keyboard Right Shift</td>
+<td>Shift</td>
+</tr>
+<tr>
+<td>Keyboard Right Control</td>
+<td>Control</td>
+</tr>
+<tr>
+<td>Keyboard Left Control</td>
+<td>Control</td>
+</tr>
+<tr>
+<td>Keyboard Left Alt</td>
+<td>Graph</td>
+</tr>
+</tbody>
+</table>
+<h2 id="compatibility">Compatibility<a class="headerlink" href="#compatibility" title="Permanent link">¶</a></h2>
+<p>Awaiting description.</p>
+<h2 id="external-links">External Links<a class="headerlink" href="#external-links" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://github.com/libretro/libretro-super/blob/master/dist/info/fmsx_libretro.info">Libretro fMSX Core info file</a></li>
+<li><a href="https://github.com/libretro/fmsx-libretro">Libretro fMSX Github Repository</a></li>
+<li><a href="https://github.com/libretro/fmsx-libretro/issues">Report Libretro fMSX Core Issues Here</a></li>
+<li><a href="http://fms.komkon.org/fMSX/">Official fMSX Website</a></li>
+<li><a href="https://fms.komkon.org/fMSX/#Downloads">Official fMSX Downloads</a></li>
+</ul>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#contribute-to-this-documentation">Contribute to this documentation</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#background">Background</a></li>
+      <ul>
+    
+      <li><a href="#why-use-this-core">Why use this core?</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#how-to-get-and-install-the-fmsx-core">How to get and install the fMSX core:</a></li>
+      <ul>
+    
+      <li><a href="#how-to-start-after-installation">How to start (after installation):</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#authors">Authors</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#see-also">See also</a></li>
+      <ul>
+    
+      <li><a href="#msx">MSX</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#license">License</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#extensions">Extensions</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#databases">Databases</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#bios">BIOS</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#features">Features</a></li>
+      <ul>
+    
+      <li><a href="#directories">Directories</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#geometry-and-timing">Geometry and timing</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#core-options">Core options</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#controllers">Controllers</a></li>
+      <ul>
+    
+      <li><a href="#device-types">Device types</a></li>
+      <ul>
+    
+      <li><a href="#user-1-device-types">User 1 device types</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#user-2-device-types">User 2 device types</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#controller-tables">Controller tables</a></li>
+      <ul>
+    
+      <li><a href="#joypad-and-analog-device-type-table">Joypad and analog device type table</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#keyboard-device-type-table">Keyboard device type table</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#compatibility">Compatibility</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#external-links">External Links</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../freeintv/" title="previous chapter">
+        Mattel - Intellivision (FreeIntv)
+      </a></li>
+    
+    
+      <li>Next: <a href="../bluemsx/" title="next chapter">
+        MSX/SVI/ColecoVision/SG-1000 (blueMSX)
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:10
+  -->
+</body>
+</html>

@@ -1,0 +1,642 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Sony - PlayStation Portable (PPSSPP) &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="sony-playstation-portable-ppsspp">Sony - PlayStation Portable (PPSSPP)<a class="headerlink" href="#sony-playstation-portable-ppsspp" title="Permanent link">¶</a></h1>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">¶</a></h2>
+<p>A PSP emulator for Android, Windows, Mac and Linux, written in C++.</p>
+<p>The PPSSPP core supports <a href="https://docs.libretro.com/library/ppsspp/#opengl">OpenGL</a>, <a href="https://docs.libretro.com/library/ppsspp/#vulkan">Vulkan</a>, and <a href="https://docs.libretro.com/library/ppsspp/#d3d11">Direct3D 11</a> rendering.</p>
+<p>The PPSSPP core has been authored by</p>
+<ul>
+<li>Henrik Hrydgard</li>
+</ul>
+<p>The PPSSPP core is licensed under</p>
+<ul>
+<li><a href="https://github.com/hrydgard/ppsspp/blob/master/LICENSE.TXT">GPLv2</a></li>
+</ul>
+<p>A summary of the licenses behind RetroArch and its cores can be found <a href="https://docs.libretro.com/tech/licenses/">here</a>.</p>
+<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">¶</a></h2>
+<ul>
+<li>OpenGL/Open GL ES 2.0 or higher for the OpenGL renderer.</li>
+<li>Vulkan for the Vulkan renderer.</li>
+<li>Direct3D 11 for the Direct3D 11 renderer.</li>
+</ul>
+<h2 id="bios">BIOS<a class="headerlink" href="#bios" title="Permanent link">¶</a></h2>
+<p>The PPSSPP core requires assets files to be fully functional. </p>
+<p>Assets such as fonts and backgrounds that are required for memory card screens.</p>
+<p>In order to acquire PPSSPP's assets files and install them succcessfully, follow these steps.</p>
+<p>1 . Create a directory named PPSSPP in RetroArch's System directory.</p>
+<pre><code>RetroArch/
+         └── system/
+                   └── PPSSPP/
+</code></pre>
+
+<p>Here's an example of what it should look like.</p>
+<p><img alt="" src="/image/core/ppsspp/directory.png" /></p>
+<p>2 . Visit <a href="https://github.com/hrydgard/ppsspp">https://github.com/hrydgard/ppsspp</a> and download the repository.</p>
+<p><img alt="" src="/image/core/ppsspp/download.png" /></p>
+<p>3 . Extract ppsspp-master.zip</p>
+<p>4 . Copy the contents of <code>ppsspp-master/assets</code> into 'system/PPSSPP'</p>
+<p>The end result should look like this.</p>
+<p><img alt="" src="/image/core/ppsspp/ppsspp_assets.png" /></p>
+<p>!!! attention
+    Don't like PPSSPP's replacement fonts? You can place the original PSP fonts in 'system/PPSSPP/flash0/font'</p>
+<h2 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">¶</a></h2>
+<p>Content that can be loaded by the PPSSPP core have the following file extensions:</p>
+<ul>
+<li>.elf</li>
+<li>.iso</li>
+<li>.cso</li>
+<li>.prx</li>
+<li>.pbp</li>
+</ul>
+<p>RetroArch database(s) that are associated with the PPSSPP core:</p>
+<ul>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Sony%20-%20PlayStation%20Portable.rdb">Sony - PlayStation Portable</a></li>
+</ul>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h2>
+<p>Frontend-level settings or features that the PPSSPP core respects.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th align="center">Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Restart</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Saves</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>States</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Rewind</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Netplay</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Core Options</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>RetroAchievements</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>RetroArch Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Native Cheats</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Controls</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Remapping</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Multi-Mouse</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Rumble</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Sensors</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Location</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Subsystem</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td><a href="https://docs.libretro.com/guides/softpatching/">Softpatching</a></td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Disk Control</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Username</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Language</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Crop Overscan</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>LEDs</td>
+<td align="center">✕</td>
+</tr>
+</tbody>
+</table>
+<h2 id="directories">Directories<a class="headerlink" href="#directories" title="Permanent link">¶</a></h2>
+<p>The PPSSPP core's library name is 'PPSSPP'</p>
+<p>The PPSSPP core saves/loads to/from these directories.</p>
+<p><strong>Frontend's Save directory</strong></p>
+<pre><code>.
+└── PSP/
+       ├── PPSSPP_STATE/ (Used to be the state directory, no longer used)
+       ├── SAVEDATA/ (In-game saves)
+       ├── flash0/ (Font override for real fonts dumped from PSP system)
+       ├── Cheats/ (Internal Cheats directory, disabled by default)
+       ├── GAME/ (DLC directory)
+       └── SYSTEM/
+                 └── CACHE/ (Shader cache)
+</code></pre>
+
+<p><strong>Frontend's State directory</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">File</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">*.state#</td>
+<td align="center">State</td>
+</tr>
+</tbody>
+</table>
+<h2 id="geometry-and-timing">Geometry and timing<a class="headerlink" href="#geometry-and-timing" title="Permanent link">¶</a></h2>
+<ul>
+<li>The PPSSPP core's core provided FPS is 60</li>
+<li>The PPSSPP core's core provided sample rate is 44100 Hz</li>
+<li>The PPSSPP core's base width is dependent on the 'Internal Resolution' core option</li>
+<li>The PPSSPP core's base height is dependent on the 'Internal Resolution' core option</li>
+<li>The PPSSPP core's max width is dependent on the 'Internal Resolution' core option</li>
+<li>The PPSSPP core's max height is dependent on the 'Internal Resolution' core option</li>
+<li>The PPSSPP core's core provided aspect ratio is 16/9</li>
+</ul>
+<h2 id="language">Language<a class="headerlink" href="#language" title="Permanent link">¶</a></h2>
+<p>When the 'Language' core option is set to automatic, the default PPSSPP language setting will be pulled from RetroArch's Language setting.</p>
+<h2 id="nickname">Nickname<a class="headerlink" href="#nickname" title="Permanent link">¶</a></h2>
+<p>PPSSPP's default nickname setting is pulled from RetroArch's nickname setting.</p>
+<h2 id="internal-cheats">Internal Cheats<a class="headerlink" href="#internal-cheats" title="Permanent link">¶</a></h2>
+<p>Disabled by default.</p>
+<p><strong>To enable and allow the use of ini cheat files in save\PSP\Cheats, set the 'Internal Cheats Support' core option to enabled.</strong></p>
+<p>Cheats can be used to unlock 60fps in several 30fps games.</p>
+<p>Each code can be activated or disabled in the ini directly with _C1 in place of _C0 on the title line.</p>
+<p><a href="http://forums.ppsspp.org/showthread.php?tid=3590">PPSSPP forums thread</a></p>
+<h2 id="dlc">DLC<a class="headerlink" href="#dlc" title="Permanent link">¶</a></h2>
+<p>DLCs need to be installed in the GAME directory. Create the GAME directory in the PSP directory and it should look like this.</p>
+<p>RetroArch\saves\PPSSPP\PSP\GAME\</p>
+<h2 id="opengl">OpenGL<a class="headerlink" href="#opengl" title="Permanent link">¶</a></h2>
+<p>PPSSPP's OpenGL renderer can be used by setting RetroArch's video driver to gl.</p>
+<p>The common option for all operating systems is OpenGL, requiring hardware that supports OpenGL/Open GL ES 2.0 or higher. It is an older, pre-Vulkan API, slower than Vulkan but with better compatibility. If you encounter problems with other APIs, try this one.</p>
+<h2 id="vulkan">Vulkan<a class="headerlink" href="#vulkan" title="Permanent link">¶</a></h2>
+<p>PPSSPP's Vulkan renderer can be used by setting RetroArch's video driver to vulkan.</p>
+<p>This is the latest and fastest API currently. It is most recommended for demanding less of your CPU, thus being the fastest.</p>
+<h2 id="d3d11">D3D11<a class="headerlink" href="#d3d11" title="Permanent link">¶</a></h2>
+<p>PPSSPP's Direct3D 11 renderer can be used by setting RetroArch's video driver to d3d11.</p>
+<p>In some cases Direct3D 11 may offer better performance than OpenGL, especially on integrated Intel graphics.</p>
+<h2 id="core-options">Core options<a class="headerlink" href="#core-options" title="Permanent link">¶</a></h2>
+<p>The PPSSPP core has the following option(s) that can be tweaked from the core options menu. The default setting is bolded. </p>
+<p>Settings with (Restart) means that core has to be closed for the new setting to be applied on next launch.</p>
+<ul>
+<li>
+<p><strong>CPU Core</strong> [ppsspp_cpu_core] (<strong>jit</strong>|IR jit|interpreter)</p>
+<p>The jit setting enables the Dynamic Recomplier (Dynarec) for CPU emulation. The Dynarec is much faster than the interpreter setting and is the default, recommended mode for supported architectures.</p>
+<p>The interpreter setting enables the Interpreter for CPU emulation. The Interpreter is a very slow type of emulation and mostly useful for debug, but should work anywhere.</p>
+<p>The IR jit setting might be worth trying against games which are broken in the other two settings.</p>
+</li>
+<li>
+<p><strong>Locked CPU Speed</strong> [ppsspp_locked_cpu_speed] (<strong>off</strong>|222MHz|266MHz|333MHz)</p>
+<p>Allows you to lock the internal CPU clock of the emulator (of the emulated CPU). </p>
+<p>Larger clocks can ensure a more stable performance in certain games that present problems even on a real PSP, but it requires more powerful hardware. </p>
+<p>Lower clocks can help weak hardware have more comfortable gameplay, limiting FPS to a lower rate. </p>
+<p>Changing this option opens the door to several bugs that may compromise some games.</p>
+<p>In case of doubt, keep this on off.</p>
+</li>
+<li>
+<p><strong>Language</strong> [ppsspp_language] (<strong>automatic</strong>|english|japanese|french|spanish|german|italian|dutch|portuguese|russian|korean|chinese_traditional|chinese_simplified)</p>
+<p>Configure the PPSSPP's system language.</p>
+<p>When set to automatic, the default PPSSPP language setting will be pulled from RetroArch's Language setting.</p>
+</li>
+<li>
+<p><strong>Rendering Mode</strong> [ppsspp_rendering_mode] (<strong>buffered</strong>|nonbuffered)</p>
+<p>Buffered mode renders graphics close to what is in the actual PSP, with all the effects and with the least possible bugs.</p>
+<p>Nonbuffered mode skips most heavier graphics effects like blur, bloom, reflections, shadows, and more. It can be used as a speed hack if it is underperforming because of a weak GPU.</p>
+</li>
+<li>
+<p><strong>True Color Depth</strong> [ppsspp_true_color] (<strong>enabled</strong>|disabled)</p>
+<p>Enhance the colors compared to the older models of PSPs which have lower quality screens.</p>
+<p>It's best to keep this enabled.</p>
+</li>
+<li>
+<p><strong>Auto Frameskip</strong> [ppsspp_auto_frameskip] (<strong>disabled</strong>|enabled)</p>
+<p>This option only selects the optimal number of frames to skip to not to compromise both gameplay. The max frames to be skipped can be limited in the Frameskip option.</p>
+</li>
+<li>
+<p><strong>Frameskip</strong> [ppsspp_frameskip] (<strong>0</strong>|1|2|3|4|5|6|7|8|9)</p>
+<p>This option skips image frames to increase the emulation speed. They can be skipped between 1 and 8 frames every second. Using this option can give the impression of the game running faster but with stuttering, and this increases the amount of frames to be skipped you select. This option is only effective when your processor is powerful enough.</p>
+</li>
+<li>
+<p><strong>Force Max FPS</strong> [ppsspp_force_max_fps] (<strong>disabled</strong>|enabled)</p>
+<p>Prevents FPS form exceeding 60. </p>
+<p>This option was created in order to help God of War games that used to have a performance problem because the FPS were higher than normal. This option locks the FPS to 60 to avoid this problem.</p>
+</li>
+<li>
+<p><strong>Audio latency</strong> [ppsspp_audio_latency] (<strong>low</strong>|medium|high)</p>
+<p>Configure the audio latency.</p>
+</li>
+<li>
+<p><strong>Internal Resolution</strong> [ppsspp_internal_resolution] (<strong>480x272</strong>|960x544|1440x816|1920x1088|2400x1360|2880x1632|3360x1904|3840x2176|4320x2448|4800x2720)</p>
+<p><strong>The 'Rendering Mode' core option must be set to buffered for this to have any effect.</strong></p>
+<p>Controls the internal resolution of the graphics, significant performance impact if your GPU is not powerful enough for certain resolutions.</p>
+</li>
+<li>
+<p><strong>Confirmation Button</strong> [ppsspp_button_preference] (<strong>cross</strong>|circle)</p>
+<p>Select whether the cross input or the circle input is the confirmation button.</p>
+</li>
+<li>
+<p><strong>Fast Memory (Speedhack)</strong> [ppsspp_fast_memory] (<strong>enabled</strong>|disabled)</p>
+<p>This option avoids some memory accesses by caching information, however a few games may have problems when this option is enabled, most run with no problem.</p>
+</li>
+<li>
+<p><strong>Block Transfer GPU</strong> [ppsspp_block_transfer_gpu] (<strong>enabled</strong>|disabled)</p>
+<p>This option simulates support for rendering effects not supported by current hardware, but supported by PSP hardware. Fixes multiple graphics problems in a number of games, but decreases performance on weaker GPUs (on smartphones). Disabling can greatly impact performance, and can be a great help in games that do not need this option enabled.</p>
+</li>
+<li>
+<p><strong>Texture Scaling Level</strong> [ppsspp_texture_scaling_level] (<strong>1</strong>|2|3|4|5|0)</p>
+<p>With this option, you can make modifications to the texture scale level, which improves the visual at high resolutions.</p>
+<p>All the scaling is made by CPU and results in a great performance impact. Use carefully.</p>
+</li>
+<li>
+<p><strong>Texture Scaling Type</strong> [ppsspp_texture_scaling_type] (<strong>xbrz</strong>|hybrid|bicubic|hybrid_bicubic)</p>
+<p>Choose the Texture Upscale Type.</p>
+<p>xBRZ is overall the best option while Hybrid is a slower version of xBRZ and doesn't offers much difference, Hybrid + Bicubic is the slowest one using two effects.</p>
+</li>
+<li>
+<p><strong>Texture Filtering</strong> [ppsspp_texture_filtering] (<strong>auto</strong>|nearest|linear|linear(FMV))</p>
+<p>Apply texture filtering.</p>
+<p>Stick to auto in case of doubt.</p>
+</li>
+<li>
+<p><strong>Anisotropic Filtering</strong> [ppsspp_texture_anisotropic_filtering] (<strong>off</strong>|1x|2x|4x|8x|16x)</p>
+<p>Modify the Anisotropic Filtering, which fixs the textures on the horizon that are drawn at angles resulting in a better look.</p>
+</li>
+<li>
+<p><strong>Texture Deposterize</strong> [ppsspp_texture_deposterize] (<strong>disabled</strong>|enabled)</p>
+<p>Deposterize fixes small in-texture glitches that may happen when the texture is upscaled.</p>
+</li>
+<li>
+<p><strong>GPU Hardware T&amp;L</strong> [ppsspp_gpu_hardware_transform] (<strong>enabled</strong>|disabled)</p>
+<p>Uses the hardware to generate lighting and shading effects. With this option disabled performance may drop a lot on weak GPUs. Bugs are rare, but if found, can be disabled for testing.</p>
+</li>
+<li>
+<p><strong>Vertex Cache (Speedhack)</strong> [ppsspp_vertex_cache] (<strong>enabled</strong>|disabled)</p>
+<p>Uses vertex cache to improve performance in few games, in rare cases can cause glitches in geometry. Some games have reduced performance with this option enabled. This option mostly benefits OpenGL API, doesn't need to be enabled to other backends.</p>
+</li>
+<li>
+<p><strong>IO Threading</strong> [ppsspp_separate_io_thread] (<strong>disabled</strong>|enabled)</p>
+<p>Uses separate CPU thread for input/output of files (read data).</p>
+</li>
+<li>
+<p><strong>Unsafe FuncReplacements</strong> [ppsspp_unsafe_func_replacements] (<strong>enabled</strong>|disabled)</p>
+<p>Enable unsafe CPU function replacements.</p>
+<p>May make games playable.</p>
+</li>
+<li>
+<p><strong>Sound Speedhack</strong> [ppsspp_sound_speedhack] (<strong>disabled</strong>|enabled)</p>
+<p>It helps in some games, like Dead or Alive, with problems in sound speed.</p>
+</li>
+<li>
+<p><strong>Internal Cheats Support</strong> [ppsspp_cheats] (<strong>disabled</strong>|enabled)</p>
+<p>Enables internal cheats. Look at the <a href="https://docs.libretro.com/library/ppsspp/#internal-cheats">Internal Cheats section</a> for more information.</p>
+</li>
+</ul>
+<h2 id="joypad">Joypad<a class="headerlink" href="#joypad" title="Permanent link">¶</a></h2>
+<p><img alt="" src="/image/controller/psp.png" /></p>
+<table>
+<thead>
+<tr>
+<th>RetroPad Inputs</th>
+<th>User 1 input descriptors</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="/image/retropad/retro_b.png" /></td>
+<td>Cross</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_y.png" /></td>
+<td>Square</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_select.png" /></td>
+<td>Select</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_start.png" /></td>
+<td>Start</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_dpad_up.png" /></td>
+<td>D-Pad Up</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_dpad_down.png" /></td>
+<td>D-Pad Down</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_dpad_left.png" /></td>
+<td>D-Pad Left</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_dpad_right.png" /></td>
+<td>D-Pad Right</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_a.png" /></td>
+<td>Circle</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_x.png" /></td>
+<td>Triangle</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_l1.png" /></td>
+<td>L</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_r1.png" /></td>
+<td>R</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_left_stick.png" /> X</td>
+<td>Analog X</td>
+</tr>
+<tr>
+<td><img alt="" src="/image/retropad/retro_left_stick.png" /> Y</td>
+<td>Analog Y</td>
+</tr>
+</tbody>
+</table>
+<h2 id="compatibility">Compatibility<a class="headerlink" href="#compatibility" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="http://report.ppsspp.org/games">PPSSPP Compatibility List</a></li>
+</ul>
+<h4 id="video-tutorial">Video Tutorial<a class="headerlink" href="#video-tutorial" title="Permanent link">¶</a></h4>
+<p><a href="http://www.youtube.com/watch?v=KYt6oXA1Bws"><img alt="Quick Video Demonstration" src="http://img.youtube.com/vi/KYt6oXA1Bws/0.jpg" /></a></p>
+<h2 id="external-links">External Links<a class="headerlink" href="#external-links" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="http://www.ppsspp.org/">Official PPSSPP Website</a></li>
+<li><a href="https://github.com/hrydgard/ppsspp">Official PPSSPP Github Repository</a></li>
+<li><a href="https://github.com/libretro/libretro-super/blob/master/dist/info/ppsspp_libretro.info">Libretro PPSSPP Core info file</a></li>
+<li><a href="https://github.com/libretro/ppsspp/issues">Report Libretro PPSSPP Core Issues Here</a></li>
+</ul>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#background">Background</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#requirements">Requirements</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#bios">BIOS</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#extensions">Extensions</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#features">Features</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#directories">Directories</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#geometry-and-timing">Geometry and timing</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#language">Language</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#nickname">Nickname</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#internal-cheats">Internal Cheats</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#dlc">DLC</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#opengl">OpenGL</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#vulkan">Vulkan</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#d3d11">D3D11</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#core-options">Core options</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#joypad">Joypad</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#compatibility">Compatibility</a></li>
+      <ul>
+    
+      <li><a href="#video-tutorial">Video Tutorial</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#external-links">External Links</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../pcsx_rearmed/" title="previous chapter">
+        Sony - PlayStation (PCSX ReARMed)
+      </a></li>
+    
+    
+      <li>Next: <a href="../bluemsx/" title="next chapter">
+        MSX/SVI/ColecoVision/SG-1000 (blueMSX)
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:11
+  -->
+</body>
+</html>

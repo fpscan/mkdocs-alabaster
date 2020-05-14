@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Joypad Auto-Configuration &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="joypad-auto-configuration">Joypad Auto Configuration<a class="headerlink" href="#joypad-auto-configuration" title="Permanent link">¶</a></h1>
+<h2 id="how-does-matching-work">How does matching work?<a class="headerlink" href="#how-does-matching-work" title="Permanent link">¶</a></h2>
+<p>RetroArch is shipped with a set of configuration files for the most common joypads. When you plug a joypad for the first time, we try to find a matching profile in our set.</p>
+<p>The matching algorithm considers three criteria:</p>
+<ul>
+<li>Device name</li>
+<li>Vendor ID</li>
+<li>Product ID</li>
+</ul>
+<p>We compute a matching score for each configuration file based on these three factors. The profile with the highest score is chosen to configure the pad.</p>
+<p>!!! Note
+    The <strong>Vendor ID</strong> and <strong>Product ID</strong> pair is often abbreviated as <strong>vid:pid</strong>.</p>
+<h2 id="why-is-it-needed">Why is it needed?<a class="headerlink" href="#why-is-it-needed" title="Permanent link">¶</a></h2>
+<p>RetroArch works many platforms. Each of these platforms has one or more input systems. These input systems in turn differ widely in the way they enumerate the pad buttons. For this reason, your joypad buttons may be mapped differently depending on if you are using Windows, Mac, or Linux.</p>
+<p>Traditional emulators allow you map each button of your pad to the original pad of the emulated system. For example, this is how the Snes9x joypad configuration interface looks:</p>
+<p><img alt="Snes9x joypad configuration" src="/image/retroarch/input/snes9x-joyconfig-example.jpg" /></p>
+<p>RetroArch also allows this kind of manual mapping. However, RetroArch tries to go further by detecting your joypad and automatically configuring it so manual configuration becomes obsolete.</p>
+<h2 id="benefits">Benefits<a class="headerlink" href="#benefits" title="Permanent link">¶</a></h2>
+<p>With RetroArch joypad auto-configuration system, your joypad will be recognized and will work out of the box.</p>
+<p>This allows:</p>
+<ul>
+<li>Use many different joypads and have them attributed to each players like it would work on a real game console.</li>
+<li>Unplug the second joypad, and replace it by another one, even if it's of a different brand and model.</li>
+</ul>
+<p>Having automatically configured joypads makes it a lot easier to navigate the RetroArch Menu with the joypad. This is very convenient when running RetroArch on a game console, where a keyboard and a mouse are not always available. It is also what makes RetroArch suitable to build your own game console using Lakka or a similar OS.</p>
+<h2 id="installing-or-updating-joypad-profiles">Installing or updating joypad profiles<a class="headerlink" href="#installing-or-updating-joypad-profiles" title="Permanent link">¶</a></h2>
+<p><img alt="downloading joypad profiles" src="/image/retroarch/input/update-joypads.png" /></p>
+<p>The set of joypad profiles used by RetroArch can be downloaded and updated from the menu. Go to <code>Main Menu</code> -&gt; <code>Online Updater</code> -&gt; <code>Update Autoconfig Profiles</code> to get the latest version of the profile pack.</p>
+<p>A message will appear at the bottom of the screen showing the download progress and the extraction of the archive.</p>
+<h2 id="generating-a-joypad-profile">Generating a joypad profile<a class="headerlink" href="#generating-a-joypad-profile" title="Permanent link">¶</a></h2>
+<p>If your joypad is not recognized by RetroArch even after updating the profiles, you can generate a profile from the menu.</p>
+<ol>
+<li>Unplug all the other joypads</li>
+<li>Use <code>Settings</code> -&gt; <code>Input</code> -&gt; <code>User 1 Binds</code> -&gt; <code>User 1 Bind All</code>. Make sure that your mapping is perfect by testing every button in the menu and in some games.</li>
+<li>Use <code>Settings</code> -&gt; <code>Inputs</code> -&gt; <code>User 1 Binds</code> -&gt; <code>User 1 Save Autoconfig</code></li>
+<li>The new profile will be saved to your disk.</li>
+<li>Use <code>Settings</code> -&gt; <code>Inputs</code> -&gt; <code>User 1 Binds</code> -&gt; <code>User 1 Bind Default All</code> to clear manual bindings and rely on the new profile</li>
+<li>Unplug your joypad an re-plug it. See if it is auto configured.</li>
+</ol>
+<p>!!! Warning "Clear manual bindings"
+    It is important to to skip the step of clearing manual bindings after using the <code>User 1 Save Autoconfig</code> command. In order to avoid issues using your profile in the future, remember to go to <code>Settings</code> -&gt; <code>Inputs</code> -&gt; <code>User 1 Binds</code> -&gt; <code>User 1 Bind Default All</code> to reset the manual settings before completing this process.</p>
+<p>If you are happy with your profile, you can submit it to RetroArch so that other users benefit:</p>
+<ol>
+<li>Edit the autoconfig file for your joypad manually to include the input descriptors (please see the <strong>Input Descriptors</strong> section below)</li>
+<li><a href="https://github.com/libretro/retroarch-joypad-autoconfig">Submit your profile to our joypad profile repository</a>.</li>
+</ol>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
+<p>If your joypad is not configured properly, you should <a href="/docs/guides/generating-retroarch-logs.md">generate a RetroArch log</a>. Your log will show if a profile has been matched for your pad and the path of the corresponding profile.</p>
+<h2 id="joypad-auto-configuration-file">Joypad auto-configuration file<a class="headerlink" href="#joypad-auto-configuration-file" title="Permanent link">¶</a></h2>
+<h3 id="metadata">Metadata<a class="headerlink" href="#metadata" title="Permanent link">¶</a></h3>
+<p>The first part of the joypad profile is used for matching the profile with the device, as explained above. The <strong>Vendor ID</strong> and <strong>Product ID</strong> are in decimal format.</p>
+<pre><code>input_device = &quot;Microsoft X-Box One pad&quot;
+input_driver = &quot;udev&quot;
+input_vendor_id = 1118
+input_product_id = 721
+</code></pre>
+
+<h3 id="mapping">Mapping<a class="headerlink" href="#mapping" title="Permanent link">¶</a></h3>
+<p>The second part is the mapping itself, where each button is assigned to a button of the RetroPad (the joypad abstraction of RetroArch):</p>
+<pre><code>input_b_btn = &quot;0&quot;
+input_y_btn = &quot;2&quot;
+input_select_btn = &quot;6&quot;
+input_start_btn = &quot;7&quot;
+input_up_btn = &quot;h0up&quot;
+input_down_btn = &quot;h0down&quot;
+input_left_btn = &quot;h0left&quot;
+input_right_btn = &quot;h0right&quot;
+input_a_btn = &quot;1&quot;
+input_x_btn = &quot;3&quot;
+input_l_btn = &quot;4&quot;
+input_r_btn = &quot;5&quot;
+input_l2_axis = &quot;+2&quot;
+input_r2_axis = &quot;+5&quot;
+input_l3_btn = &quot;9&quot;
+input_r3_btn = &quot;10&quot;
+input_l_x_plus_axis = &quot;+0&quot;
+input_l_x_minus_axis = &quot;-0&quot;
+input_l_y_plus_axis = &quot;+1&quot;
+input_l_y_minus_axis = &quot;-1&quot;
+input_r_x_plus_axis = &quot;+3&quot;
+input_r_x_minus_axis = &quot;-3&quot;
+input_r_y_plus_axis = &quot;+4&quot;
+input_r_y_minus_axis = &quot;-4&quot;
+input_menu_toggle_btn = &quot;8&quot;
+</code></pre>
+
+<h3 id="input-descriptors">Input descriptors<a class="headerlink" href="#input-descriptors" title="Permanent link">¶</a></h3>
+<p>The third part are <em>input descriptors</em> used by RetroArch to display the labels of the buttons as they are written on your joypad. So if you are using a DualShock pad, RetroArch will refer to the buttons as Cross, Circle, Square and Triangle.</p>
+<pre><code>input_b_btn_label = &quot;A&quot;
+input_y_btn_label = &quot;X&quot;
+input_select_btn_label = &quot;Back&quot;
+input_start_btn_label = &quot;Start&quot;
+input_up_btn_label = &quot;D-Pad Up&quot;
+input_down_btn_label = &quot;D-Pad Down&quot;
+input_left_btn_label = &quot;D-Pad Left&quot;
+input_right_btn_label = &quot;D-Pad Right&quot;
+input_a_btn_label = &quot;B&quot;
+input_x_btn_label = &quot;Y&quot;
+input_l_btn_label = &quot;LB&quot;
+input_r_btn_label = &quot;RB&quot;
+input_l2_axis_label = &quot;LT&quot;
+input_r2_axis_label = &quot;RT&quot;
+input_l3_btn_label = &quot;Left Thumb&quot;
+input_r3_btn_label = &quot;Right Thumb&quot;
+input_l_x_plus_axis_label = &quot;Left Analog X+&quot;
+input_l_x_minus_axis_label = &quot;Left Analog X-&quot;
+input_l_y_plus_axis_label = &quot;Left Analog Y+&quot;
+input_l_y_minus_axis_label = &quot;Left Analog Y-&quot;
+input_r_x_plus_axis_label = &quot;Right Analog X+&quot;
+input_r_x_minus_axis_label = &quot;Right Analog X-&quot;
+input_r_y_plus_axis_label = &quot;Right Analog Y+&quot;
+input_r_y_minus_axis_label = &quot;Right Analog Y-&quot;
+input_menu_toggle_btn_label = &quot;Guide&quot;
+</code></pre>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#how-does-matching-work">How does matching work?</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#why-is-it-needed">Why is it needed?</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#benefits">Benefits</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#installing-or-updating-joypad-profiles">Installing or updating joypad profiles</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#generating-a-joypad-profile">Generating a joypad profile</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#troubleshooting">Troubleshooting</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#joypad-auto-configuration-file">Joypad auto-configuration file</a></li>
+      <ul>
+    
+      <li><a href="#metadata">Metadata</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#mapping">Mapping</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#input-descriptors">Input descriptors</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../input-and-controls/" title="previous chapter">
+        Input and Controls
+      </a></li>
+    
+    
+      <li>Next: <a href="../download-cores/" title="next chapter">
+        Installing Cores
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

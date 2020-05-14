@@ -1,0 +1,1094 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Sega - MS/GG/MD/CD (Genesis Plus GX) &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="sega-msggmdcd-genesis-plus-gx">Sega - MS/GG/MD/CD (Genesis Plus GX)<a class="headerlink" href="#sega-msggmdcd-genesis-plus-gx" title="Permanent link">¶</a></h1>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">¶</a></h2>
+<p>Genesis Plus GX is an open-source Sega 8/16 bit emulator focused on accuracy and portability. The source code, originally based on Genesis Plus 1.3 by Charles MacDonald, has been heavily modified &amp; enhanced, with respect to initial goals and design, in order to improve the accuracy of emulation, implementing new features and adding support for extra peripherals, cartridge &amp; systems hardware.</p>
+<p>Genesis Plus GX has 100% compatibility with Genesis / Mega Drive, Sega/Mega CD, Master System, Game Gear, SG-1000 &amp; Pico released software (including all unlicensed or pirate known dumps), also emulating backwards compatibility modes when available.</p>
+<p>The Genesis Plus GX core has been authored by</p>
+<ul>
+<li>Charles McDonald</li>
+<li>Eke-Eke</li>
+</ul>
+<p>The Genesis Plus GX core is licensed under</p>
+<ul>
+<li><a href="https://github.com/libretro/Genesis-Plus-GX/blob/master/LICENSE.txt">Non-commercial</a></li>
+</ul>
+<p>A summary of the licenses behind RetroArch and its cores have found <a href="https://docs.libretro.com/development/licenses/">here</a>.</p>
+<h2 id="bios">BIOS<a class="headerlink" href="#bios" title="Permanent link">¶</a></h2>
+<p>Required or optional firmware files go in the frontend's system directory.</p>
+<p>!!! warning ""
+    Please note that BIOS choice isn't locked to any specific revisions.
+!!! warning ""
+    BIOS files that are labelled (bootrom) and (lock-on) must have their corresponding <a href="https://docs.libretro.com/library/genesis_plus_gx/#core-options">core option</a> ('System bootrom' core option or 'Cartridge lock-on' core option) configured correctly in order for them to be loaded.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Filename</th>
+<th align="center">Description</th>
+<th align="center">md5sum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">bios_MD.bin</td>
+<td align="center">MegaDrive TMSS startup ROM (bootrom) - Optional</td>
+<td align="center">45e298905a08f9cfb38fd504cd6dbc84</td>
+</tr>
+<tr>
+<td align="center">bios_CD_E.bin</td>
+<td align="center">MegaCD EU BIOS - Required for MegaCD EU games</td>
+<td align="center">e66fa1dc5820d254611fdcdba0662372</td>
+</tr>
+<tr>
+<td align="center">bios_CD_U.bin</td>
+<td align="center">SegaCD US BIOS - Required for SegaCD US games</td>
+<td align="center">854b9150240a198070150e4566ae1290</td>
+</tr>
+<tr>
+<td align="center">bios_CD_J.bin</td>
+<td align="center">MegaCD JP BIOS - Required for MegaCD JP games</td>
+<td align="center">278a9397d192149e84e820ac621a8edd</td>
+</tr>
+<tr>
+<td align="center">bios_E.sms</td>
+<td align="center">MasterSystem EU BIOS (bootrom) - Optional</td>
+<td align="center">840481177270d5642a14ca71ee72844c</td>
+</tr>
+<tr>
+<td align="center">bios_U.sms</td>
+<td align="center">MasterSystem US BIOS (bootrom) - Optional</td>
+<td align="center">840481177270d5642a14ca71ee72844c</td>
+</tr>
+<tr>
+<td align="center">bios_J.sms</td>
+<td align="center">MasterSystem JP BIOS (bootrom) - Optional</td>
+<td align="center">24a519c53f67b00640d0048ef7089105</td>
+</tr>
+<tr>
+<td align="center">bios.gg</td>
+<td align="center">GameGear BIOS (bootrom) - Optional</td>
+<td align="center">672e104c3be3a238301aceffc3b23fd6</td>
+</tr>
+<tr>
+<td align="center">sk.bin</td>
+<td align="center">Sonic &amp; Knuckles ROM (lock-on) - Optional</td>
+<td align="center">4ea493ea4e9f6c9ebfccbdb15110367e</td>
+</tr>
+<tr>
+<td align="center">sk2chip.bin</td>
+<td align="center">Sonic &amp; Knuckles UPMEM ROM (lock-on) - Optional</td>
+<td align="center">b4e76e416b887f4e7413ba76fa735f16</td>
+</tr>
+<tr>
+<td align="center">areplay.bin</td>
+<td align="center">Action Replay ROM (lock-on) - Optional</td>
+<td align="center">a0028b3043f9d59ceeb03da5b073b30d</td>
+</tr>
+<tr>
+<td align="center">ggenie.bin</td>
+<td align="center">Game Genie ROM (lock-on) - Optional</td>
+<td align="center">e8af7fe115a75c849f6aab3701e7799b</td>
+</tr>
+</tbody>
+</table>
+<h2 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">¶</a></h2>
+<p>Content that can be loaded by the Genesis Plus GX core have the following file extensions:</p>
+<ul>
+<li>.mdx</li>
+<li>.md</li>
+<li>.smd</li>
+<li>.gen</li>
+<li>.bin</li>
+<li>.cue</li>
+<li>.iso</li>
+<li>.sms</li>
+<li>.gg</li>
+<li>.sg</li>
+<li>.68k</li>
+<li>.chd</li>
+</ul>
+<p>RetroArch database(s) that are associated with the Genesis Plus GX core:</p>
+<ul>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Sega%20-%20Game%20Gear.rdb">Sega - Game Gear</a></li>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Sega%20-%20Master%20System%20-%20Mark%20III.rdb">Sega - Master System - Mark III</a></li>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Sega%20-%20Mega-CD%20-%20Sega%20CD.rdb">Sega - Mega-CD - Sega CD</a></li>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Sega%20-%20Mega%20Drive%20-%20Genesis.rdb">Sega - Mega Drive - Genesis</a></li>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Sega%20-%20PICO.rdb">Sega - PICO</a></li>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Sega%20-%20SG-1000.rdb">Sega - SG-1000</a></li>
+</ul>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h2>
+<p>Frontend-level settings or features that the Genesis Plus GX core respects.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th align="center">Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Restart</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Saves</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>States</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Rewind</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Netplay</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Core Options</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>RetroAchievements</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>RetroArch Cheats</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Native Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Controls</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Remapping</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Multi-Mouse</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Rumble</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Sensors</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Location</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Subsystem</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td><a href="https://docs.libretro.com/guides/softpatching/">Softpatching</a></td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Disk Control</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Username</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Language</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Crop Overscan</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>LEDs</td>
+<td align="center">✕</td>
+</tr>
+</tbody>
+</table>
+<h2 id="directories">Directories<a class="headerlink" href="#directories" title="Permanent link">¶</a></h2>
+<p>The Genesis Plus GX core's library name is 'Genesis Plus GX'</p>
+<p>The Genesis Plus GX core saves/loads to/from these directories.</p>
+<p><strong>Frontend's Save directory</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">File</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">*.srm</td>
+<td align="center">MS/GG/MD/Pico/SG-1000 Cartridge backup save</td>
+</tr>
+<tr>
+<td align="center">cart.brm</td>
+<td align="center">Sega/Mega CD RAM Cart</td>
+</tr>
+<tr>
+<td align="center">scd_U.brm</td>
+<td align="center">Sega CD US Backup RAM - When the 'CD System BRAM' core option is set to per bios</td>
+</tr>
+<tr>
+<td align="center">scd_E.brm</td>
+<td align="center">Mega CD EU Backup RAM - When the 'CD System BRAM' core option is set to per bios</td>
+</tr>
+<tr>
+<td align="center">scd_J.brm</td>
+<td align="center">Mega CD JP Backup RAM - When the 'CD System BRAM' core option is set to per bios</td>
+</tr>
+<tr>
+<td align="center">*.brm</td>
+<td align="center">Sega CD/MegaCD Backup RAM - When the 'CD System BRAM' core option is set to per game</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Frontend's State directory</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">File</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">*.state#</td>
+<td align="center">State</td>
+</tr>
+</tbody>
+</table>
+<h2 id="geometry-and-timing">Geometry and timing<a class="headerlink" href="#geometry-and-timing" title="Permanent link">¶</a></h2>
+<ul>
+<li>The Genesis Plus GX core's core provided FPS is dependent on the loaded content.</li>
+<li>The Genesis Plus GX core's core provided sample rate is 44100 Hz</li>
+<li>The Genesis Plus GX core's base width is dependent on the loaded content.</li>
+<li>The Genesis Plus GX core's base height is dependent on the loaded content.</li>
+<li>The Genesis Plus GX core's max width is 720</li>
+<li>The Genesis Plus GX core's max height is 576</li>
+<li>The Genesis Plus GX core's core provided aspect ratio is dependent on the 'Core-provided aspect ratio' <a href="https://docs.libretro.com/library/genesis_plus_gx/#core-options">core option</a>.</li>
+</ul>
+<h2 id="loading-sega-cd-games">Loading Sega CD games<a class="headerlink" href="#loading-sega-cd-games" title="Permanent link">¶</a></h2>
+<p>When loading Sega CD games, Genesis Plus GX needs a cue-sheet that points to an image file. A cue sheet, or cue file, is a metadata file which describes how the tracks of a CD or DVD are laid out.</p>
+<p>If you have e.g. <code>foo.bin</code>, you should create a text file and save it as <code>foo.cue</code>. If the Sega CD game is single-track, the cue file contents should look like this:</p>
+<pre><code> FILE &quot;foo.bin&quot; BINARY
+  TRACK 01 MODE1/2352
+   INDEX 01 00:00:00
+</code></pre>
+
+<p>After that, you can load the <code>foo.cue</code> file in RetroArch with the Genesis Plus GX core.</p>
+<p>!!! warning ""
+    Certain Sega CD games are multi-track, so their .cue files might be more complicated.</p>
+<p>Here's a cue file example done with Lunar - Eternal Blue (USA)</p>
+<p><img alt="" src="../../image/core/genesis_plus_gx/cue.png" /></p>
+<p>!!! warning ""
+    For Sega-CD games, ISO + WAV, BIN + CUE and ISO + OGG formats are supported; ISO + MP3 is not supported.</p>
+<h2 id="core-options">Core options<a class="headerlink" href="#core-options" title="Permanent link">¶</a></h2>
+<p>The Genesis Plus GX core has the following option(s) that can be tweaked from the core options menu. The default setting is bolded.</p>
+<p>Settings with (Restart) means that core has to be closed for the new setting to be applied on next launch.</p>
+<ul>
+<li>
+<p><strong>System hardware</strong> [genesis_plus_gx_system_hw] (<strong>auto</strong>/sg-1000/sg-1000 II/mark-III/master system/master system II/game gear/mega drive / genesis)</p>
+<p>Choose which system is going to be emulated.</p>
+</li>
+<li>
+<p><strong>System region</strong> [genesis_plus_gx_region_detect] (<strong>auto</strong>/ntsc-u/pal/ntsc-j)</p>
+<p>Choose which region the system is from.</p>
+</li>
+<li>
+<p><strong>System lockups</strong> [genesis_plus_gx_force_dtack] (<strong>enabled</strong>/disabled)</p>
+<p>Emulate system lockups that occur on real hardware.</p>
+</li>
+<li>
+<p><strong>System bootrom</strong> [genesis_plus_gx_bios] (<strong>disabled</strong>/enabled)</p>
+<p>Runs bootrom if available and then starts loaded content after the boot sequence. Look above at the <a href="https://docs.libretro.com/library/genesis_plus_gx/#bios">BIOS section</a> for more information.</p>
+</li>
+<li>
+<p><strong>CD System BRAM</strong> [genesis_plus_gx_bram] (<strong>per bios</strong>/per game)</p>
+<p>The Sega CD's internal memory cannot hold a lot of saves. Setting this core option to per game allows each game to have its own one brm file, thus negating any lack of available space issues.</p>
+</li>
+</ul>
+<p>??? note "<em>CD System BRAM diagram</em>"
+    <img alt="" src="../../image/core/genesis_plus_gx/bram.png" /></p>
+<ul>
+<li>
+<p><strong>68k address error</strong> [genesis_plus_gx_addr_error] (<strong>enabled</strong>/disabled)</p>
+<p>Emulate the <a href="http://segaretro.org/M68000">68k</a> address error that occurs on real hardware. Set this to disabled when playing rom hacks since most emulators used to develop rom hacks don't emulate the error.</p>
+</li>
+<li>
+<p><strong>Cartridge lock-on</strong> [genesis_plus_gx_lock_on] (<strong>disabled</strong>/game genie/action replay (pro)/sonic &amp; knuckles)</p>
+<p>Select a lock-on cartridge. Look above at the <a href="https://docs.libretro.com/library/genesis_plus_gx/#bios">BIOS section</a> for more information.</p>
+</li>
+<li>
+<p><strong>Master System FM (YM2413)</strong> [genesis_plus_gx_ym2413] (<strong>auto</strong>/disabled/enabled)</p>
+<p>Enable the Master System FM chip. (Enhanced sound output support for <a href="http://segaretro.org/FM_Sound_Unit">SMS compatible games</a>)</p>
+</li>
+<li>
+<p><strong>Mega Drive / Genesis FM</strong> [genesis_plus_gx_ym2612] (<strong>mame (ym2612)</strong>/mame (asic ym3438)/mame (enhanced ym3438)/nuked (ym2612)/nuked (asic ym3438)/nuked (discrete ym3438))</p>
+<p>Awaiting description.</p>
+</li>
+<li>
+<p><strong>Sound output</strong> [genesis_plus_gx_sound_output] (<strong>stereo</strong>/mono)</p>
+<p>Self-explanatory.</p>
+</li>
+<li>
+<p><strong>Audio filter</strong> [genesis_plus_gx_audio_filter] (<strong>disabled</strong>/low-pass)</p>
+<p>Awaiting description.</p>
+</li>
+<li>
+<p><strong>Low-pass filter %</strong> [genesis_plus_gx_lowpass_range] (5 to 95 in increments of 5. <strong>60 is default</strong>)</p>
+<p>Awaiting description.</p>
+</li>
+<li>
+<p><strong>Blargg NTSC filter</strong> [genesis_plus_gx_blargg_ntsc_filter] (<strong>Off</strong>/monochrome/composite/svidio/rgb)</p>
+<p>Self-explanatory.</p>
+</li>
+</ul>
+<p>??? note "<em>Blargg NTSC filter - Off</em>"
+    <img alt="" src="../../image/core/genesis_plus_gx/normal.png" /></p>
+<p>??? note "<em>Blargg NTSC filter  - monochrome</em>"
+    <img alt="" src="../../image/core/genesis_plus_gx/monochrome.png" /></p>
+<p>??? note "<em>Blargg NTSC filter - composite</em>"
+    <img alt="" src="../../image/core/genesis_plus_gx/composite.png" /></p>
+<p>??? note "<em>Blargg NTSC filter  - svideo</em>"
+    <img alt="" src="../../image/core/genesis_plus_gx/svideo.png" /></p>
+<p>??? note "<em>Blargg NTSC filter - rgb</em>"
+    <img alt="" src="../../image/core/genesis_plus_gx/rgb.png" /></p>
+<ul>
+<li><strong>LCD Ghosting filter</strong> [genesis_plus_gx_lcd_filter] (<strong>disabled</strong>/enabled)</li>
+</ul>
+<p>??? note "<em>LCD Ghosting filter - On</em>"
+    <img alt="" src="../../image/core/genesis_plus_gx/ghost.png" /></p>
+<ul>
+<li>
+<p><strong>Borders</strong> [genesis_plus_gx_overscan] (<strong>disabled</strong>/top/bottom/left/right/full)</p>
+<p>Self-explanatory.</p>
+</li>
+<li>
+<p><strong>Game Gear extended screen</strong> [genesis_plus_gx_gg_extra] (<strong>disabled</strong>/enabled)</p>
+<p>Self-explanatory.</p>
+</li>
+</ul>
+<p>??? note "<em>Game Gear extended screen - Off</em>"
+    <img alt="" src="../../image/core/genesis_plus_gx/off.png" /></p>
+<p>??? note "<em>Game Gear extended screen - On</em>"
+    <img alt="" src="../../image/core/genesis_plus_gx/on.png" /></p>
+<ul>
+<li>
+<p><strong>Core-provided aspect ratio</strong> [genesis_plus_gx_aspect_ratio] (<strong>auto</strong>/NTSC PAR/PAL PAR)</p>
+<p>Choose the Core-provided aspect ratio. RetroArch's aspect ratio must be set to Core provided in the Video settings for this to function properly.</p>
+</li>
+<li>
+<p><strong>Interlaced mode 2 output</strong> [genesis_plus_gx_render] (<strong>single field</strong>/double field)</p>
+<p>Change how interlaced mode 2 output is handled. Games like Sonic 2's multiplayer mode uses Interlaced Mode 2.</p>
+</li>
+</ul>
+<p>??? note "<em>Interlaced mode 2 output - single field</em>"
+    <img alt="" src="../../image/core/genesis_plus_gx/single.png" /></p>
+<p>??? note "<em>Interlaced mode 2 output - double field</em>"
+    <img alt="" src="../../image/core/genesis_plus_gx/double.png" /></p>
+<ul>
+<li>
+<p><strong>Show Lightgun crosshair</strong> [genesis_plus_gx_gun_cursor] (<strong>disabled</strong>/enabled)</p>
+<p>Shows lightgun crosshairs for the 'MD Menacer', 'MD Justifiers', and 'MS Light Phaser' Device Types.</p>
+</li>
+</ul>
+<p>??? note "<em>Lightgun crosshair</em>"
+    <img alt="" src="../../image/core/genesis_plus_gx/lightgun.png" /></p>
+<ul>
+<li>
+<p><strong>Invert Mouse Y-axis</strong> [genesis_plus_gx_invert_mouse] (<strong>disabled</strong>/enabled)</p>
+<p>Inverts the Mouse Y-axis for the 'MD Mouse' Device Type.</p>
+</li>
+<li>
+<p><strong>CPU speed</strong> [genesis_plus_gx_overclock] (<strong>100%</strong>/125%/150%/175%/200%)</p>
+<p>Overclock the emulated CPU.</p>
+</li>
+<li>
+<p><strong>Remove per-line sprite limit</strong> [genesis_plus_gx_no_sprite_limit] (<strong>disabled</strong>/enabled)</p>
+<p>Reduce sprite flickering when enabled.</p>
+</li>
+</ul>
+<h2 id="user-1-device-types">User 1 device types<a class="headerlink" href="#user-1-device-types" title="Permanent link">¶</a></h2>
+<p>The Genesis Plus GX core supports the following device type(s) in the controls menu, bolded device types are the default for the specified user(s):</p>
+<ul>
+<li>Joypad Port Empty - None - No device is connected; input is disabled.</li>
+<li><strong>Joypad Auto</strong> - Joypad - Depending on the loaded content, the core will automatically emulate a MD Joypad 3 Button controller, or a MD Joypad 6 Button controller or a MS Joypad 2 Button controller.</li>
+<li><a href="https://segaretro.org/Control_Pad_(Mega_Drive)">MD Joypad 3 Button</a> - Joypad</li>
+<li><a href="https://segaretro.org/Six_Button_Control_Pad_(Mega_Drive)">MD Joypad 6 Button</a> - Joypad</li>
+<li><a href="https://segaretro.org/Control_Pad_(Master_System)">MS Joypad 2 Button</a> - Joypad - Also used for Game Gear.</li>
+<li><a href="https://segaretro.org/4_Way_Play">MD Joypad 3 Button + 4-WayPlay</a> - Joypad - Enables multitap for 4-WayPlay games.</li>
+<li><a href="https://segaretro.org/4_Way_Play">MD Joypad 6 Button + 4-WayPlay</a> - Joypad - Enables multitap for 4-WayPlay games.</li>
+<li><a href="https://segaretro.org/Team_Player">MD Joypad 3 Button + Teamplayer</a> - Joypad - Enables multitap for Teamplayer games.</li>
+<li><a href="https://segaretro.org/Team_Player">MD Joypad 6 Button + Teamplayer</a> - Joypad - Enables multitap for Teamplayer games.</li>
+<li>MS Joypad 2 Button + Master Tap - Joypad - Enables Furrtek's Master Tap (unofficial mulitap device).</li>
+<li><a href="https://segaretro.org/Light_Phaser">MS Light Phaser</a> - Lightgun</li>
+<li><a href="https://segaretro.org/Paddle_Control">MS Paddle Control</a> - Analog</li>
+<li><a href="https://segaretro.org/Sports_Pad">MS Sports Pad</a> - Analog</li>
+<li><a href="https://segaretro.org/Sega_Graphic_Board">MS Graphic Board</a> - Pointer</li>
+<li><a href="https://segaretro.org/XE-1_AP">MD XE-1AP</a> - Analog</li>
+<li><a href="https://segaretro.org/Sega_Mouse">MD Mouse</a> - Mouse</li>
+</ul>
+<h2 id="user-2-device-types">User 2 device types<a class="headerlink" href="#user-2-device-types" title="Permanent link">¶</a></h2>
+<ul>
+<li>Joypad Port Empty - None - No device is connected; input is disabled.</li>
+<li><strong>Joypad Auto</strong> - Joypad - Depending on the loaded content, the core will automatically emulate a MD Joypad 3 Button controller, or a MD Joypad 6 Button controller or a MS Joypad 2 Button controller.</li>
+<li><a href="https://segaretro.org/Control_Pad_(Mega_Drive)">MD Joypad 3 Button</a> - Joypad</li>
+<li><a href="https://segaretro.org/Six_Button_Control_Pad_(Mega_Drive)">MD Joypad 6 Button</a> - Joypad</li>
+<li><a href="https://segaretro.org/Control_Pad_(Master_System)">MS Joypad 2 Button</a> - Joypad - Also used for Game Gear.</li>
+<li><a href="https://segaretro.org/4_Way_Play">MD Joypad 3 Button + 4-WayPlay</a> - Joypad - Enables multitap for 4-WayPlay games.</li>
+<li><a href="https://segaretro.org/4_Way_Play">MD Joypad 6 Button + 4-WayPlay</a> - Joypad - Enables multitap for 4-WayPlay games.</li>
+<li><a href="https://segaretro.org/Team_Player">MD Joypad 3 Button + Teamplayer</a> - Joypad - Enables multitap for Teamplayer games.</li>
+<li><a href="https://segaretro.org/Team_Player">MD Joypad 6 Button + Teamplayer</a> - Joypad - Enables multitap for Teamplayer games.</li>
+<li>MS Joypad 2 Button + Master Tap - Joypad - Enables Furrtek's Master Tap (unofficial mulitap device).</li>
+<li><a href="https://segaretro.org/Menacer">MD Menancer</a> - Lightgun</li>
+<li><a href="https://segaretro.org/The_Justifier">MD Justifiers</a>  - Lightgun</li>
+<li><a href="https://segaretro.org/Light_Phaser">MS Light Phaser</a> - Lightgun</li>
+<li><a href="https://segaretro.org/Paddle_Control">MS Paddle Control</a> - Analog</li>
+<li><a href="https://segaretro.org/Sports_Pad">MS Sports Pad</a> - Analog</li>
+<li><a href="https://segaretro.org/Sega_Graphic_Board">MS Graphic Board</a> - Pointer</li>
+<li><a href="https://segaretro.org/XE-1_AP">MD XE-1AP</a> - Analog</li>
+<li><a href="https://segaretro.org/Sega_Mouse">MD Mouse</a> - Mouse</li>
+</ul>
+<h2 id="other-devices">Other devices<a class="headerlink" href="#other-devices" title="Permanent link">¶</a></h2>
+<ul>
+<li>PICO tablet - The Genesis Plus GX core can emulate PICO tablet inputs but this is done automatically, based off the game's crc, and cannot be manually selected as a device type.</li>
+<li>Terebi Oekaki tablet - The Genesis Plus GX core can emulate Terebi Oekaki table inputs but this is done automatically, based off the game's crc, and cannot be manually selected a device type.</li>
+</ul>
+<h2 id="multitap">Multitap<a class="headerlink" href="#multitap" title="Permanent link">¶</a></h2>
+<p>Activating multitap support in compatible games can be configured by the 4-WayPlay, Teamplayer, Master Tap device types for the corresponding users.</p>
+<h2 id="joypad">Joypad<a class="headerlink" href="#joypad" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>RetroPad Inputs</th>
+<th>User 1 - 8 input descriptors</th>
+<th>MD Joypad 3 Button</th>
+<th>MD Joypad 6 Button</th>
+<th>MS Joypad 2 Button</th>
+<th>MS Paddle Control</th>
+<th>MS Sports Pad</th>
+<th>MD XE-1AP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_b.png" /></td>
+<td>B</td>
+<td>B</td>
+<td>B</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>E2</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_y.png" /></td>
+<td>A</td>
+<td>A</td>
+<td>A</td>
+<td></td>
+<td></td>
+<td></td>
+<td>E1</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_select.png" /></td>
+<td>Mode</td>
+<td></td>
+<td>Mode</td>
+<td></td>
+<td></td>
+<td></td>
+<td>Select</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_start.png" /></td>
+<td>Start</td>
+<td>Start</td>
+<td>Start</td>
+<td>Start</td>
+<td>Start</td>
+<td>Start</td>
+<td>Start</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_dpad_up.png" /></td>
+<td>D-Pad Up</td>
+<td>D-Pad Up</td>
+<td>D-Pad Up</td>
+<td>D-Pad Up</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_dpad_down.png" /></td>
+<td>D-Pad Down</td>
+<td>D-Pad Down</td>
+<td>D-Pad Down</td>
+<td>D-Pad Down</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_dpad_left.png" /></td>
+<td>D-Pad Left</td>
+<td>D-Pad Left</td>
+<td>D-Pad Left</td>
+<td>D-Pad Left</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_dpad_right.png" /></td>
+<td>D-Pad Right</td>
+<td>D-Pad Right</td>
+<td>D-Pad Right</td>
+<td>D-Pad Right</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_a.png" /></td>
+<td>C</td>
+<td>C</td>
+<td>C</td>
+<td>2</td>
+<td></td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_x.png" /></td>
+<td>Y</td>
+<td></td>
+<td>Y</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_l1.png" /></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+<td>C</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_r1.png" /></td>
+<td>Z</td>
+<td></td>
+<td>Z</td>
+<td></td>
+<td></td>
+<td></td>
+<td>A</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_l2.png" /></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>D</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_r2.png" /></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>B</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_l3.png" /></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_r3.png" /></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_left_stick.png" /> X</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Paddle</td>
+<td>Trackball X</td>
+<td>Thumb-stick X</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_left_stick.png" /> Y</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Trackball Y</td>
+<td>Thumb-stick Y</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_right_stick.png" /> X</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Slider Y</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_right_stick.png" /> Y</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Slider X</td>
+</tr>
+</tbody>
+</table>
+<h2 id="mouse">Mouse<a class="headerlink" href="#mouse" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>RetroMouse Inputs</th>
+<th>MD Mouse</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="../../image/retromouse/retro_mouse.png" /> Mouse Cursor</td>
+<td>MD Mouse Cursor</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retromouse/retro_left.png" /> Mouse 1</td>
+<td>MD Mouse Left</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retromouse/retro_right.png" /> Mouse 2</td>
+<td>MD Mouse Right</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retromouse/retro_middle.png" /> Mouse 3</td>
+<td>MD Mouse Start</td>
+</tr>
+<tr>
+<td>Wheel Down</td>
+<td>MD Mouse Center</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pointer">Pointer<a class="headerlink" href="#pointer" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>RetroPointer Inputs</th>
+<th>MS Graphic Board</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="../../image/retromouse/retro_mouse.png" /> or <img alt="" src="/image/Button_Pack/Gestures/Gesture_Finger_Front.png" /> Pointer Position</td>
+<td>MS Graphic Board Stylus</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retromouse/retro_left.png" /> Mouse 1</td>
+<td>MS Graphic Board Pen</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retromouse/retro_right.png" /> Mouse 2</td>
+<td>MS Graphic Board Menu</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retromouse/retro_middle.png" /> Mouse 3</td>
+<td>MS Graphic Do</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lightgun">Lightgun<a class="headerlink" href="#lightgun" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>RetroLightgun Inputs</th>
+<th>MD Menacer</th>
+<th>MD Justifier</th>
+<th>MS Light Phaser</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="../../image/retromouse/retro_mouse.png" /> Gun Crosshair</td>
+<td>MD Menacer Crosshair</td>
+<td>MD Justifier Crosshair</td>
+<td>MS Light Phaser Crosshair</td>
+</tr>
+<tr>
+<td>Gun Trigger</td>
+<td>MD Menacer A</td>
+<td>MD Justifier A</td>
+<td>MS Light Phaser A</td>
+</tr>
+<tr>
+<td>Gun Aux A</td>
+<td>MD Menacer B</td>
+<td>MD Justifer B</td>
+<td>MS Light Phaser B</td>
+</tr>
+<tr>
+<td>Gun Aux B</td>
+<td>MD Menacer C</td>
+<td>MD Justifer C</td>
+<td>MS Light Phaser C</td>
+</tr>
+<tr>
+<td>Gun Start</td>
+<td>MD Menacer Start</td>
+<td>MD Justifer Start</td>
+<td>MS Light Phaser Start</td>
+</tr>
+</tbody>
+</table>
+<h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Inputs</th>
+<th>PICO tablet</th>
+<th>Terebi Oekaki tablet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="../../image/retromouse/retro_mouse.png" /> or <img alt="" src="../../image/Button_Pack/Gestures/Gesture_Finger_Front.png" /> Pointer Position</td>
+<td>PICO tablet Stylus</td>
+<td>Terebi Oeka tablet Stylus</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retromouse/retro_left.png" /> Mouse 1</td>
+<td>PICO tablet Pen</td>
+<td>Terebi Oeka tablet Pen</td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retromouse/retro_right.png" /> Mouse 2</td>
+<td>PICO tablet Red</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retromouse/retro_middle.png" /> Mouse 3</td>
+<td></td>
+<td>Terebo Peka tablet Start</td>
+</tr>
+<tr>
+<td>Wheel Up</td>
+<td>PICO tablet Previous page</td>
+<td></td>
+</tr>
+<tr>
+<td>Wheel Down</td>
+<td>PICO tablet Next page</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_dpad_up.png" /></td>
+<td>PICO tablet Up (White)</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_dpad_down.png" /></td>
+<td>PICO tablet Down (Orange)</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_dpad_left.png" /></td>
+<td>PICO tablet Left (Purple)</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="../../image/retropad/retro_dpad_right.png" /></td>
+<td>PICO tablet Right (Green)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="external-links">External Links<a class="headerlink" href="#external-links" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://github.com/ekeeke/Genesis-Plus-GX">Official Genesis Plus GX Github Repository</a></li>
+<li><a href="https://bitbucket.org/eke/genesis-plus-gx">Official Genesis Plus GX Bitbucket Repository</a></li>
+<li><a href="https://github.com/libretro/libretro-super/blob/master/dist/info/genesis_plus_gx_libretro.info">Libretro Genesis Plus GX Core info file</a></li>
+<li><a href="https://github.com/libretro/Genesis-Plus-GX">Libretro Genesis Plus GX Github Repository</a></li>
+<li><a href="https://github.com/libretro/Genesis-Plus-GX/issues">Report Libretro Genesis Plus GX Core Issues Here</a></li>
+</ul>
+<h2 id="sega-16-bit">Sega 16-bit<a class="headerlink" href="#sega-16-bit" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://docs.libretro.com/library/emux_sms/">Sega - Master System (Emux SMS)</a></li>
+<li><a href="https://docs.libretro.com/library/picodrive/">Sega - MS/MD/CD/32X (PicoDrive)</a></li>
+<li><a href="https://docs.libretro.com/library/gearsystem/">Sega - MS/GG/SG-1000 (Gearsystem)</a></li>
+<li><a href="https://docs.libretro.com/library/bluemsx/">MSX/SVI/ColecoVision/SG-1000 (blueMSX)</a></li>
+</ul>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#background">Background</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#bios">BIOS</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#extensions">Extensions</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#features">Features</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#directories">Directories</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#geometry-and-timing">Geometry and timing</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#loading-sega-cd-games">Loading Sega CD games</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#core-options">Core options</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#user-1-device-types">User 1 device types</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#user-2-device-types">User 2 device types</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#other-devices">Other devices</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#multitap">Multitap</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#joypad">Joypad</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#mouse">Mouse</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#pointer">Pointer</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#lightgun">Lightgun</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#other">Other</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#external-links">External Links</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#sega-16-bit">Sega 16-bit</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../gearsystem/" title="previous chapter">
+        Sega - MS/GG/SG-1000 (Gearsystem)
+      </a></li>
+    
+    
+      <li>Next: <a href="../picodrive/" title="next chapter">
+        Sega - MS/MD/CD/32X (PicoDrive)
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:10
+  -->
+</body>
+</html>

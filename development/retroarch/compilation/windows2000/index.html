@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>MSVC IDE &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+    <link rel="stylesheet" href="../../../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="windows-2000-and-later-compilation-development-guide">Windows (2000 and later) Compilation / Development Guide<a class="headerlink" href="#windows-2000-and-later-compilation-development-guide" title="Permanent link">¶</a></h1>
+<h2 id="environment-configuration">Environment configuration<a class="headerlink" href="#environment-configuration" title="Permanent link">¶</a></h2>
+<p>To compile RetroArch targeting Windows 2000 or later, we will use Microsoft Visual C++ 2008. This is the last version of Visual C++ that can target 2000.</p>
+<p>Prerequisites:</p>
+<p><a href="http://download.microsoft.com/download/A/9/1/A91D6B2B-A798-47DF-9C7E-A97854B7DD18/VC.iso">Visual C++ 2008 Express</a> (or Pro)</p>
+<h2 id="retroarch-compilation">RetroArch Compilation<a class="headerlink" href="#retroarch-compilation" title="Permanent link">¶</a></h2>
+<h3 id="building-retroarch">Building RetroArch<a class="headerlink" href="#building-retroarch" title="Permanent link">¶</a></h3>
+<p>!!! Note
+    Setting up a working git shell is beyond the scope of this document. </p>
+<p>The first step is to obtain RetroArch's source tree.
+You can clone the repository directly from <a href="https://github.com/libretro/RetroArch">GitHub</a></p>
+<pre><code>git clone https://github.com/libretro/RetroArch.git retroarch
+</code></pre>
+<p>For subsequent builds you will need to pull the changes from the repo</p>
+<pre><code>cd retroarch
+git pull
+</code></pre>
+<p>To compile RetroArch, first open the solution file located at pkg/msvc/RetroArch-msvc2008.sln with Visual C++ 2008.</p>
+<p>Next we select the desired solution configuration:</p>
+<p><img alt="configurations" src="https://s3.amazonaws.com/retroarch/msvc2005-targets.png" /></p>
+<p>The choices are:</p>
+<pre><code>Debug
+Debug NoAccel
+Release
+Release NoAccel
+</code></pre>
+<p>For development purposes you can use the Debug configurations, otherwise use Release. The "NoAccel" versions do not include Direct3D or OpenGL support (but keeps DirectInput and DirectSound support).</p>
+<p>Now press F7 to build the solution, or go to Build -&gt; Build Solution.</p>
+<p>After the build is finished you should be able to find RetroArch-msvc2008.exe in the pkg/msvc/msvc-2008/&lt;configuration&gt; directory, where <code>&lt;configuration&gt;</code> is the one you chose earlier such as Debug or Release. To start the newly compiled retroarch you can press F5 in Visual C++ or simply navigate to the .exe file and run it there.</p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../../../..">
+      <img class="logo" src="../../../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#environment-configuration">Environment configuration</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#retroarch-compilation">RetroArch Compilation</a></li>
+      <ul>
+    
+      <li><a href="#building-retroarch">Building RetroArch</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../windows2000-msvc-cmdline/" title="previous chapter">
+        MSVC Commandline
+      </a></li>
+    
+    
+      <li>Next: <a href="../windows98-msvc-cmdline/" title="next chapter">
+        MSVC Commandline
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

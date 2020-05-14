@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Core Development Overview &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <link rel="stylesheet" href="../../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="developing-libretro-cores">Developing Libretro Cores<a class="headerlink" href="#developing-libretro-cores" title="Permanent link">¶</a></h1>
+<h3 id="libretro-api">Libretro API<a class="headerlink" href="#libretro-api" title="Permanent link">¶</a></h3>
+<p>The Libretro API is a lightweight C-based Application Programming Interface (API) that exposes generic audio, video, and input callbacks. Developers of "cores" such as standalone games, game emulators, media players, and other applications don’t have to worry about writing different video drivers for Direct3D, OpenGL or worrying about catering to all possible input APIs, sound APIs, joypads, etc.</p>
+<p>When you choose to use the libretro API, your program gets turned into a single library file (called a ‘libretro core’). A frontend that supports the libretro API can then load that library file and run the app. The frontend’s responsibility is to provide all the implementation-specific details. The libretro core’s responsibility is solely to provide the main program.</p>
+<p>Any project that is ported to work with this API can be made to run on ANY libretro frontend – now and forever. You maintain a single codebase that only deals with the main program, and you then target one single API (libretro) in order to port your program over to multiple platforms at once. A libretro core written in portable C or C++ can run seamlessly on many platforms with very little or no porting effort. Libretro bindings for other languages are growing increasingly common and comprehensive as well.</p>
+<p>!!! info "Licensing"
+    Libretro is an open specification that is 100% free to implement, with no licensing fees or strings attached. Our reference frontend is RetroArch. The two projects are not the same, and this is reflected in the licensing. RetroArch is licensed via GPLv3 whereas the libretro API is a MIT-licensed API.</p>
+<h2 id="resources-for-core-development">Resources for core development<a class="headerlink" href="#resources-for-core-development" title="Permanent link">¶</a></h2>
+<h3 id="canonical-libretroh">Canonical <code>libretro.h</code><a class="headerlink" href="#canonical-libretroh" title="Permanent link">¶</a></h3>
+<p>The <a href="https://raw.githubusercontent.com/libretro/libretro-common/master/include/libretro.h">most current canonical copy of <code>libretro.h</code></a> can be found in the master branch of the libretro-common repository.</p>
+<p>!!! tip
+    <code>libretro.h</code> is the single most important technical reference for developers of libretro cores and frontends</p>
+<h3 id="skeletor-sample-core"><code>skeletor</code> sample core<a class="headerlink" href="#skeletor-sample-core" title="Permanent link">¶</a></h3>
+<p>RetroArch contributor <strong>bparker06</strong> created <a href="https://github.com/bparker06/skeletor"><code>skeletor</code></a> as a minimal libretro core implementation. <code>skeletor</code> can also be useful by furnishing the stub libretro <code>Makefile</code> and <code>Makefile.common</code> files.</p>
+<h3 id="vectrexia-codebase-and-development-log">Vectrexia codebase and development log<a class="headerlink" href="#vectrexia-codebase-and-development-log" title="Permanent link">¶</a></h3>
+<p><strong>beardypig</strong> published a two-part guide (<a href="https://web.archive.org/web/20190219134430/http://www.beardypig.com/2016/01/15/emulator-build-along-1/">Part 1</a>, <a href="https://web.archive.org/web/20190219134028/http://www.beardypig.com/2016/01/22/emulator-build-along-2/">Part 2</a>) describing the process of implementing <code>libretro.h</code> as part of creating <a href="https://github.com/beardypig/vectrexia-emulator/">Vectrexia</a>, an original emulator core designed for libretro from the ground up.</p>
+<h3 id="libretro-common"><code>libretro-common</code><a class="headerlink" href="#libretro-common" title="Permanent link">¶</a></h3>
+<p><a href="https://github.com/libretro/libretro-common/"><code>libretro-common</code></a> is a collection of essential cross-platform coding blocks useful for libretro core and frontend development, written primarily in C. Permissively licensed.</p>
+<h3 id="libretro-deps"><code>libretro-deps</code><a class="headerlink" href="#libretro-deps" title="Permanent link">¶</a></h3>
+<p><a href="https://github.com/libretro/libretro-deps/"><code>libretro-deps</code></a> is a collection of third-party dependencies, pre-modified for use by libretro cores.</p>
+<h3 id="libretro-samples"><code>libretro-samples</code><a class="headerlink" href="#libretro-samples" title="Permanent link">¶</a></h3>
+<p><a href="https://github.com/libretro/libretro-samples"><code>libretro-samples</code></a> is a set of illustrations of the libretro API.</p>
+<h3 id="opengl-hardware-accelerated-cores">OpenGL hardware accelerated cores<a class="headerlink" href="#opengl-hardware-accelerated-cores" title="Permanent link">¶</a></h3>
+<p><a href="../opengl-cores/">A guide for developing OpenGL accelerated cores</a> is available.</p>
+<h2 id="implementing-the-api">Implementing the API<a class="headerlink" href="#implementing-the-api" title="Permanent link">¶</a></h2>
+<p>The libretro API consists of several functions outlined in libretro.h, found in the RetroArch source package. A libretro implementation should be compiled into a dynamically loadable executable (.dll/.so/.dylib) or a static library (.a/.lib) that exports all the functions outlined in libretro.h. These will be called by the frontend. Implementations are designed to be single-instance, so global state is allowed. Should the frontend call these functions in wrong order, undefined behavior occurs. The API header is compatible with C99 and C++. From C99, the bool type and <stdint.h> are used.</p>
+<p>The program flow of a frontend using the libretro API can be expressed as follows:</p>
+<h3 id="startup">Startup<a class="headerlink" href="#startup" title="Permanent link">¶</a></h3>
+<h4 id="retro_api_version"><code>retro_api_version()</code><a class="headerlink" href="#retro_api_version" title="Permanent link">¶</a></h4>
+<p>This function should return RETRO_API_VERSION, defined in libretro.h. It is used by the frontend to determine if ABI/API are mismatched. The ver- sion will be bumped should there be any non- compatible changes to the API. Changes to retro_* structures, as well as changes in publically visible functions and/or their arguments will warrant a bump in API version.</p>
+<h4 id="retro_set_"><code>retro_set_*()</code><a class="headerlink" href="#retro_set_" title="Permanent link">¶</a></h4>
+<p>Libretro is callback based. The frontend will set all callbacks at this stage, and the implementation must store these function pointers somewhere. The frontend can, at a later stage, call these.</p>
+<h4 id="retro_init"><code>retro_init()</code><a class="headerlink" href="#retro_init" title="Permanent link">¶</a></h4>
+<p>This function is called once, and gives the implementation a chance to initialize data structures.</p>
+<h4 id="environment-callback">Environment callback<a class="headerlink" href="#environment-callback" title="Permanent link">¶</a></h4>
+<p>While libretro has callbacks for video, audio and input, there’s a callback type dubbed the environment callback. This callback (<code>retro_environment_t</code>) is a generic way for the libretro implementation to access features of the API that are considered too obscure to deserve its own symbols. It can be extended without breaking ABI. The callback has a return type of <code>bool</code> which tells if the frontend recognized the request given to it.</p>
+<h4 id="retro_set_controller_port_device"><code>retro_set_controller_port_device()</code><a class="headerlink" href="#retro_set_controller_port_device" title="Permanent link">¶</a></h4>
+<p>By default, joypads will be assumed to be inserted into the implementation. If the engine is sensitive to which type of input device is plugged in, the frontend may call this function to set the device to be used for a certain player. The implementation should try to auto-detect this if possible.</p>
+<h4 id="retro_get_system_info"><code>retro_get_system_info()</code><a class="headerlink" href="#retro_get_system_info" title="Permanent link">¶</a></h4>
+<p>The frontend will typically request statically known information about the core such as the name of the implementation, version number, etc. The information returned should be stored statically. If dynamic allocation must take place, the implementation must make sure to free this storage in <code>retro_deinit()</code> later.</p>
+<h4 id="retro_load_game"><code>retro_load_game()</code><a class="headerlink" href="#retro_load_game" title="Permanent link">¶</a></h4>
+<p>This function will load content. If the implementation is an emulator, this would be a game ROM image, if it is a game engine, this could be packaged upassets for the game, etc. The function takes a structure that points to the path where the ROM was loaded from, as well as a memory chunk of the already loaded file.</p>
+<p><strong>There are two modes of loading files with libretro.</strong> If the game engine requires to know the path of where the ROM image was loaded from, the <code>need_fullpath</code> field in <code>retro_system_info</code> must be set to true. If the path is required, the frontend will not load the file into the data/size fields, and it is up to the implementation to load the file from disk. The path might be both relative and absolute, and the implementation must check for both cases. This is useful if the ROM image is too large to load into memory at once. It is also useful if the assests consist of many smaller files, where it is necessary to know the path of a master file to infer the paths of the others.</p>
+<p>If <code>need_fullpath</code> is set to <code>false</code>, the frontend will load the ROM image into memory beforehand. In this mode, the path field is not guaranteed to be non-<code>NULL</code>. It should point to a valid path if the file was indeed, loaded from disk, however, it is possible that the file was loaded from <code>stdin</code>, or similar, which has no well-defined path. It is recommended that <code>need_fullpath</code> is set to <code>false</code> if possible, as it allows more features, such as soft-patching to work correctly.</p>
+<h4 id="retro_get_system_av_info"><code>retro_get_system_av_info()</code><a class="headerlink" href="#retro_get_system_av_info" title="Permanent link">¶</a></h4>
+<p>This function lets the frontend know essential audio/video properties of the game. As this information can depend on the game being loaded, this info will only be queried after a valid ROM image has been loaded. It is important to accuractely report FPS and audio sampling rates, as FFmpeg recording relies on exact information to be able to run in sync for several hours.</p>
+<h3 id="running">Running<a class="headerlink" href="#running" title="Permanent link">¶</a></h3>
+<h4 id="retro_run"><code>retro_run()</code><a class="headerlink" href="#retro_run" title="Permanent link">¶</a></h4>
+<p>After a game has been loaded successfully, retro_run() will be called repeatedly as long as the user desires. When called, the implementation will perform its inner functionality for one video frame. During this time, the implementation is free to call callbacks for video frames, audio samples, as well as polling input, and querying current input state. The requirements for the callbacks are that video callback is called exactly once, i.e. it does not have to come last. Also, input polling must be called at least once.</p>
+<h4 id="input">Input<a class="headerlink" href="#input" title="Permanent link">¶</a></h4>
+<p>Abstracting joypad and other input devices is the hardest part of defining a multi-system API as it differs across every system. The libretro API therefore provides the RetroPad -- a joypad abstraction available with digital and analog controls -- to allow cores to be written without platform-specific input code.</p>
+<p>Input device abstractions are also available for keyboards, mice, pointers, and lightguns.</p>
+<p><strong>Learn more in the <a href="/docs/development/input-api.md">Input API</a> docs.</strong></p>
+<h4 id="videoaudio-synchronization-considerations">Video/Audio synchronization considerations<a class="headerlink" href="#videoaudio-synchronization-considerations" title="Permanent link">¶</a></h4>
+<p>Libretro is based on fixed rates; video FPS and audio sampling rates are always assumed to be constant. Frontends will have control of the speed of playing, typically using VSync to obtain correctspeed. The frontend is free to "fast-forward", i.e. play as fast as possible without waiting, or slow-motion. For this reason, the engine should not rely on system timers to perform arbitrary synchronization. This is common and often needed in 3D games to account for varying frame rates while still maintaining a playable game.</p>
+<p>However, libretro targets classic systems where one can assume that 100% real-time performance will always be met, thus avoiding the need for careful timing code. By default, the libretro implementation should replace any arbitrary <code>sleep()</code> and <code>time()</code> patterns with simply calling video/audio callbacks. The frontend will make sure to apply the proper synchronization. This is mostly a problem with game ports, such as PrBoom. For the libretro port of PrBoom, which heavily relied on timers and sleeping patterns, sleeping was replaced with simply running for one frame, and calling the video callback. After that, enough audio was rendered to correspond to one frames worth of time, 1/fps seconds. All sleeping and timing patterns could be removed, and synchronization was correct.</p>
+<h4 id="audio-callback-options">Audio callback options<a class="headerlink" href="#audio-callback-options" title="Permanent link">¶</a></h4>
+<p>The libretro API has two different audio callbacks. Only one of these should be used; the implementation must choose which callback is best suited.</p>
+<h5 id="per-sample-audio">Per-sample audio<a class="headerlink" href="#per-sample-audio" title="Permanent link">¶</a></h5>
+<p>The first audio callback is per-sample, and has the type <code>void (*)(int16_t, int16_t)</code>. This should be used if the implementation outputs audio on a per-sample basis. The frontend will make sure to partition the audio data into suitable chunks to avoid incurring too much syscall overhead.</p>
+<h5 id="batch-audio">Batch audio<a class="headerlink" href="#batch-audio" title="Permanent link">¶</a></h5>
+<p>If audio is output in a "batch" fashion, i.e. 1 / fps seconds worth of audio data at a time, the batch approach should be considered. Rather than looping over all samples and calling per-sample callback every time, the batch callback should be used instead, <code>size_t (*)(const int16_t *, size_t)</code>. Using the batch callback, audio will not be copied in a temporary buffer, which can buy a slight performance gain. Also, all data will be pushed to audio driver in one go, saving some slight overhead.</p>
+<p>It is not recommended to use the batch callback for very small (&lt; 32 frames) amounts of data. The data passed to the batch callback should, if possible, be aligned to 16 bytes (depends on platform), to allow accelerated SIMD operations on audio.</p>
+<h4 id="retro_serialize_size-retro_serialize-and-retro_unserialize"><code>retro_serialize_size()</code>, <code>retro_serialize()</code>, and <code>retro_unserialize()</code><a class="headerlink" href="#retro_serialize_size-retro_serialize-and-retro_unserialize" title="Permanent link">¶</a></h4>
+<p>Serialization is optional to implement. Serialization is better known as "save states" in emulators, and these functions are certainly more useful in emulators which have a fixed amount of state. It allows the frontend to take a snapshot of all internal state, and later restore it. This functionality is used to implement e.g. rewind and netplay.</p>
+<p>Some important considerations must be taken to implement these functions well:</p>
+<ul>
+<li>If serialization is not supported, <code>retro_serialize_size()</code> should return 0. If retro_serialize_size() returns non-zero, it is assumed that serialization is properly implemented.</li>
+<li>The frontend should call <code>retro_serialize_size()</code> before calling <code>retro_serialize()</code> to determine the amount of memory needed to correctly serialize.</li>
+<li>The size eventually passed to <code>retro_serialize()</code> must be at least the size of the value returned in <code>retro_serialize_size()</code>. If too large a buffer is passed to <code>retro_serialize()</code>, the extra data should be ignored (or <code>memset</code> to 0).</li>
+<li>It is valid for the value returned by <code>retro_serialize_size()</code> to vary over time, however, it cannot ever increase over time. If it should ever change, it must decrease. This is rationaled by the ability to predetermined a fixed save state size right after <code>retro_load_game()</code> that will always be large enough to hold any following serialization. This certainty is fundamental to the rewind implementation. This requirement only holds between calls to <code>retro_load_game()</code> and <code>retro_unload_game()</code>.</li>
+</ul>
+<p>If possible, the implementation should attempt to serialize data at consistent offsets in the memory buffer. This will greatly help the rewind implementation in RetroArch to use less memory. Both <code>retro_serialize()</code> and <code>retro_unserialize()</code> return a boolean value to let the frontend know if the implementation succeeded in serializing or unserializing.</p>
+<h3 id="tear-down">Tear-down<a class="headerlink" href="#tear-down" title="Permanent link">¶</a></h3>
+<h4 id="retro_unload_game"><code>retro_unload_game()</code><a class="headerlink" href="#retro_unload_game" title="Permanent link">¶</a></h4>
+<p>After the user desired to stop playing, <code>retro_unload_game()</code> will be called. This should free any internal data related to the game, and allow <code>retro_load_game()</code> to be called again.</p>
+<h4 id="retro_deinit"><code>retro_deinit()</code><a class="headerlink" href="#retro_deinit" title="Permanent link">¶</a></h4>
+<p>This function should free all state that was initialized during <code>retro_init()</code>. After calling this function, the frontend can again call <code>retro_init()</code>.</p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../../..">
+      <img class="logo" src="../../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#libretro-api">Libretro API</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#resources-for-core-development">Resources for core development</a></li>
+      <ul>
+    
+      <li><a href="#canonical-libretroh">Canonical libretro.h</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#skeletor-sample-core">skeletor sample core</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#vectrexia-codebase-and-development-log">Vectrexia codebase and development log</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#libretro-common">libretro-common</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#libretro-deps">libretro-deps</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#libretro-samples">libretro-samples</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#opengl-hardware-accelerated-cores">OpenGL hardware accelerated cores</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#implementing-the-api">Implementing the API</a></li>
+      <ul>
+    
+      <li><a href="#startup">Startup</a></li>
+      <ul>
+    
+      <li><a href="#retro_api_version">retro_api_version()</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#retro_set_">retro_set_*()</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#retro_init">retro_init()</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#environment-callback">Environment callback</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#retro_set_controller_port_device">retro_set_controller_port_device()</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#retro_get_system_info">retro_get_system_info()</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#retro_load_game">retro_load_game()</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#retro_get_system_av_info">retro_get_system_av_info()</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#running">Running</a></li>
+      <ul>
+    
+      <li><a href="#retro_run">retro_run()</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#input">Input</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#videoaudio-synchronization-considerations">Video/Audio synchronization considerations</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#audio-callback-options">Audio callback options</a></li>
+      <ul>
+    
+      <li><a href="#per-sample-audio">Per-sample audio</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#batch-audio">Batch audio</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#retro_serialize_size-retro_serialize-and-retro_unserialize">retro_serialize_size(), retro_serialize(), and retro_unserialize()</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#tear-down">Tear-down</a></li>
+      <ul>
+    
+      <li><a href="#retro_unload_game">retro_unload_game()</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#retro_deinit">retro_deinit()</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../../retroarch/compilation/psvita/" title="previous chapter">
+        PlayStation Vita/TV
+      </a></li>
+    
+    
+      <li>Next: <a href="../dynamic-rate-control/" title="next chapter">
+        Dynamic Rate Control for Emulators
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

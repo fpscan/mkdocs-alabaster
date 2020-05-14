@@ -1,0 +1,1645 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Creating a Theme &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="making-custom-themes">Making Custom Themes<a class="headerlink" href="#making-custom-themes" title="Permanent link">¶</a></h1>
+<p>This page will guide you through the essential information needed to customize the core RetroArch theme.</p>
+<p>Credit for information goes to @baxysquare from this <a href="https://forums.libretro.com/t/guide-to-making-themes/9554">forum post</a></p>
+<p>!!! tip
+    For examples of Menu Icon Themes and how to change them please read <a href="https://github.com/libretro/docs/blob/master/docs/guides/theme-examples.md">this guide</a></p>
+<h2 id="skills-tools-needed-to-make-and-contribute-a-theme">Skills &amp; Tools Needed to Make and Contribute a Theme<a class="headerlink" href="#skills-tools-needed-to-make-and-contribute-a-theme" title="Permanent link">¶</a></h2>
+<ul>
+<li>
+<p>A GitHub account and a basic understanding on how to fork a project and contribute via Pull Requests. The GitHub project that hosts the theme is the <a href="https://github.com/libretro/retroarch-assets">retroarch-assets</a> repository.</p>
+</li>
+<li>
+<p>Computer application(s) to create source icons. You can use any photo editing application such as Photoshop or GIMP, but a Vector-based application such as Illustrator or Inkscape is preferred. The preferred source format is SVG.</p>
+</li>
+<li>
+<p>Conversion applications can come in handy. You can use ImageMagick to batch convert your source files to PNG format. Running your PNG files through ImageOptim can help reduce the icon file size without reducing the quality.</p>
+</li>
+<li>
+<p>Attention to detail, patience and time. Be prepared to create and revise as you learn and grow. Feel free to take an existing theme, make modifications and then test your new design.</p>
+</li>
+</ul>
+<h2 id="required-theme-components">Required Theme Components<a class="headerlink" href="#required-theme-components" title="Permanent link">¶</a></h2>
+<ul>
+<li>
+<p>A truetype font renamed to "font.ttf." You need to choose a typeface that has an open license. There is a wide selection to choose from at <a href="https://fonts.google.com/">Google Fonts</a>. If you have the tools and skills to make your own font and wish to contribute it via open license, feel free to do so.</p>
+</li>
+<li>
+<p>A text file in GitHub Markdown format titled README.md. This file provides basic info on the theme itself along with specifications and guidelines to help others contribute to the theme. Make sure to include an attribution and license info for the included truetype font.</p>
+</li>
+<li>
+<p>A PNG folder that contains a complete set of icons and a default background image.</p>
+</li>
+</ul>
+<h3 id="optional-theme-components">Optional Theme Components<a class="headerlink" href="#optional-theme-components" title="Permanent link">¶</a></h3>
+<ul>
+<li>A SRC file containing SVG or other source files. If you choose not to include your source files, please host them elsewhere and indicate in the README.</li>
+</ul>
+<h2 id="icons">Icons<a class="headerlink" href="#icons" title="Permanent link">¶</a></h2>
+<p>The majority of time and effort involved in creating a theme is creating and revising the icons. The default Monochrome set includes just over 200 icons as listed below. That number will continue to grow as more cores and features are added.</p>
+<h2 id="tips-tricks-for-creating-icons">Tips &amp; Tricks for Creating Icons<a class="headerlink" href="#tips-tricks-for-creating-icons" title="Permanent link">¶</a></h2>
+<ul>
+<li>
+<p>The icons should be set to a 256x256 pixel canvas and should be centered on a 64x64 grid. You need to snap your point and line elements to the grid wherever possible. Libretro icons are scaled down, so when design elements do not line up with the grid, they tend to render oddly.</p>
+</li>
+<li>
+<p>Give your icons room to breathe. While you are capable of using the full canvas, a 248x248 or 240x240 maximum icon size is highly recommended. Alternatively, you can keep your icons inside a 256x256 circular "blueprint". This will keep the top and the bottom of your icons from touching when you're scrolling through a list of icons.</p>
+</li>
+<li>
+<p>Create and stick to a color palette of 64 colors or less. While you can use an unlimited palette, your icons will look more uniform and consistent as a theme.</p>
+</li>
+<li>
+<p>Keep the details of your icons in harmony with one another. If one icon has too many design details, try to simplify it to match with the other icons. If an icon is lacking in detail, do what you can to add balance in comparison to the other designs.</p>
+</li>
+</ul>
+<p>Here's a complete list of icons (and wallpaper) in the default set. Category, Type, Menu Level and Size info has been included to help you understand an icon's purpose and use in the user interface.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Category</th>
+<th>Type</th>
+<th>Level</th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FB Alpha - Arcade Games-content.png</td>
+<td>Arcade</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>MAME-content.png</td>
+<td>Arcade</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>MAME2003-content.png</td>
+<td>Arcade</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>MAME2010-content.png</td>
+<td>Arcade</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Neo Geo-content.png</td>
+<td>Arcade</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>FB Alpha - Arcade Games.png</td>
+<td>Arcade</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>MAME.png</td>
+<td>Arcade</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>MAME2003.png</td>
+<td>Arcade</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>MAME2010.png</td>
+<td>Arcade</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Neo Geo.png</td>
+<td>Arcade</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Lutro.png</td>
+<td>Computer</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>DOS.png</td>
+<td>Computer</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Atari - ST-content.png</td>
+<td>Computer</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Commodore Amiga-content.png</td>
+<td>Computer</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>DOS-content.png</td>
+<td>Computer</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Microsoft - MSX-content.png</td>
+<td>Computer</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Microsoft - MSX2-content.png</td>
+<td>Computer</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>ScummVM-content.png</td>
+<td>Computer</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sinclair - ZX 81-content.png</td>
+<td>Computer</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sinclair - ZX Spectrum +3-content.png</td>
+<td>Computer</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sinclair - ZX Spectrum-content.png</td>
+<td>Computer</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Lutro-content.png</td>
+<td>Computer</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Atari - ST.png</td>
+<td>Computer</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Commodore Amiga.png</td>
+<td>Computer</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Microsoft - MSX.png</td>
+<td>Computer</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Microsoft - MSX2.png</td>
+<td>Computer</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>ScummVM.png</td>
+<td>Computer</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sinclair - ZX 81.png</td>
+<td>Computer</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sinclair - ZX Spectrum +3.png</td>
+<td>Computer</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sinclair - ZX Spectrum.png</td>
+<td>Computer</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Atari - 2600-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Atari - 5200-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Atari - 7800-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Atari - Jaguar-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Bandai - WonderSwan Color-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Bandai - WonderSwan-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Coleco - ColecoVision-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>GCE - Vectrex-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Magnavox - Odyssey2-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>NEC - PC Engine - TurboGrafx 16-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>NEC - PC Engine CD - TurboGrafx-CD-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>NEC - PC Engine SuperGrafx-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>NEC - PC-FX-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Family Computer Disk System-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - GameCube-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Nintendo 64-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Nintendo 64DD-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Nintendo Entertainment System-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Satellaview-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Sufami Turbo-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Super Nintendo Entertainment System-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Wii-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sega - 32X-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sega - Dreamcast-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sega - Master System - Mark III-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sega - Mega Drive - Genesis-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sega - Mega-CD - Sega CD-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sega - PICO-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sega - Saturn-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sega - SG-1000-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>SNK - Neo Geo CD-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>SNK - Neo Geo-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sony - PlayStation-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>The 3DO Company - 3DO-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Uzebox-content.png</td>
+<td>Console</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Atari - 2600.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Atari - 5200.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Atari - 7800.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Atari - Jaguar.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Bandai - WonderSwan Color.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Bandai - WonderSwan.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Coleco - ColecoVision.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>GCE - Vectrex.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Magnavox - Odyssey2.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>NEC - PC Engine - TurboGrafx 16.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>NEC - PC Engine CD - TurboGrafx-CD.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>NEC - PC Engine SuperGrafx.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>NEC - PC-FX.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Family Computer Disk System.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - GameCube.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Nintendo 64.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Nintendo 64DD.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Nintendo Entertainment System.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Satellaview.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Sufami Turbo.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Super Nintendo Entertainment System.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Wii.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sega - 32X.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sega - Dreamcast.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sega - Master System - Mark III.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sega - Mega Drive - Genesis.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sega - Mega-CD - Sega CD.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sega - PICO.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sega - Saturn.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sega - SG-1000.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>SNK - Neo Geo CD.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>SNK - Neo Geo.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sony - PlayStation.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>The 3DO Company - 3DO.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Uzebox.png</td>
+<td>Console</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Atari - Lynx-content.png</td>
+<td>Handheld</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Game Park - GP32-content.png</td>
+<td>Handheld</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Handheld Electronic Game-content.png</td>
+<td>Handheld</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Game Boy Advance-content.png</td>
+<td>Handheld</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Game Boy Color-content.png</td>
+<td>Handheld</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Game Boy-content.png</td>
+<td>Handheld</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Nintendo DS Decrypted-content.png</td>
+<td>Handheld</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Nintendo DS-content.png</td>
+<td>Handheld</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Pokemon Mini-content.png</td>
+<td>Handheld</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Virtual Boy-content.png</td>
+<td>Handheld</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sega - Game Gear-content.png</td>
+<td>Handheld</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>SNK - Neo Geo Pocket Color-content.png</td>
+<td>Handheld</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>SNK - Neo Geo Pocket-content.png</td>
+<td>Handheld</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sony - PlayStation Portable-content.png</td>
+<td>Handheld</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Tiger - Game.com-content.png</td>
+<td>Handheld</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Atari - Lynx.png</td>
+<td>Handheld</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Game Park - GP32.png</td>
+<td>Handheld</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Handheld Electronic Game.png</td>
+<td>Handheld</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Game Boy Advance.png</td>
+<td>Handheld</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Game Boy Color.png</td>
+<td>Handheld</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Game Boy.png</td>
+<td>Handheld</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Nintendo DS Decrypted.png</td>
+<td>Handheld</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Nintendo DS.png</td>
+<td>Handheld</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Pokemon Mini.png</td>
+<td>Handheld</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Nintendo - Virtual Boy.png</td>
+<td>Handheld</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sega - Game Gear.png</td>
+<td>Handheld</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>SNK - Neo Geo Pocket Color.png</td>
+<td>Handheld</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>SNK - Neo Geo Pocket.png</td>
+<td>Handheld</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Sony - PlayStation Portable.png</td>
+<td>Handheld</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Tiger - Game.com.png</td>
+<td>Handheld</td>
+<td>System</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>2048.png</td>
+<td>Port</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Cave Story.png</td>
+<td>Port</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Dinothawr.png</td>
+<td>Port</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>DOOM.png</td>
+<td>Port</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Dungeon Crawl Stone Soup.png</td>
+<td>Port</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Quake1.png</td>
+<td>Port</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>2048-content.png</td>
+<td>Port</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Cave Story-content.png</td>
+<td>Port</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Dinothawr-content.png</td>
+<td>Port</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>DOOM-content.png</td>
+<td>Port</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Dungeon Crawl Stone Soup-content.png</td>
+<td>Port</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Quake1-content.png</td>
+<td>Port</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>FFmpeg.png</td>
+<td>XMB</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>default.png</td>
+<td>XMB</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Game.png</td>
+<td>XMB</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>history.png</td>
+<td>XMB</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>images.png</td>
+<td>XMB</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>lakka.png</td>
+<td>XMB</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>movies.png</td>
+<td>XMB</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>netplay.png</td>
+<td>XMB</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>retroarch.png</td>
+<td>XMB</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>settings.png</td>
+<td>XMB</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>musics.png</td>
+<td>XMB</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>add.png</td>
+<td>XMB</td>
+<td>Application</td>
+<td>0</td>
+<td>256</td>
+</tr>
+<tr>
+<td>FFmpeg-content.png</td>
+<td>XMB</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>music.png</td>
+<td>XMB</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>image.png</td>
+<td>XMB</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>movie.png</td>
+<td>XMB</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>achievement-list.png</td>
+<td>XMB</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>default-content.png</td>
+<td>XMB</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Game-content.png</td>
+<td>XMB</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>netplay - iRoom-locked.png</td>
+<td>XMB</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>netplay - iRoom.png</td>
+<td>XMB</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>netplay - LAN Room-locked.png</td>
+<td>XMB</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>netplay - LAN Room.png</td>
+<td>XMB</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>netplay - rooms-locked.png</td>
+<td>XMB</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>netplay - rooms.png</td>
+<td>XMB</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>room.png</td>
+<td>XMB</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>setting.png</td>
+<td>XMB</td>
+<td>Content</td>
+<td>1</td>
+<td>256</td>
+</tr>
+<tr>
+<td>zip.png</td>
+<td>XMB</td>
+<td>Content</td>
+<td>2</td>
+<td>256</td>
+</tr>
+<tr>
+<td>file.png</td>
+<td>XMB</td>
+<td>Content</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>folder.png</td>
+<td>XMB</td>
+<td>Content</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>dialog-slice.png</td>
+<td>XMB</td>
+<td>Dialog</td>
+<td>2</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Libretro - Pad.png</td>
+<td>XMB</td>
+<td>Help</td>
+<td>-</td>
+<td>256</td>
+</tr>
+<tr>
+<td>battery-charging.png</td>
+<td>XMB</td>
+<td>Info Bar</td>
+<td>-</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>battery-full.png</td>
+<td>XMB</td>
+<td>Info Bar</td>
+<td>-</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>clock.png</td>
+<td>XMB</td>
+<td>Info Bar</td>
+<td>-</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>undo.png</td>
+<td>XMB</td>
+<td>Info Bar</td>
+<td>-</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>wifi.png</td>
+<td>XMB</td>
+<td>Info Bar</td>
+<td>-</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>key-hover.png</td>
+<td>XMB</td>
+<td>Key</td>
+<td>2</td>
+<td>256</td>
+</tr>
+<tr>
+<td>key.png</td>
+<td>XMB</td>
+<td>Key</td>
+<td>2</td>
+<td>256</td>
+</tr>
+<tr>
+<td>arrow.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>close.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>core-cheat-options.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>core-disk-options.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>core-infos.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>core-input-remapping-options.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>core-options.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>core-shader-options.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>core.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>cursor.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>database.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>loadstate.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>pointer.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>reload.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>resume.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>run.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>savestate.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>screenshot.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>subsetting.png</td>
+<td>XMB</td>
+<td>Nav</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>off.png</td>
+<td>XMB</td>
+<td>Selection</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>on.png</td>
+<td>XMB</td>
+<td>Selection</td>
+<td>2</td>
+<td>Small</td>
+</tr>
+<tr>
+<td>bg.png</td>
+<td>XMB</td>
+<td>Wallpaper</td>
+<td>-</td>
+<td>1080p</td>
+</tr>
+</tbody>
+</table>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#skills-tools-needed-to-make-and-contribute-a-theme">Skills &amp; Tools Needed to Make and Contribute a Theme</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#required-theme-components">Required Theme Components</a></li>
+      <ul>
+    
+      <li><a href="#optional-theme-components">Optional Theme Components</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#icons">Icons</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#tips-tricks-for-creating-icons">Tips &amp; Tricks for Creating Icons</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../generating-retroarch-logs/" title="previous chapter">
+        Generating Logs
+      </a></li>
+    
+    
+      <li>Next: <a href="../roms-playlists-thumbnails/" title="next chapter">
+        Playlists and Thumbnails
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

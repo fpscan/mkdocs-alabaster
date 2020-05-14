@@ -1,0 +1,884 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>MSVC Compatibility Guide &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+    <link rel="stylesheet" href="../../../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="msvc-runtime-versions">MSVC Runtime Versions<a class="headerlink" href="#msvc-runtime-versions" title="Permanent link">¶</a></h1>
+<table>
+<thead>
+<tr>
+<th>VC++ version</th>
+<th>_MSC_VER</th>
+<th>Alternative name</th>
+<th>C runtime</th>
+<th>C++ runtime</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>800</td>
+<td></td>
+<td>MSVCRT10.DLL</td>
+<td></td>
+</tr>
+<tr>
+<td>2.0</td>
+<td>900</td>
+<td></td>
+<td>MSVCRT20.DLL</td>
+<td></td>
+</tr>
+<tr>
+<td>4.0</td>
+<td>1000</td>
+<td></td>
+<td>MSVCRT40.DLL</td>
+<td></td>
+</tr>
+<tr>
+<td>4.2</td>
+<td>1020</td>
+<td></td>
+<td>MSVCRT.DLL</td>
+<td></td>
+</tr>
+<tr>
+<td>5.0</td>
+<td>1100</td>
+<td>Visual Studio 97</td>
+<td>MSVCRT.DLL</td>
+<td>MSVCP50.DLL</td>
+</tr>
+<tr>
+<td>6.0</td>
+<td>1200</td>
+<td>Visual Studio 6.0, VC98</td>
+<td>MSVCRT.DLL</td>
+<td>MSVCP60.DLL</td>
+</tr>
+<tr>
+<td>7.0</td>
+<td>1300</td>
+<td>Visual Studio .NET (2002)</td>
+<td>MSVCR70.DLL</td>
+<td>MSVCP70.DLL</td>
+</tr>
+<tr>
+<td>7.1</td>
+<td>1310</td>
+<td>Visual Studio .NET 2003</td>
+<td>MSVCR71.DLL</td>
+<td>MSVCP71.DLL</td>
+</tr>
+<tr>
+<td>8.0</td>
+<td>1400</td>
+<td>Visual Studio 2005</td>
+<td>MSVCR80.DLL</td>
+<td>MSVCP80.DLL</td>
+</tr>
+<tr>
+<td>9.0</td>
+<td>1500</td>
+<td>Visual Studio 2008</td>
+<td>MSVCR90.DLL</td>
+<td>MSVCP90.DLL</td>
+</tr>
+<tr>
+<td>10.0</td>
+<td>1600</td>
+<td>Visual Studio 2010</td>
+<td>MSVCR100.DLL</td>
+<td>MSVCP100.DLL</td>
+</tr>
+<tr>
+<td>11.0</td>
+<td>1700</td>
+<td>Visual Studio 2012</td>
+<td>MSVCR110.DLL</td>
+<td>MSVCP110.DLL</td>
+</tr>
+<tr>
+<td>12.0</td>
+<td>1800</td>
+<td>Visual Studio 2013</td>
+<td>MSVCR120.DLL</td>
+<td>MSVCP120.DLL</td>
+</tr>
+<tr>
+<td>14.0</td>
+<td>1900</td>
+<td>Visual Studio 2015</td>
+<td>See notes</td>
+<td>MSVCP140.DLL</td>
+</tr>
+<tr>
+<td>14.1*</td>
+<td>1910*</td>
+<td>Visual Studio 2017</td>
+<td>See notes</td>
+<td>MSVCP140.DLL</td>
+</tr>
+</tbody>
+</table>
+<p>!!! Note "Note for VC2003"
+    The runtime does not have its own redist, it is instead only bundled with .NET Framework 1.1, or you can manually extract it from KB932298 (2007 DST Update).</p>
+<p>!!! Note "Note for VC2015/2017"
+    The runtime was split into 4 external libraries: concrt140.dll, msvcp140.dll, vccorlib140.dll and vcruntime140.dll, as well as an OS-local component named ucrtbase.dll included with Windows 10 and up.</p>
+<p>!!! Note "Note for VC2017"
+    The version numbers increment with each update (VC++ versions 14.1/14.11/14.12, _MSC_VER 1910/1911/1912, Visual Studio versions 15.0/15.3/15.5 etc.). And yes, the C++ runtime is still called VCP140 and not VCP141...</p>
+<h2 id="what-does-my-windows-version-ship-with">What does my Windows version ship with?<a class="headerlink" href="#what-does-my-windows-version-ship-with" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th align="center">Version</th>
+<th align="center">NT3</th>
+<th align="center">95</th>
+<th align="center">NT4</th>
+<th align="center">98</th>
+<th align="center">2000</th>
+<th align="center">ME</th>
+<th align="center">XP</th>
+<th align="center">2003</th>
+<th align="center">2003R2</th>
+<th align="center">Vista</th>
+<th align="center">2008</th>
+<th align="center">7</th>
+<th align="center">2008R2</th>
+<th align="center">2012</th>
+<th align="center">8</th>
+<th align="center">8.1</th>
+<th align="center">2012R2</th>
+<th align="center">10</th>
+<th align="center">2016</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">1.0</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">2.0</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="center">4.0</td>
+<td align="center"></td>
+<td align="center">X*</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="center">5.0</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X*</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">6.0</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="center">2002</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">2003</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X*</td>
+<td align="center">X*</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">2005</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="center">2008</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="center">2010</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="center">2012</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="center">2013</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">2015</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">2017</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p>!!! Note "Note for Windows 95"
+    The VC40 runtime is only bundled with Windows 95B (OSR2) and up.</p>
+<p>!!! Note "Note for Windows 98"
+    The VC50 runtime is not always installed, but is available on the install CD (in WIN98/WIN98_36.CAB for First Edition and 37.CAB for Second Edition).</p>
+<p>!!! Note "Note for Server 2003 and 2003R2"
+    The VC2003 runtime requires installing the .NET Framework via the Windows Components Wizard after installation.</p>
+<h2 id="which-runtime-is-supported-by-my-windows-version">Which runtime is supported by my Windows version?<a class="headerlink" href="#which-runtime-is-supported-by-my-windows-version" title="Permanent link">¶</a></h2>
+<p>From <a href="https://support.microsoft.com/en-us/help/2661358/minimum-service-pack-levels-for-microsoft-vc-redistributable-packages">Minimum service pack levels for Microsoft VC++ Redistributable Packages</a>:</p>
+<table>
+<thead>
+<tr>
+<th align="center">Version</th>
+<th align="center">95</th>
+<th align="center">NT4</th>
+<th align="center">98</th>
+<th align="center">2000</th>
+<th align="center">ME</th>
+<th align="center">XP</th>
+<th align="center">2003</th>
+<th align="center">2003R2</th>
+<th align="center">Vista</th>
+<th align="center">2008</th>
+<th align="center">7</th>
+<th align="center">2008R2</th>
+<th align="center">2012</th>
+<th align="center">8</th>
+<th align="center">8.1</th>
+<th align="center">2012R2</th>
+<th align="center">10</th>
+<th align="center">2016</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">2003</td>
+<td align="center">X*</td>
+<td align="center">SP6a*</td>
+<td align="center">X*</td>
+<td align="center">X*</td>
+<td align="center">X*</td>
+<td align="center">X*</td>
+<td align="center">X*</td>
+<td align="center">X*</td>
+<td align="center">X*</td>
+<td align="center">X*</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">2005</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">SP2+</td>
+<td align="center">SP1+</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">2005 SP1</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">SP2+</td>
+<td align="center">SP1+</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">2008</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">SP4</td>
+<td align="center"></td>
+<td align="center">SP2+</td>
+<td align="center">SP1+</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">2008 SP1</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">SP2+</td>
+<td align="center">SP1+</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">2010</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">SP3</td>
+<td align="center">SP2+</td>
+<td align="center">X</td>
+<td align="center">SP2+</td>
+<td align="center">SP2+</td>
+<td align="center">X</td>
+<td align="center">X*</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">2010 SP1</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">SP3</td>
+<td align="center">SP2+</td>
+<td align="center">X</td>
+<td align="center">SP2+</td>
+<td align="center">SP2+</td>
+<td align="center">X</td>
+<td align="center">X*</td>
+<td align="center">X*</td>
+<td align="center">X*</td>
+<td align="center">X*</td>
+<td align="center">X*</td>
+<td align="center">X*</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">2012 Upd. 4</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">SP3</td>
+<td align="center">SP2+</td>
+<td align="center">X</td>
+<td align="center">SP2+</td>
+<td align="center">SP2+</td>
+<td align="center">SP1+</td>
+<td align="center">SP1+</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">SP1+*</td>
+<td align="center">X</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">2013</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">SP3</td>
+<td align="center">SP2+</td>
+<td align="center">X</td>
+<td align="center">SP2+</td>
+<td align="center">SP2+</td>
+<td align="center">SP1+</td>
+<td align="center">SP1+</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">2015</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">SP3</td>
+<td align="center">SP2+</td>
+<td align="center">X</td>
+<td align="center">SP2+</td>
+<td align="center">SP2+</td>
+<td align="center">SP1+</td>
+<td align="center">SP1+</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">2017</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">SP3</td>
+<td align="center">SP2+</td>
+<td align="center"></td>
+<td align="center">SP2+</td>
+<td align="center">SP2+</td>
+<td align="center">SP1+</td>
+<td align="center">SP1+</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X*</td>
+<td align="center"></td>
+<td align="center">X*</td>
+<td align="center">X</td>
+</tr>
+</tbody>
+</table>
+<p>!!! Note "Note for VC2003"
+    The VC2003 runtime is not provided as a separate download and requires installing the .NET Framework 1.1 (requires IE 5.01 or later).</p>
+<p>!!! Note "Note for VC2010"
+    Server 2008R2 requires SP1 if using the x64 version.</p>
+<p>!!! Note "Note for VC2010 SP1"
+    MS Documentation is conflicting about whether or not 2008R2/2012 x86 is supported, or if 8/2012 or higher is even supported at all.</p>
+<p>!!! Note "Note for VC2012 Update 4/VC2013"
+    MS Documentation is conflicting about the exact service pack levels and architectures supported for each OS version.</p>
+<p>!!! Note "Note for VC2013"
+    For 8.1 and 2012R2, KB2883200 is required.</p>
+<p>!!! Note "Note for VC2017"
+    For 8.1 and 2012R2, KB2919355 is required. For 10, build 1507 or later is required. Requirements were taken from <a href="https://docs.microsoft.com/en-us/visualstudio/productinfo/vs2017-system-requirements-vs">here</a>.</p>
+<p>!!! Note "Note for Windows 7/8/2012 and higher"
+    While some runtimes may not be documented as officially supported, testing shows that all the above versions appear to work.</p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../../../..">
+      <img class="logo" src="../../../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#what-does-my-windows-version-ship-with">What does my Windows version ship with?</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#which-runtime-is-supported-by-my-windows-version">Which runtime is supported by my Windows version?</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../windows/" title="previous chapter">
+        Windows 7 and later (MSYS2)
+      </a></li>
+    
+    
+      <li>Next: <a href="../windowsXP-msvc-cmdline/" title="next chapter">
+        MSVC Commandline
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

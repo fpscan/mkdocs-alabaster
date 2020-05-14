@@ -1,0 +1,544 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Nintendo - Game Boy Advance (VBA Next) &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="nintendo-game-boy-advance-vba-next">Nintendo - Game Boy Advance (VBA Next)<a class="headerlink" href="#nintendo-game-boy-advance-vba-next" title="Permanent link">¶</a></h1>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">¶</a></h2>
+<p>VBA Next is a Game Boy Advance emulator based on VBA-M 2011 with backported patches for performance and compatibility improvements.</p>
+<h3 id="authorlicense">Author/License<a class="headerlink" href="#authorlicense" title="Permanent link">¶</a></h3>
+<p>The VBA Next core has been authored by</p>
+<ul>
+<li>Forgotten</li>
+<li>VBA-M Team</li>
+<li>Squarepusher</li>
+</ul>
+<p>The VBA Next core is licensed under</p>
+<ul>
+<li><a href="https://github.com/libretro/vba-next/blob/master/LICENSE">GPLv2</a></li>
+</ul>
+<p>A summary of the licenses behind RetroArch and its cores have found <a href="https://docs.libretro.com/tech/licenses/">here</a>.</p>
+<h2 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">¶</a></h2>
+<p>Content that can be loaded by the VBA Next core have the following file extensions:</p>
+<ul>
+<li>.gba</li>
+</ul>
+<h2 id="databases">Databases<a class="headerlink" href="#databases" title="Permanent link">¶</a></h2>
+<p>RetroArch database(s) that are associated with the VBA Next core:</p>
+<ul>
+<li><a href="https://github.com/libretro/libretro-database/blob/master/rdb/Nintendo%20-%20Game%20Boy%20Advance.rdb">Nintendo - Game Boy Advance</a></li>
+</ul>
+<h2 id="bios">BIOS<a class="headerlink" href="#bios" title="Permanent link">¶</a></h2>
+<p>Required or optional firmware files go in the frontend's system directory.</p>
+<p>!!! warning
+    In order for the Game Boy Advance BIOS to be used, the 'Use bios if available' core option must be set to On.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Filename</th>
+<th align="center">Description</th>
+<th align="center">md5sum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">gba_bios.bin</td>
+<td align="center">Game Boy Advance Image - Optional</td>
+<td align="center">a860e8c0b6d573d191e4ec7db1b1e4f6</td>
+</tr>
+</tbody>
+</table>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h2>
+<p>Frontend-level settings or features that the VBA Next core respects.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th align="center">Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Restart</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Screenshots</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Saves</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>States</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Rewind</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Netplay</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Core Options</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>RetroAchievements</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>RetroArch Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Native Cheats</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Controls</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Remapping</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Multi-Mouse</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Rumble</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Sensors</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Location</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Subsystem</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td><a href="https://docs.libretro.com/guides/softpatching/">Softpatching</a></td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td>Disk Control</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Username</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Language</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>Crop Overscan</td>
+<td align="center">✕</td>
+</tr>
+<tr>
+<td>LEDs</td>
+<td align="center">✕</td>
+</tr>
+</tbody>
+</table>
+<h3 id="directories">Directories<a class="headerlink" href="#directories" title="Permanent link">¶</a></h3>
+<p>The VBA Next core's directory name is 'VBA Next'</p>
+<p>The VBA Next core saves/loads to/from these directories.</p>
+<p><strong>Frontend's Save directory</strong></p>
+<ul>
+<li>'content-name'.srm (Cartridge battery save)</li>
+</ul>
+<p><strong>Frontend's State directory</strong></p>
+<ul>
+<li>'content-name'.state# (State)</li>
+</ul>
+<h3 id="geometry-and-timing">Geometry and timing<a class="headerlink" href="#geometry-and-timing" title="Permanent link">¶</a></h3>
+<ul>
+<li>The VBA Next core's core provided FPS is 59.727</li>
+<li>The VBA Next core's core provided sample rate is 32000 Hz</li>
+<li>The VBA Next core's core provided aspect ratio is 3/2</li>
+</ul>
+<h2 id="core-options">Core options<a class="headerlink" href="#core-options" title="Permanent link">¶</a></h2>
+<p>The VBA Next core has the following option(s) that can be tweaked from the core options menu. The default setting is bolded. </p>
+<p>Settings with (Restart) means that core has to be closed for the new setting to be applied on next launch.</p>
+<ul>
+<li>
+<p><strong>Use bios if available (Restart)</strong> [vbanext_bios] (Off/<strong>On</strong>)</p>
+<p>Uses BIOS present in RetroArch's system directory. Look at the <a href="https://docs.libretro.com/library/vba_next/#bios">BIOS section</a> for more information.</p>
+</li>
+</ul>
+<p>??? note "Use bios if available - On"
+    <img alt="" src="/image/core/vba_nextbios.png" /></p>
+<h2 id="controllers">Controllers<a class="headerlink" href="#controllers" title="Permanent link">¶</a></h2>
+<p>The VBA Next core supports the following device type(s) in the controls menu, bolded device types are the default for the specified user(s):</p>
+<h3 id="user-1-device-types">User 1 device types<a class="headerlink" href="#user-1-device-types" title="Permanent link">¶</a></h3>
+<ul>
+<li>None - Doesn't disable input</li>
+<li><strong>RetroPad</strong> - Joypad</li>
+<li>RetroPad w/Analog - Joypad - There's no reason to switch to this.</li>
+</ul>
+<h3 id="controller-tables">Controller tables<a class="headerlink" href="#controller-tables" title="Permanent link">¶</a></h3>
+<h4 id="joypad">Joypad<a class="headerlink" href="#joypad" title="Permanent link">¶</a></h4>
+<p><img alt="" src="/image/controller/gba.png" /></p>
+<table>
+<thead>
+<tr>
+<th>User 1 Remap descriptors</th>
+<th>RetroPad Inputs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td><img alt="" src="/image/retropad/retro_b.png" /></td>
+</tr>
+<tr>
+<td>Select</td>
+<td><img alt="" src="/image/retropad/retro_select.png" /></td>
+</tr>
+<tr>
+<td>Start</td>
+<td><img alt="" src="/image/retropad/retro_start.png" /></td>
+</tr>
+<tr>
+<td>D-Pad Up</td>
+<td><img alt="" src="/image/retropad/retro_dpad_up.png" /></td>
+</tr>
+<tr>
+<td>D-Pad Down</td>
+<td><img alt="" src="/image/retropad/retro_dpad_down.png" /></td>
+</tr>
+<tr>
+<td>D-Pad Left</td>
+<td><img alt="" src="/image/retropad/retro_dpad_left.png" /></td>
+</tr>
+<tr>
+<td>D-Pad Right</td>
+<td><img alt="" src="/image/retropad/retro_dpad_right.png" /></td>
+</tr>
+<tr>
+<td>A</td>
+<td><img alt="" src="/image/retropad/retro_a.png" /></td>
+</tr>
+<tr>
+<td>L</td>
+<td><img alt="" src="/image/retropad/retro_l1.png" /></td>
+</tr>
+<tr>
+<td>R</td>
+<td><img alt="" src="/image/retropad/retro_r1.png" /></td>
+</tr>
+</tbody>
+</table>
+<h2 id="compatibility">Compatibility<a class="headerlink" href="#compatibility" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Game</th>
+<th>Issue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Boktai Trilogy</td>
+<td>The solar sensor is not emulated.</td>
+</tr>
+<tr>
+<td>Croket! 2 – Yami no Bank to Banqueen</td>
+<td>Heavy slowdown when approaching the snowman in the beginning.</td>
+</tr>
+<tr>
+<td>Digimon Racing (Europe)</td>
+<td>Freezes during the intro. This can be avoided by enabling linking in the standalone VBA-M release.</td>
+</tr>
+<tr>
+<td>Drome Racers</td>
+<td>Only shows a black screen after the THQ logo.</td>
+</tr>
+<tr>
+<td>Hamtaro: Ham-Ham Games</td>
+<td>Locks up if the opening cinematics aren’t skipped.</td>
+</tr>
+<tr>
+<td>Hot Wheels - Stunt Track Challenge</td>
+<td>Resets itself when trying to go in-game.</td>
+</tr>
+<tr>
+<td>Jurassic Park III: Park Builder</td>
+<td>Unreadable glitched text.</td>
+</tr>
+<tr>
+<td>Koro Koro Puzzle Happy Panechu!</td>
+<td>The tilt sensor is not emulated.</td>
+</tr>
+<tr>
+<td>Moto GP</td>
+<td>Black screen, loud screeching noise.</td>
+</tr>
+<tr>
+<td>Phantasy Star Collection</td>
+<td>Digital Eclipse logo sound effect is missing. Phantasy Star 1 flickers.</td>
+</tr>
+<tr>
+<td>SSX 3</td>
+<td>Graphics glitches. Seems pitch-related. (1)</td>
+</tr>
+<tr>
+<td>Super Mario Advance 2: Super Mario World (Europe)</td>
+<td>The program crashes during the final fight, when Bowser approaches (zoom mode 7)</td>
+</tr>
+<tr>
+<td>WarioWare: Twisted!</td>
+<td>The tilt sensor is not emulated.</td>
+</tr>
+<tr>
+<td>Yoshi’s Universal Gravitation</td>
+<td>The tilt sensor is not emulated.</td>
+</tr>
+</tbody>
+</table>
+<p>??? note "1"
+    <img alt="" src="/image/core/vba_next/ssx.png" /></p>
+<h2 id="external-links">External Links<a class="headerlink" href="#external-links" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://github.com/libretro/libretro-super/blob/master/dist/info/vba_next_libretro.info">Libretro VBA Next Core info file</a></li>
+<li><a href="https://github.com/libretro/vba-next">Libretro VBA Next Github Repository</a></li>
+<li><a href="https://github.com/libretro/vba-next/issues">Report Libretro VBA Next Core Issues Here</a></li>
+</ul>
+<h3 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h3>
+<h4 id="nintendo-game-boy-advance">Nintendo - Game Boy Advance<a class="headerlink" href="#nintendo-game-boy-advance" title="Permanent link">¶</a></h4>
+<ul>
+<li><a href="https://docs.libretro.com/library/beetle_gba/">Nintendo - Game Boy Advance (Beetle GBA)</a></li>
+<li><a href="https://docs.libretro.com/library/gpsp/">Nintendo - Game Boy Advance (gpSP)</a></li>
+<li><a href="https://docs.libretro.com/library/meteor/">Nintendo - Game Boy Advance (Meteor)</a></li>
+<li><a href="https://docs.libretro.com/library/mgba/">Nintendo - Game Boy Advance (mGBA)</a></li>
+<li><a href="https://docs.libretro.com/library/tempgba/">Nintendo - Game Boy Advance (TempGBA)</a></li>
+<li><a href="https://docs.libretro.com/library/vba_m/">Nintendo - Game Boy Advance (VBA-M)</a></li>
+</ul>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#background">Background</a></li>
+      <ul>
+    
+      <li><a href="#authorlicense">Author/License</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#extensions">Extensions</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#databases">Databases</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#bios">BIOS</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#features">Features</a></li>
+      <ul>
+    
+      <li><a href="#directories">Directories</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#geometry-and-timing">Geometry and timing</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#core-options">Core options</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#controllers">Controllers</a></li>
+      <ul>
+    
+      <li><a href="#user-1-device-types">User 1 device types</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#controller-tables">Controller tables</a></li>
+      <ul>
+    
+      <li><a href="#joypad">Joypad</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#compatibility">Compatibility</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#external-links">External Links</a></li>
+      <ul>
+    
+      <li><a href="#see-also">See also</a></li>
+      <ul>
+    
+      <li><a href="#nintendo-game-boy-advance">Nintendo - Game Boy Advance</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../mgba/" title="previous chapter">
+        Nintendo - Game Boy Advance (mGBA)
+      </a></li>
+    
+    
+      <li>Next: <a href="../vba_m/" title="next chapter">
+        Nintendo - Game Boy Advance (VBA-M)
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:11
+  -->
+</body>
+</html>

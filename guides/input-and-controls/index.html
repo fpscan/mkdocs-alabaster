@@ -1,0 +1,550 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Input and Controls &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="getting-started-input-and-controls">Getting started: Input and controls<a class="headerlink" href="#getting-started-input-and-controls" title="Permanent link">¶</a></h1>
+<h2 id="retropad-concept">RetroPad Concept<a class="headerlink" href="#retropad-concept" title="Permanent link">¶</a></h2>
+<p>RetroArch controls map real-world controller buttons to a virtual controller called a "RetroPad". A RetroPad does not exist in real life, it's a concept only within RetroArch. A RetroPad has an ABXY layout like a SNES gamepad plus four shoulder buttons and dual analog sticks like a Sony DualShock.</p>
+<p>You don't have to map all of the RetroPad buttons to a real world button. If your real controller has less buttons than a DualShock, then the virtual RetroPad also has less buttons, that's perfectly fine.</p>
+<p><img alt="RetroPad Conceptual Diagram" src="/image/guides/retropad-conceptual-diagram.png" /></p>
+<h2 id="gamepad-setup">Gamepad setup<a class="headerlink" href="#gamepad-setup" title="Permanent link">¶</a></h2>
+<p>RetroArch is intended to be easily controlled with a gamepad. RetroArch and libretro provide ability to configure a gamepad once for many cores instead of having to configure each core individually. However, RetroArch also provides the freedom to configure specific cores and even individual games differently if the user wants.</p>
+<h3 id="gamepad-autoconfiguration">Gamepad autoconfiguration<a class="headerlink" href="#gamepad-autoconfiguration" title="Permanent link">¶</a></h3>
+<p>Many gamepads should work out of the box via the RetroArch autoconfiguration profile database. If the gamepad can be autoconfigured the OSD will inform you of the autoconfiguration event.</p>
+<p>!!! info "Manual RetroPad binding"
+    Not all gamepads have autoconfigs. If that is the case for your gamepad, please refer to the <strong>Manual RetroPad binding</strong> section below.</p>
+<h2 id="keyboard-controls">Keyboard controls<a class="headerlink" href="#keyboard-controls" title="Permanent link">¶</a></h2>
+<p>RetroArch provides a remappable set of bindings between a keyboard and the RetroPad abstraction as well as between a keyboard and RetroArch's hotkeys. Please refer to <strong>Default RetroArch keyboard bindings</strong> in this doc as a reference.</p>
+<h3 id="cores-with-direct-keyboard-input">Cores with direct keyboard input<a class="headerlink" href="#cores-with-direct-keyboard-input" title="Permanent link">¶</a></h3>
+<p>Please be aware that some cores, for example arcade emulator cores and vintage computer emulator cores, can also be configured to directly read the keyboard or controls that use a keyboard interface. <strong>If you are using a core configured for direct keyboard access, it is recommended that users unbind the RetroArch keyboard-to-RetroPad and hotkey bindings or use the <code>Game Focus</code> mode to disable those bindings while using the keyboard device.</strong> Otherwise, keyboard input may result in multiple conflicting simultaneous actions by the core.</p>
+<p>!!! tip
+    Controls with keyboard interfaces can also benefit from defining a <strong>Hotkey Enable</strong> button in RetroArch which is required to be held down in order to activate the other hotkeys.</p>
+<h2 id="manual-retropad-binding">Manual RetroPad binding<a class="headerlink" href="#manual-retropad-binding" title="Permanent link">¶</a></h2>
+<p>If your gamepad does not have an autoconfiguration or if you would like to change its default RetroPad binding, use the <strong>Input</strong> settings menu.</p>
+<p><img alt="Screenshot of input binding" src="/image/retroarch/xmb/autoconf.gif" /></p>
+<ul>
+<li>Navigate to <strong>Settings</strong></li>
+<li>Navigate to <strong>Input</strong></li>
+<li>Navigate to <strong>Input User 1 Binds</strong></li>
+<li>Select <strong>User 1 Bind All</strong></li>
+<li>Press the buttons as required</li>
+</ul>
+<p>!!! tip
+    If you have several different controller types you may want to use the <strong>User 1 Save Autoconfig</strong> followed by <strong>User 1 Bind Default All</strong> options after binding in order to achieve hotplug functionality</p>
+<h2 id="controls-for-multi-player">Controls for multi-player<a class="headerlink" href="#controls-for-multi-player" title="Permanent link">¶</a></h2>
+<p>If you want to set-up local multi-player with games that supports it:</p>
+<ul>
+<li>Navigate to <strong>Settings</strong></li>
+<li>Navigate to <strong>Input</strong></li>
+</ul>
+<p>Here you will find the option to set binds for multiple users, "Input User 1 Binds", "Input User 2 Binds" and so on.</p>
+<p>So lets set-up User 1's controller:</p>
+<ul>
+<li>Navigate to <strong>Input User 1 Binds</strong></li>
+<li>Select <strong>User 1 Device Index</strong></li>
+</ul>
+<p>From here using the left/right buttons, select which currently plugged-in controller will be assigned to what player. While here you should also bind the controls to this player by pressing them on the assigned controller, Select <strong>User 1 Bind All</strong> to do this.</p>
+<p>After you finish, go back, select <strong>Input User 2 Binds</strong> and repeat for user 2.</p>
+<h2 id="hotkeys">Hotkeys<a class="headerlink" href="#hotkeys" title="Permanent link">¶</a></h2>
+<p>Hotkeys are combinations of buttons you can press in order to access options such as saving, loading, and exiting games. Hotkey binds can be configured at <code>Settings</code> → <code>Input</code> → <code>Input Hotkey Binds</code>. If you map <code>Enable Hotkeys</code> to a button, it will require that button to be held in order to trigger any hotkeys.</p>
+<h2 id="remapping-controls-for-individual-cores-or-content">Remapping controls for individual cores or content<a class="headerlink" href="#remapping-controls-for-individual-cores-or-content" title="Permanent link">¶</a></h2>
+<p>Core Controls Remapping alters how the core receives input rather than how the gamepad is coded, for example you can tell an individual core to switch button A and B on the RetroPad for gameplay, but you can still use "A" to select in the RetroArch menu and "B" to go back. This is opposed to changing the gamepad bindings in RetroArch itself which would swap "A" and "B" in the core but would also make "B" select and "A" back in the RetroArch menu.</p>
+<p><strong>How to remap the controls for a single core or game:</strong></p>
+<ul>
+<li>Start content with the core for which you want to remap controls</li>
+<li>Go to <strong>Quick Menu</strong> and then <strong>Controls</strong></li>
+<li>Configure the buttons the way you want</li>
+<li>Select <strong>Save Core Remap File</strong></li>
+<li>OR, if you want to save this remapping for the current game only, select <strong>Save Game Remap File</strong></li>
+</ul>
+<h2 id="default-retroarch-keyboard-bindings">Default RetroArch keyboard bindings<a class="headerlink" href="#default-retroarch-keyboard-bindings" title="Permanent link">¶</a></h2>
+<h3 id="keyboard-gameplay-controls">Keyboard gameplay controls<a class="headerlink" href="#keyboard-gameplay-controls" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>User 1 Keyboard</th>
+<th>Default RetroPad Mapping</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="Up Arrow" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Arrow_Up.png" /></td>
+<td><img alt="RetroPad Up" src="../../image/retropad/retro_dpad_up.png" /></td>
+</tr>
+<tr>
+<td><img alt="Down Arrow" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Arrow_Down.png" /></td>
+<td><img alt="RetroPad Down" src="../../image/retropad/retro_dpad_down.png" /></td>
+</tr>
+<tr>
+<td><img alt="Left Arrow" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Arrow_Left.png" /></td>
+<td><img alt="RetroPad Left" src="../../image/retropad/retro_dpad_left.png" /></td>
+</tr>
+<tr>
+<td><img alt="Right Arrow" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Arrow_Right.png" /></td>
+<td><img alt="RetroPad Right" src="../../image/retropad/retro_dpad_right.png" /></td>
+</tr>
+<tr>
+<td><img alt="Q" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Q.png" /></td>
+<td><img alt="RetroPad L1" src="../../image/retropad/retro_l1.png" /></td>
+</tr>
+<tr>
+<td><img alt="W" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_W.png" /></td>
+<td><img alt="RetroPad R1" src="../../image/retropad/retro_r1.png" /></td>
+</tr>
+<tr>
+<td><img alt="Shift" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Shift.png" /></td>
+<td><img alt="RetroPad Select" src="../../image/retropad/retro_select.png" /></td>
+</tr>
+<tr>
+<td><img alt="Enter" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Enter.png" /></td>
+<td><img alt="RetroPad Start" src="../../image/retropad/retro_start.png" /></td>
+</tr>
+<tr>
+<td><img alt="Z" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Z.png" /></td>
+<td><img alt="RetroPad B" src="../../image/retropad/retro_b.png" /></td>
+</tr>
+<tr>
+<td><img alt="X" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_X.png" /></td>
+<td><img alt="RetroPad A" src="../../image/retropad/retro_a.png" /></td>
+</tr>
+<tr>
+<td><img alt="A" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_A.png" /></td>
+<td><img alt="RetroPad Y" src="../../image/retropad/retro_y.png" /></td>
+</tr>
+<tr>
+<td><img alt="S" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_S.png" /></td>
+<td><img alt="RetoPad X" src="../../image/retropad/retro_x.png" /></td>
+</tr>
+</tbody>
+</table>
+<h3 id="menu-controls">Menu controls<a class="headerlink" href="#menu-controls" title="Permanent link">¶</a></h3>
+<p>The keyboard inputs shown here are active only when <code>Settings</code> → <code>Input</code> → <code>Unified Menu Controls</code> is disabled (default). Otherwise, only Retropad inputs are used.</p>
+<table>
+<thead>
+<tr>
+<th>Keyboard Input</th>
+<th>Retropad Input</th>
+<th>Menu Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="Up Arrow" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Arrow_Up.png" /></td>
+<td><img alt="RetroPad Up" src="../../image/retropad/retro_dpad_up.png" /></td>
+<td>Move cursor up</td>
+</tr>
+<tr>
+<td><img alt="Down Arrow" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Arrow_Down.png" /></td>
+<td><img alt="RetroPad Down" src="../../image/retropad/retro_dpad_down.png" /></td>
+<td>Move cursor down</td>
+</tr>
+<tr>
+<td><img alt="Left Arrow" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Arrow_Left.png" /></td>
+<td><img alt="RetroPad Left" src="../../image/retropad/retro_dpad_left.png" /></td>
+<td>Move cursor left</td>
+</tr>
+<tr>
+<td><img alt="Right Arrow" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Arrow_Right.png" /></td>
+<td><img alt="RetroPad Right" src="../../image/retropad/retro_dpad_right.png" /></td>
+<td>Move cursor right</td>
+</tr>
+<tr>
+<td><img alt="Page Up" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Page_Up.png" /></td>
+<td><img alt="RetroPad L1" src="../../image/retropad/retro_l1.png" /></td>
+<td>Scroll one page up</td>
+</tr>
+<tr>
+<td><img alt="Page Down" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Page_Down.png" /></td>
+<td><img alt="RetroPad R1" src="../../image/retropad/retro_r1.png" /></td>
+<td>Scroll one page down</td>
+</tr>
+<tr>
+<td><img alt="Backspace" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Backspace.png" /></td>
+<td><img alt="RetroPad B" src="../../image/retropad/retro_b.png" /></td>
+<td>Return to the previous screen</td>
+</tr>
+<tr>
+<td><img alt="Enter" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Enter.png" /></td>
+<td><img alt="RetroPad A" src="../../image/retropad/retro_a.png" /></td>
+<td>Select Item</td>
+</tr>
+<tr>
+<td>-</td>
+<td><img alt="RetroPad Y" src="../../image/retropad/retro_y.png" /></td>
+<td>Scan content</td>
+</tr>
+<tr>
+<td><img alt="/" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Slash.png" /></td>
+<td><img alt="RetroPad X" src="../../image/retropad/retro_x.png" /></td>
+<td>Search</td>
+</tr>
+<tr>
+<td><img alt="Shift" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Shift.png" /></td>
+<td><img alt="RetroPad Select" src="../../image/retropad/retro_select.png" /></td>
+<td>Help</td>
+</tr>
+<tr>
+<td><img alt="Del" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Del.png" /></td>
+<td>-</td>
+<td>Remove highlighted input bind</td>
+</tr>
+<tr>
+<td><img alt="Space" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Space.png" /></td>
+<td><img alt="RetroPad Start" src="../../image/retropad/retro_start.png" /></td>
+<td>Reset to default</td>
+</tr>
+<tr>
+<td><img alt="Esc" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Esc.png" /></td>
+<td>-</td>
+<td>Exit RetroArch</td>
+</tr>
+</tbody>
+</table>
+<h3 id="hotkey-controls">Hotkey controls<a class="headerlink" href="#hotkey-controls" title="Permanent link">¶</a></h3>
+<p>Hotkey binds can be configured at <code>Settings</code> → <code>Input</code> → 'Input Hotkey Binds'. If you map <code>Enable Hotkeys</code> to a key, it will require that key to be held in order to trigger any hotkeys. This can be useful in avoiding keyboard mapping conflicts between RetroArch and cores cores that use the keyboard for input.</p>
+<p>!!! Tip
+    Hotkeys can also be mapped to RetroPad buttons.</p>
+<table>
+<thead>
+<tr>
+<th>Keyboard Input</th>
+<th>In-Game Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="R" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_R.png" /></td>
+<td>Rewind</td>
+</tr>
+<tr>
+<td><img alt="P" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_P.png" /></td>
+<td>Pause</td>
+</tr>
+<tr>
+<td><img alt="H" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_H.png" /></td>
+<td>Reset</td>
+</tr>
+<tr>
+<td><img alt="M" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_M.png" /></td>
+<td>Next shader</td>
+</tr>
+<tr>
+<td><img alt="N" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_N.png" /></td>
+<td>Previous shader</td>
+</tr>
+<tr>
+<td><img alt="I" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_I.png" /></td>
+<td>Netplay toggle play/spectate</td>
+</tr>
+<tr>
+<td><img alt="F1" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_F1.png" /></td>
+<td>Menu toggle</td>
+</tr>
+<tr>
+<td><img alt="F2" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_F2.png" /></td>
+<td>Save state</td>
+</tr>
+<tr>
+<td><img alt="F4" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_F4.png" /></td>
+<td>Load state</td>
+</tr>
+<tr>
+<td><img alt="F7" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_F7.png" /></td>
+<td>Increase current state slot</td>
+</tr>
+<tr>
+<td><img alt="F6" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_F6.png" /></td>
+<td>Decrease current state slot</td>
+</tr>
+<tr>
+<td><img alt="F8" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_F8.png" /></td>
+<td>Take screenshot</td>
+</tr>
+<tr>
+<td><img alt="F9" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_F9.png" /></td>
+<td>Mute</td>
+</tr>
+<tr>
+<td><img alt="F12" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_F12.png" /></td>
+<td>Show on-screen keyboard</td>
+</tr>
+<tr>
+<td><img alt="F11" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_F11.png" /></td>
+<td>Grab mouse</td>
+</tr>
+<tr>
+<td><img alt="+" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Plus.png" /></td>
+<td>Volume Up</td>
+</tr>
+<tr>
+<td><img alt="-" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Minus.png" /></td>
+<td>Volume Down</td>
+</tr>
+<tr>
+<td><img alt="Spacebar" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_Space.png" /></td>
+<td>Fast forward toggle</td>
+</tr>
+<tr>
+<td><img alt="L" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_L.png" /></td>
+<td>Fast forward hold</td>
+</tr>
+<tr>
+<td><img alt="O" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_O.png" /></td>
+<td>Movie record</td>
+</tr>
+<tr>
+<td><img alt="P" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_K.png" /></td>
+<td>Frame advance</td>
+</tr>
+<tr>
+<td><img alt="E" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_E.png" /></td>
+<td>Slow motion</td>
+</tr>
+<tr>
+<td><img alt="F" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_F.png" /></td>
+<td>Fullscreen toggle</td>
+</tr>
+<tr>
+<td><img alt="F5" src="/image/Button_Pack/Keyboard_Mouse/Dark/Keyboard_Black_F5.png" /></td>
+<td>Switch GUI</td>
+</tr>
+</tbody>
+</table>
+<h2 id="platform-specific-controls">Platform-specific controls<a class="headerlink" href="#platform-specific-controls" title="Permanent link">¶</a></h2>
+<h3 id="nintendo-switch">Nintendo Switch<a class="headerlink" href="#nintendo-switch" title="Permanent link">¶</a></h3>
+<p>USB keyboards and mice: All keyboards seem to work. Not all mice seem to work. <a href="https://docs.google.com/spreadsheets/d/1Drbo5-QuSX901MwtOytSMuqRGxeIkq2HELM806I9dj0/edit#gid=0">Mouse compatibility sheet</a>.</p>
+<p>Touch mouse emulation: The Switch touchscreen can be used for mouse control like a laptop touchpad. The following gestures are supported.</p>
+<table>
+<thead>
+<tr>
+<th>Touch Input</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>single finger drag</td>
+<td>move the mouse pointer (indirectly like on a touchpad)</td>
+</tr>
+<tr>
+<td>single short tap</td>
+<td>left mouse click</td>
+</tr>
+<tr>
+<td>dual finger short tap*</td>
+<td>right mouse click</td>
+</tr>
+<tr>
+<td>dual finger drag</td>
+<td>drag'n'drop (left mouse button is held down)</td>
+</tr>
+<tr>
+<td>three finger drag</td>
+<td>drag'n'drop (right mouse button is held down)</td>
+</tr>
+</tbody>
+</table>
+<p>*: hold one finger, short tap with another</p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#retropad-concept">RetroPad Concept</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#gamepad-setup">Gamepad setup</a></li>
+      <ul>
+    
+      <li><a href="#gamepad-autoconfiguration">Gamepad autoconfiguration</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#keyboard-controls">Keyboard controls</a></li>
+      <ul>
+    
+      <li><a href="#cores-with-direct-keyboard-input">Cores with direct keyboard input</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#manual-retropad-binding">Manual RetroPad binding</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#controls-for-multi-player">Controls for multi-player</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#hotkeys">Hotkeys</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#remapping-controls-for-individual-cores-or-content">Remapping controls for individual cores or content</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#default-retroarch-keyboard-bindings">Default RetroArch keyboard bindings</a></li>
+      <ul>
+    
+      <li><a href="#keyboard-gameplay-controls">Keyboard gameplay controls</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#menu-controls">Menu controls</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#hotkey-controls">Hotkey controls</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#platform-specific-controls">Platform-specific controls</a></li>
+      <ul>
+    
+      <li><a href="#nintendo-switch">Nintendo Switch</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../navigating/" title="previous chapter">
+        User Interface
+      </a></li>
+    
+    
+      <li>Next: <a href="../joypad-autoconfiguration/" title="next chapter">
+        Joypad Auto-Configuration
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

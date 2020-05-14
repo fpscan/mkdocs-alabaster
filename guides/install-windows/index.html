@@ -1,0 +1,320 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Windows 10 &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="getting-started-with-retroarch-windows-7-and-later">Getting Started with RetroArch: Windows 7 and Later<a class="headerlink" href="#getting-started-with-retroarch-windows-7-and-later" title="Permanent link">¶</a></h1>
+<h2 id="downloading">Downloading<a class="headerlink" href="#downloading" title="Permanent link">¶</a></h2>
+<p>First decide if you want a stable release or a nightly. </p>
+<p>Stable release are <a href="https://buildbot.libretro.com/stable">here</a>, Simply click on the lastest version, navigate to <em>Windows</em>, and then select the architecture of your computer.</p>
+<p>The current nightly is <a href="https://buildbot.libretro.com/nightly/windows/">here</a>.</p>
+<p>There are several files you can download in these folders. For a new installation you want <strong>RetroArch.7z</strong> or the setup package (<strong>RetroArch-20XX-XX-XX-setup.exe</strong>).</p>
+<p>Both options provide you with the lastest RetroArch, the only difference is that one is a self extracting installer, and the other one an archive you have to extract manually. Both are portable installation which means the RetroArch setup is:
+- It's self-contained
+- It doesn't need users to guess random locations for configurations files
+- It's easy to update by just replacing files</p>
+<h2 id="installing">Installing<a class="headerlink" href="#installing" title="Permanent link">¶</a></h2>
+<p>If you pick the 7z archive package, extract it in a folder that doesn't require administrator permissions such as <em>C:\Users\yourusername\RetroArch</em>. Don't extract it to <em>Program Files</em> or your Windows folder.</p>
+<h2 id="updating">Updating<a class="headerlink" href="#updating" title="Permanent link">¶</a></h2>
+<p>You can update the installation by downloading the latest <strong>20XX-XX-XX-RetroArch.7z</strong> package and overwriting the executable.</p>
+<p>If you pick the installer package we recommend to use the default location, follow the installation steps and you should be good to go. You can update the installer version by downloading the latest version and re-running the installer.</p>
+<p>!!! Warning
+    If you were running a stable release prior to 1.4.0. you will need to update the system libraries. You can do so by downloading the full <strong>RetroArch.7z</strong> package or <strong>redist.7z</strong> from the download locations.</p>
+<h2 id="starting-retroarch">Starting RetroArch<a class="headerlink" href="#starting-retroarch" title="Permanent link">¶</a></h2>
+<p>On the first run you will be greeted by this screen:</p>
+<p><img alt="Screenshot" src="/image/retroarch/ozone/first_run.jpg" /></p>
+<p>From here you can launch content, change settings and build up your content collection.</p>
+<h2 id="keyboard-controls">Keyboard Controls<a class="headerlink" href="#keyboard-controls" title="Permanent link">¶</a></h2>
+<p>The RetroArch user interface is designed with gamepad navigation in mind but it also features robust keyboard and mouse support. Learn more about keyboard input at <a href="https://buildbot.libretro.com/.docs/guides/retroarch-keyboard-controls/">RetroArch Keyboard Controls</a>.</p>
+<h2 id="gamepad-controls">Gamepad Controls<a class="headerlink" href="#gamepad-controls" title="Permanent link">¶</a></h2>
+<p>XINPUT controllers should work out of the box. If the controller can be autoconfigured the OSD will inform you of the autoconfiguration event. We also include autoconf profiles for many popular controllers. If your controller doesn't auto configure you can follow this procedure:</p>
+<p><img alt="Screenshot" src="/image/retroarch/xmb/autoconf.gif" /></p>
+<ul>
+<li>Navigate to <strong>Settings</strong></li>
+<li>Navigate to <strong>Input</strong></li>
+<li>Navigate to <strong>Input User 1 Binds</strong></li>
+<li>Select <strong>User 1 Bind All</strong></li>
+<li>Press the buttons as required</li>
+</ul>
+<p>!!! tip
+    If you have several different controller types you may want to use the <strong>User 1 Save Autoconfig</strong> followed by <strong>User 1 Bind Default All</strong> options after binding in order to achieve hotplug functionality</p>
+<h3 id="directory-configuration">Directory Configuration<a class="headerlink" href="#directory-configuration" title="Permanent link">¶</a></h3>
+<p>Configuring directories is an important aspect to get the best RetroArch experience possible.
+To configure the directories follow these steps:</p>
+<ul>
+<li>Navigate to <strong>Settings</strong></li>
+<li>Navigate to <strong>Directories</strong></li>
+<li>Select the directory you want to changed</li>
+<li>Navigate to the desired location</li>
+</ul>
+<p>You should always configure the following paths:</p>
+<ul>
+<li>System Directory for <em>system files</em></li>
+<li>Savefile Directory for <em>save files</em></li>
+<li>Savestate Directory <em>save state files</em></li>
+<li>Browser Directory for <em>your content</em></li>
+</ul>
+<p>!!! tip
+    The <strong>Browser Directory</strong> is used as a startup location which allows easy access to your content library.</p>
+<h3 id="installing-cores">Installing Cores<a class="headerlink" href="#installing-cores" title="Permanent link">¶</a></h3>
+<p>RetroArch requires cores to run any content. You can download cores directly from RetroArch's interface by following this procedure:</p>
+<p><img alt="Screenshot" src="/image/retroarch/ozone/core_updater.gif" /></p>
+<ul>
+<li>Navigate to <strong>Online Updater</strong></li>
+<li>Navigate to <strong>Select Core Updater</strong></li>
+<li>Select the core you want to download</li>
+</ul>
+<h3 id="running-content">Running Content<a class="headerlink" href="#running-content" title="Permanent link">¶</a></h3>
+<p>After you have installed one or more cores you can run your content following this procedure:</p>
+<ul>
+<li>Navigate to <strong>Load Content</strong></li>
+<li>Browse to the folder that contains the content you want to run</li>
+<li>Select the content that you want to run</li>
+<li>If you have more than one compatible core you will be asked to select the core you want to use for that purpose</li>
+</ul>
+<p><img alt="Screenshot" src="/image/retroarch/ozone/run_content.gif" /></p>
+<p>!!! tip
+    By default loading content will trigger a content scan. If your content matches with any of our databases it will be added to a playlist for easy access. You can find the playlists by navigating to the right of the main menu.</p>
+<p>!!! tip
+    Every content you launch is added to a history playlist that you can use to load it again quickly at any time</p>
+<h2 id="glossary">Glossary<a class="headerlink" href="#glossary" title="Permanent link">¶</a></h2>
+<h4 id="frontend">frontend<a class="headerlink" href="#frontend" title="Permanent link">¶</a></h4>
+<p>A frontend is a program designed to run libretro cores such as Kodi's RetroPlayer, RetroArch, Phoenix, Minir</p>
+<h4 id="core">core<a class="headerlink" href="#core" title="Permanent link">¶</a></h4>
+<p>A core is a program that has been ported to the libretro API and runs inside a libretro frontend</p>
+<h4 id="content">content<a class="headerlink" href="#content" title="Permanent link">¶</a></h4>
+<p>Content can be a game, an image, a video, an audio file that is executed by a core. In most cases contents are the ROMs of an emulated platform</p>
+<h4 id="retropad">retropad<a class="headerlink" href="#retropad" title="Permanent link">¶</a></h4>
+<p>RetroPad is libretro’s input abstraction controller, it’s the interface between the physical controller and the core inputs</p>
+<h4 id="save-files">save files<a class="headerlink" href="#save-files" title="Permanent link">¶</a></h4>
+<p>Save files are saves that are made from within a game, usually cross platform and should work across emulators in most cases</p>
+<h4 id="save-states">save states<a class="headerlink" href="#save-states" title="Permanent link">¶</a></h4>
+<p>Save states are snapshots of the content menory at a particular moment, these are not always cross platform and most certainly won’t work on a different emulator that the one used to create them</p>
+<h4 id="system-files">system files<a class="headerlink" href="#system-files" title="Permanent link">¶</a></h4>
+<p>Additional files that might or not be part of the romset that might be needed to get some content to work (usually referred to by the BIOS term)</p>
+<h4 id="autoconf">autoconf<a class="headerlink" href="#autoconf" title="Permanent link">¶</a></h4>
+<p>A configuration file that has button definitions for a particular gamepad</p>
+<h4 id="video-tutorial">Video Tutorial<a class="headerlink" href="#video-tutorial" title="Permanent link">¶</a></h4>
+<p><a href="http://www.youtube.com/watch?v=hu-TW02bhhY"><img alt="Quick Video Demonstration" src="http://img.youtube.com/vi/hu-TW02bhhY/0.jpg" /></a></p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#downloading">Downloading</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#installing">Installing</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#updating">Updating</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#starting-retroarch">Starting RetroArch</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#keyboard-controls">Keyboard Controls</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#gamepad-controls">Gamepad Controls</a></li>
+      <ul>
+    
+      <li><a href="#directory-configuration">Directory Configuration</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#installing-cores">Installing Cores</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#running-content">Running Content</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#glossary">Glossary</a></li>
+      <ul>
+    
+      <li><a href="#frontend">frontend</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#core">core</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#content">content</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#retropad">retropad</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#save-files">save files</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#save-states">save states</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#system-files">system files</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#autoconf">autoconf</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#video-tutorial">Video Tutorial</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../.." title="previous chapter">
+        About
+      </a></li>
+    
+    
+      <li>Next: <a href="../install-windows-2000-me-98SE/" title="next chapter">
+        Windows 2000/ME/98SE
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

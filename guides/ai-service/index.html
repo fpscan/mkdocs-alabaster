@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>AI Service &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="retroarch-ai-service">RetroArch AI Service<a class="headerlink" href="#retroarch-ai-service" title="Permanent link">¶</a></h1>
+<h2 id="what-is-the-ai-service">What is the AI Service<a class="headerlink" href="#what-is-the-ai-service" title="Permanent link">¶</a></h2>
+<p>This feature allows users to play games written in a foreign language, or add text voice-overs automatically.  This uses OCR (optical character recognition), machine translation, and text-to-speech.  While these technologies can't provide the same level of accuracy as curated content, it can go quite far.  Machine translation can give a good gist of what's being said, especially for some language pairs, and text-to-speech can be of great benefit for accessibility.</p>
+<h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">¶</a></h2>
+<p>When a user presses the AI Service hotkey, RetroArch will grab the screen of the game being played and send it to the service endpoint listed in the configuration.  When the service returns, RetroArch will then either write the translated image to the screen or say the text, depending on the configuration.</p>
+<p>The main supported service to use is the vgtranslate project: ( https://gitlab.com/spherebeaker/vgtranslate ).  This project is a python server you can run locally (or on your network) and uses Google Cloud OCR, and Google Text-to-Speech APIs with the Google Cloud keys you provide.</p>
+<p>Other supported services are in the Alternative Services section. </p>
+<h2 id="how-to-set-it-up">How to set it up<a class="headerlink" href="#how-to-set-it-up" title="Permanent link">¶</a></h2>
+<p>First, go to Settings-&gt;Input-&gt;Hotkey Binds, and assign a key for the AI Service.</p>
+<p>Next, go to Settings-&gt;AI Service and modify the configuration options as follows.</p>
+<p>If <code>AI Service Output</code> is <code>Image Mode</code>, then when you press the AI Service hotkey, RetroArch will grab the game screen and display translated textbox over the screen when it's available, and pressing the hotkey again will clear the translated textbox.  If <code>AI Service Pause Toggle</code> is <code>ON</code> then it will pause while doing so, and pressing the AI Service hotkey again will unpause the game and continue as normal.  This mode is recommended when you want the text on the screen to be translated and written back on the screen where it was found.  When <code>AI Service Output</code> is <code>Speech Mode</code>, then RetroArch speak the text on the screen instead, and will use an AI text-to-speech algorithm.  This speech however will only play while the core is unpaused (for technical reasons).  However, if in <code>Narrator Mode</code> the AI Service will use the OS's narrator, which will speak the text even while unpaused (assuming that accessibility is enabled).  However, <code>Narrator Mode</code> is only supported on Windows, Linux, and Macos.</p>
+<p>The <code>AI Service URL</code> points to where the translation service you're using is located.  In the case of running vgtranslate yourself, this URL would be <code>http://localhost:4404</code>.  For more instructions on how to set up vgtranslate on your system, see ( https://gitlab.com/spherebeaker/vgtranslate/blob/master/README.md ).  If you have issues running vgtranslate, or don't want to run the service yourself, see the "Alternative Services" section.</p>
+<p><code>AI Service Enabled</code> should be set to on.</p>
+<p>If <code>Source Language</code> is set to <code>Don't care</code>, then the service will attempt to auto-detect the language on the screen.  Setting it to a specific language will increase accuracy, and restrict translation to only text in the source language specified.</p>
+<p>Finally, <code>Target Language</code> is the language to translate into.  If set to <code>Don't care</code> then it will translate into English.  See the vgtranslate docs for more information.</p>
+<h2 id="supported-cores">Supported Cores<a class="headerlink" href="#supported-cores" title="Permanent link">¶</a></h2>
+<p>Since RetroArch v1.8.0, all cores should now be supported if your build has menu widgets.  If not, then only software cores will be supported.</p>
+<h2 id="alternative-services">Alternative Services<a class="headerlink" href="#alternative-services" title="Permanent link">¶</a></h2>
+<p>If you have issues setting up the vgtranslate service, or don't want to run a local service yourself, you can use a service someone else has set up.  One example is the ZTranslate service ( https://ztranslate.net/docs/service ).  In this case, you can use the following url for <code>AI Service URL</code>:</p>
+<pre><code>http://ztranslate.net/service?api_key=&lt;YOUR_ZTRANSLATE_API_KEY&gt;
+</code></pre>
+
+<p>This requires registering an account with ztranslate.net to get an API key.  Due to uploading of the screen cap to the server, latency will likely be a bit higher than using a vgtranslate service running locally.  See the ztranslate docs for more information.</p>
+<h2 id="alternative-translators">Alternative Translators<a class="headerlink" href="#alternative-translators" title="Permanent link">¶</a></h2>
+<p>There are some other options for translating game screens that don't require a special build of RetroArch and should work with hardware buffer cores.  Here are some:</p>
+<h3 id="ztranslate">ZTranslate<a class="headerlink" href="#ztranslate" title="Permanent link">¶</a></h3>
+<p><a href="https://ztranslate.net">ZTranslate</a> uses a standalone client app for Windows or Linux that grabs the screen of the window currently in focus and displays a translated version in the ZTranslate client window.  Besides automatic translation (which needs a ztranslate.net api key), it also supports package-based translations, which is like a translation patch for a rom, but for game screens instead.  For more information see https://ztranslate.net/docs   </p>
+<h3 id="retroarch-ai-with-iotedge">RetroArch-AI-with-IoTEdge<a class="headerlink" href="#retroarch-ai-with-iotedge" title="Permanent link">¶</a></h3>
+<p><a href="https://github.com/toolboc/RetroArch-AI-with-IoTEdge">RetroArch-AI-with-IoTEdge</a> uses IoTEdge and Azure Cognitive Services Containers (requires microsoft Azure account) to translate RetroArch screenshots and display them on a Lakka device.  For more information see https://github.com/toolboc/RetroArch-AI-with-IoTEdge/blob/master/README.md</p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#what-is-the-ai-service">What is the AI Service</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#how-it-works">How it works</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#how-to-set-it-up">How to set it up</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#supported-cores">Supported Cores</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#alternative-services">Alternative Services</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#alternative-translators">Alternative Translators</a></li>
+      <ul>
+    
+      <li><a href="#ztranslate">ZTranslate</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#retroarch-ai-with-iotedge">RetroArch-AI-with-IoTEdge</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../rgui/" title="previous chapter">
+        RGUI Interface
+      </a></li>
+    
+    
+      <li>Next: <a href="../cli-intro/" title="next chapter">
+        Command-Line Interface (CLI)
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

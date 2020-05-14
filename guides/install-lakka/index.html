@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Lakka-PC &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="stylesheet" href="../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="downloading-installing-and-updating-lakka-for-pc">Downloading, Installing and Updating Lakka for PC.<a class="headerlink" href="#downloading-installing-and-updating-lakka-for-pc" title="Permanent link">¶</a></h1>
+<h4 id="what-is-it">What is it?<a class="headerlink" href="#what-is-it" title="Permanent link">¶</a></h4>
+<hr />
+<p>Lakka is a lightweight Linux distribution that transforms a small computer into a full blown retrogaming console.</p>
+<h3 id="disclaimer">Disclaimer<a class="headerlink" href="#disclaimer" title="Permanent link">¶</a></h3>
+<p>Lakka is still under heavy development. In its current state, the project allows you to play most games on most platforms. However, expect bugs, missing features or features not working as intended, and hardware that is yet to be supported. If you find a bug, you can declare it in our <a href="https://github.com/libretro/Lakka-LibreELEC/issues">tracker</a>, unless already reported.</p>
+<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>SD card or USB</strong> You need a USB or SD Card to write the installation image.</li>
+<li><strong>Flashing Software</strong> You can use either <code>Etcher</code> or <code>Win32 disk imager</code>.</li>
+</ul>
+<h4 id="download-lakka">Download Lakka<a class="headerlink" href="#download-lakka" title="Permanent link">¶</a></h4>
+<hr />
+<p>Click here to get the <a href="http://le.builds.lakka.tv/Generic.x86_64/Lakka-Generic.x86_64-2.2.2.img.gz">64bit</a> version or click here to get the <a href="http://le.builds.lakka.tv/Generic.i386/Lakka-Generic.i386-2.2.2.img.gz">32bit</a> version.</p>
+<p>Please note that due to the wide variety of PC hardware, Lakka may not work on your hardware. Those image are USB images, not CD or DVD images, those installation mediums are unsupported. Also, we don't support virtualization and dualboot. Lakka is meant to be installed on real hardware.</p>
+<h3 id="flashing-lakka-image">Flashing Lakka Image<a class="headerlink" href="#flashing-lakka-image" title="Permanent link">¶</a></h3>
+<p>The following softwares are fine however you can use any other software you want. The following softwares are not related to RetroArch or Libretro in any way. You must act consciously when providing or using these softwares.</p>
+<h4 id="etcher">Etcher<a class="headerlink" href="#etcher" title="Permanent link">¶</a></h4>
+<p>Etcher is a free and open-source utility used for burning image files such as .iso and .img files, as well as zipped folders to create live SD cards and USB flash drives. </p>
+<p>• Run <strong>Etcher</strong>
+• Select <code>Lakka Image</code>
+• Select USB drive
+• Click <strong>Flash</strong></p>
+<h4 id="win32-disk-imager">Win32 Disk Imager<a class="headerlink" href="#win32-disk-imager" title="Permanent link">¶</a></h4>
+<p>This program is designed to write a raw disk image to a removable device or backup a removable device to a raw image file.</p>
+<p>• Click on the <strong>folder icon</strong>
+• Select the <strong>image file</strong> 
+• Select drive letter <strong>UNDER DEVICE</strong>
+• Click <strong>Write</strong></p>
+<h3 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h3>
+<p>Lakka is still under heavy development. In its current state, the project allows you to play most games on most platforms. However, expect bugs, missing features or features not working as intended, and hardware that is yet to be supported.</p>
+<hr />
+<h4 id="the-live-usb-mode">The Live USB Mode<a class="headerlink" href="#the-live-usb-mode" title="Permanent link">¶</a></h4>
+<p>Lakka can be installed on an USB key, and be booted in Live Mode on any PC that supports Lakka’s requirements. This Live Mode is persistent: all changes will be saved to the key, safely storing games within the USB.</p>
+<p><strong>Unknown Sources</strong> To avoid compromising the safety of your device, always use applications provided through our official channels.</p>
+<ol>
+<li>Insert your USB drive into your computer.</li>
+<li>Boot from USB.<ol>
+<li>You can use Boot Device Options by pressing the key specified by your motherboard manufacturer.</li>
+<li>You can choose to boot from USB in the BIOS.
+<em>The above options may vary depending on your motherboard model.</em></li>
+</ol>
+</li>
+<li>Wait during the <code>bootloader phase</code>.</li>
+</ol>
+<p>This will start the Lakka operating system via USB. This Live Mode is persistent: all changes will be saved to the key, safely storing games within the USB. You will be able to check if Lakka works on your hardware, without altering your PC’s hard drive or partitions. Certain settings and configurations may not be saved in spite of the persistence property.</p>
+<h4 id="full-setup">Full Setup<a class="headerlink" href="#full-setup" title="Permanent link">¶</a></h4>
+<p>Installing Lakka on your device is as simple as installing any other operating systems. You may experience unexpected errors during setup. Lakka is still under construction.</p>
+<ol>
+<li>Insert your USB drive into your computer.</li>
+<li>Boot from USB.<ol>
+<li>You can use Boot Device Options by pressing the key specified by your motherboard manufacturer.</li>
+<li>You can choose to boot from USB in the BIOS.
+<em>The above options may vary depending on your motherboard model.</em></li>
+</ol>
+</li>
+<li>Type <code>installer</code> or <code>live</code></li>
+<li>Select <strong>Install Lakka</strong>.</li>
+<li>Use the <strong>up/down</strong> arrows to select the drive to install.
+<em>Observe the warnings on the screen. If you continue the targeted drive will be wiped out.</em></li>
+<li>Select Yes in confirmation alerts.</li>
+<li>After the installation, you will return to the Main menu. <strong>Remove the USB</strong> and <strong>select Reboot</strong>.</li>
+</ol>
+<p>Your computer will launch Lakka on the next Boot.</p>
+<h3 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">¶</a></h3>
+<hr />
+<p>Lakka is still under heavy development. In its current state, the project allows you to play most games on most platforms. More information can be found in the <a href="http://www.lakka.tv/doc/Home/">Lakka documents</a>. You may also want to check the <a href="https://forums.libretro.com/c/libretro/lakka-tv-general">Official Forum</a>.</p>
+<h3 id="video-tutorial">Video Tutorial<a class="headerlink" href="#video-tutorial" title="Permanent link">¶</a></h3>
+<hr />
+<p><a href="http://www.youtube.com/watch?v=8rMvf3tfjFk"><img alt="Quick Video Demonstration" src="http://img.youtube.com/vi/8rMvf3tfjFk/0.jpg" /></a></p>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../..">
+      <img class="logo" src="../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#what-is-it">What is it?</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#disclaimer">Disclaimer</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#prerequisites">Prerequisites</a></li>
+      <ul>
+    
+      <li><a href="#download-lakka">Download Lakka</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#flashing-lakka-image">Flashing Lakka Image</a></li>
+      <ul>
+    
+      <li><a href="#etcher">Etcher</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#win32-disk-imager">Win32 Disk Imager</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#installation">Installation</a></li>
+      <ul>
+    
+      <li><a href="#the-live-usb-mode">The Live USB Mode</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#full-setup">Full Setup</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#conclusion">Conclusion</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#video-tutorial">Video Tutorial</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../install-ps3/" title="previous chapter">
+        PlayStation 3
+      </a></li>
+    
+    
+      <li>Next: <a href="../install-steamlink/" title="next chapter">
+        Steam Link
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>

@@ -1,0 +1,576 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Cg Shader Development (deprecated) &mdash; Alabaster</title>
+
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <link rel="stylesheet" href="../../../css/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="../../../css/alabaster-overrides.css" type="text/css">
+
+    
+
+    
+      <script src="../../../search/main.js"></script>
+    
+
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+    
+  
+</head>
+<body>
+
+  <div class="document">
+    <div class="documentwrapper">
+      <div class="bodywrapper">
+        <div class="body" role="main">
+          
+            <h1 id="developing-legacy-cg-shaders">Developing Legacy Cg Shaders<a class="headerlink" href="#developing-legacy-cg-shaders" title="Permanent link">¶</a></h1>
+<p>!!! Warning "Cg Shaders are deprecated"</p>
+<p>Cg has been discontinued for years and is closed source. Developers cannot use Cg for newer APIs such as Vulkan, D3D12, and Metal. Cg cross-compilation to GLSL is unmaintainable. We cannot do the Cg transform in runtime on mobile due to lack of open source Cg runtime.</p>
+<h2 id="new-slang-shader-specification">New Slang Shader Specification<a class="headerlink" href="#new-slang-shader-specification" title="Permanent link">¶</a></h2>
+<p>Unless you are developing shaders for a platform that cannot support the newer Slang standard, please consider <a href="../slang-shaders/">developing a Slang shader</a> instead.</p>
+<h2 id="example-cghlsl-program">Example Cg/HLSL program<a class="headerlink" href="#example-cghlsl-program" title="Permanent link">¶</a></h2>
+<p>If you were to process an image on a CPU, you would most likely do something like this:</p>
+<pre><code class="c">for(unsigned y = 0; y &lt; height ; y++) {
+   for(unsigned x = 0; x &lt; width ; x++)
+      out_pixel[y][x] = process_pixel(in_pixel[y][x], y,x);
+}
+</code></pre>
+
+<p>We quickly realize that this is highly serial and slow. We see that <code>out_pixel[y][x]</code> isn’t dependent on <code>out_pixel[y + k][x + k]</code>, so we see that we can parallelize quite a bit.</p>
+<p>Essentially, we only need to implement <code>process_pixel()</code> as a single function, which is called thousands, even millions of time every frame. The only purpose in life for <code>process_pixel()</code> is to process an input, and produce an output. No
+state is needed, thus, a “pure” function in computer science terms.</p>
+<p>For the Cg program, we need to implement two different functions. <code>main_vertex()</code> takes care of transforming every incoming vertex from camera space down to clip space. This essentially means projection of 3D (coordinates on GPU) down to 2D (your screen). Since we’re dealing with old school emulators here, which are already 2D, the vertex shading is very trivial.</p>
+<p>Vertex shaders get various coordinates as input, and uniforms. Every vertex emitted by the emulator is run through <code>main_vertex</code> which calculates the final output position. For our emulators this is just 4 times, since we’re rendering a quad on the screen. 3D games would obviously have a lot more vertices.</p>
+<p>While coordinates differ for each invocation, uniforms are constant through-out every call. Think of it as a global variable that you’re not allowed to change. Vertex shading can almost be ignored altogether, but since the vertex shader is run only 4 times, and the fragment shader is run millions of times per frame, it is a good idea to precalculate values in vertex shader that can later be used in fragment shader. There are some limitiations to this which will be mentioned
+later.</p>
+<p><code>main_fragment()</code> takes care of calculating a pixel color for every single out-put pixel on the screen. If you’re playing at 1080p, the fragment shader will have to be run <code>1920 * 1080</code> times! This is obviously straining on the GPU unless the shader is written efficiently. Obviously, main_fragment is where the real action happens. For many shaders we can stick with a “dummy” vertex shader which does some very simple stuff.</p>
+<p>The fragment shader receives a handle to a texture (the game frame itself), and the texture coordinate for the current pixel, and a bunch of uniforms.
+A fragment shader’s final output is a color, simple as that. Processing ends
+here.</p>
+<h2 id="shader-hello-world">Shader Hello World<a class="headerlink" href="#shader-hello-world" title="Permanent link">¶</a></h2>
+<p>We’ll start off with the basic vertex shader. No fancy things are being done. You’ll see a similiar vertex shader in most of the Cg programs out there in the wild.</p>
+<pre><code class="c">void main_vertex (float4 pos : POSITION,
+                  out float4 out_pos : POSITION,
+                  uniform float4x4 modelViewProj,
+                  float4 color : COLOR,
+                  out float4 out_color : COLOR,
+                  float2 tex : TEXCOORD,
+                  out float2 out_tex : TEXCOORD
+                  )
+
+{
+   out_pos = mul(modelViewProj, pos);
+   out_color = color ;
+   out_tex = tex ;
+}
+</code></pre>
+
+<p>This looks vaguely familiar to C, and it is. Cg stands for “C for graphics” after all. We notice some things are happening, notable some new types.</p>
+<h3 id="cg-types">Cg types<a class="headerlink" href="#cg-types" title="Permanent link">¶</a></h3>
+<h4 id="float">Float<a class="headerlink" href="#float" title="Permanent link">¶</a></h4>
+<p><code>float4</code> is a vector type. It contains 4 elements. It could be colors, positions, whatever. It's used for vector processing which the GPUs are extremely efficient at.</p>
+<h3 id="semantics">Semantics<a class="headerlink" href="#semantics" title="Permanent link">¶</a></h3>
+<p>We see various semantics. The <code>POSITION</code> semantic means that the variable is tied to vertex coordinates. We see that we have an input <code>POSITION</code>, and an output (out) <code>POSITION</code>. We thus transform the input to the output with a matrix multiply with the current model-view projection. Since this matrix is the same for every vertex, it is a uniform. Remember that the variable names DO matter. modelViewProj has to be called exactly that, as the emulator will pass the MVP to this uniform. It is in the specification.</p>
+<p>Since we have semantics for the <code>POSITION</code>, etc, we can call them whatever we want, as the Cg environment figures out what the variables mean.</p>
+<p>The transformation happens here:</p>
+<pre><code class="c">out_pos = mul(modelViewProj , pos);
+</code></pre>
+
+<p>The <code>COLOR</code> semantic isn’t very interesting for us, but the example code in nVidias Cg documentation includes it, so we just follow along. <code>TEXCOORD</code> is the texture coordinate we get from the emulator, and generally we just pass it to the fragment shader directly. The coordinate will then be linearly interpolated across the fragments.</p>
+<p>More complex shaders can output (almost) as many variables they want, that will be linearily interpolated for free
+to the fragment shader. We also need a fragment shader to go along with the vertex shader, and here's a basic shader that only outputs the pixel as-is. This is pretty much the result you’d get if you didn’t run any shader (fixed-function) at all.</p>
+<pre><code class="c">float4 main_fragment ( uniform sampler2D s0 : TEXUNIT0, float2 tex : TEXCOORD) : COLOR
+{
+   return tex2D ( s0 , tex ) ;
+}
+</code></pre>
+
+<p>This is arguably simpler than the vertex shader. Important to notice are: </p>
+<ul>
+<li><code>sampler2D</code> is a handle to a texture in Cg. The semantic here is <code>TEXUNIT0</code>, which means that it refers to the texture in texture unit 0. This is also part of the specification.</li>
+<li><code>float2 tex : TEXCOORD</code> is the interpolated coordinate we received from the vertex shader.</li>
+<li><code>tex2D(s0, tex);</code> simply does texture lookup and returns a <code>COLOR</code>, which is emitted to the framebuffer.</li>
+</ul>
+<p>Practically every fragment does more than one texture lookup. For example, classic pixel shaders look at the neighbor pixels as well to determine the output. But where is the neighbor pixel? We’ll revise the fragment shader and try to make a really blurry shader to demonstrate. We now need to pull up some uniforms. We need to know how to modify our tex coordinates so that it points to a neighbor pixel.</p>
+<pre><code class="c">struct input
+{
+   float2 video_size ;
+   float2 texture_size ;
+   float2 output_size ;
+   float frame_count ;
+};
+
+float4 main_fragment ( uniform sampler2D s0 : TEXUNIT0, uniform input IN , float2 tex : TEXCOORD) : COLOR
+{
+   float4 result = float4 ( 0. 0 ) ;
+   float dx = 1.0 / IN. texture_size. x ;
+   float dy = 1.0 / IN. texture_size. y ;
+
+   // Grab some of the neighboring pixels and blend together for a very mushy blur.
+   result += tex2D (s0 , tex + float2 (−dx, −dy));
+   result += tex2D (s0 , tex + float2 (dx, −dy));
+   result += tex2D (s0 , tex + float2 (0.0, 0.0));
+   result += tex2D (s0 , tex + float2 (−dx, 0.0));
+   return result / 4. 0 ;
+}
+</code></pre>
+
+<p>Here we use <code>IN.texture_size</code> to determine the the size of the texture. Since GL maps the whole texture to the interval <code>[0.0, 1.0]</code>, <code>1.0 / IN.texture_size</code> means we get the offset for a single pixel, simple enough. Almost every shader uses this. We can calculate these offsets in vertex shader to improve performance since the coordinates are linearily interpolated anyways, but that is for another time.</p>
+<h2 id="putting-it-together">Putting it together<a class="headerlink" href="#putting-it-together" title="Permanent link">¶</a></h2>
+<p>The final runnable product is a single <code>.cg</code> file with the <code>main_vertex</code> and <code>main_fragment</code> functions added together. Not very complicated. For the icing on the cake, you should add a license header.</p>
+<pre><code class="c">/* Stupid blur shader.
+ * Author : Your friendly neighbor.
+ * License : We don't have those things!
+*/
+
+struct input
+{
+   float2 video_size;
+   float2 texture_size;
+   float2 output_size;
+   float frame_count;
+};
+
+void main_vertex (
+   float4 pos : POSITION,
+   out float4 out_pos : POSITION,
+   uniform float4x4 modelViewProj ,
+   float4 color : COLOR,
+   out float4 out_color : COLOR,
+   float2 tex : TEXCOORD,
+   out float2 out_tex : TEXCOORD
+)
+{
+out_pos = mul( modelViewProj , pos );
+out_color = color ; out_tex = tex ;
+}
+
+float4 main_fragment ( uniform sampler2D s0 : TEXUNIT0,
+                       uniform input IN,
+                       float2 tex : TEXCOORD
+                     ) : COLOR
+{
+   float4 result = float4 ( 0. 0 ) ;
+   float dx = 1.0 / IN.texture_size.x;
+   float dy = 1.0 / IN.texture_size.y;
+
+   // Grab some of the neighboring pixels and blend
+   // together f o r a very mushy blur.
+   result += tex2D ( s0 , tex + float2 (−dx, −dy));
+   result += tex2D ( s0 , tex + float2 (dx, −dy ));
+   result += tex2D ( s0 , tex + float2 (0.0, 0.0));
+   result += tex2D ( s0 , tex + float2 (−dx, 0.0));
+   return result / 4.0;
+}
+</code></pre>
+
+<h2 id="result">Result<a class="headerlink" href="#result" title="Permanent link">¶</a></h2>
+<p>As you can see, it’s not a practical shader, but it shows the blurring effect to the extreme.
+<img alt="A blurry Super Metroid shader" src="/image/development/shaders/example-burry-shader.jpg" /></p>
+<hr />
+<h2 id="shader-file-format">Shader file format<a class="headerlink" href="#shader-file-format" title="Permanent link">¶</a></h2>
+<ul>
+<li><code>#</code> begins a comment; the rest of the line is ignored.</li>
+<li>Format is: <code>key = value</code>. There can be as many spaces as you like in between</li>
+<li>Values can be wrapped inside <code>"</code> for multiword strings (<code>foo = "hai u"</code>)</li>
+<li><code>#include</code> includes a config file</li>
+<li>Path is relative to where config file was loaded unless an absolute path is chosen</li>
+<li>Key/value pairs from an <code>#include</code> are read-only and cannot be modified</li>
+</ul>
+<hr />
+<h2 id="cg-shader-spec">Cg shader spec<a class="headerlink" href="#cg-shader-spec" title="Permanent link">¶</a></h2>
+<p>This spec is for the Cg shading language developed by nVidia. It wraps around OpenGL to make shaders written in Cg quite portable. Shaders written in Cg can also be used with Direct3D and PlayStation3. Cg shaders are also compatible with basic HLSL if some considerations are taken into account. They can even be automatically compiled into GLSL shaders, which makes Cg shaders a true “write once, run everywhere” shader format.</p>
+<p>We encourage new shaders targeting Libretro frontends to be written in this format. RetroArch supports both single-pass Cg shaders as well as multi-pass shaders and uses a custom Cg preset format (<code>.cgp</code>).</p>
+<h3 id="another-example-cg-shader">Another example Cg shader<a class="headerlink" href="#another-example-cg-shader" title="Permanent link">¶</a></h3>
+<pre><code class="c">void main_vertex
+(
+   float4 position : POSITION,
+   out float4 oPosition : POSITION,
+   uniform float4x4 modelViewProj,
+   float2 tex : TEXCOORD,
+   out float2 oTex : TEXCOORD
+)
+{
+   oPosition = mul(modelViewProj, position);
+   oTex = tex;
+}
+
+float4 main_fragment (float2 tex : TEXCOORD, uniform sampler2D s0 : TEXUNIT0) : COLOR
+{
+   return tex2D(s0, tex);
+}
+</code></pre>
+
+<h3 id="example-cg-preset">Example Cg preset<a class="headerlink" href="#example-cg-preset" title="Permanent link">¶</a></h3>
+<pre><code class="c">shaders = 2
+shader0 = 4xBR-v3.9.cg
+scale_type0 = source
+scale0 = 4.0
+filter_linear0 = false
+shader1 = dummy.cg
+filter_linear1 = true
+</code></pre>
+
+<h3 id="entry-points">Entry points:<a class="headerlink" href="#entry-points" title="Permanent link">¶</a></h3>
+<ul>
+<li>Vertex: <code>main_vertex</code></li>
+<li>Fragment: <code>main_fragment</code></li>
+</ul>
+<h3 id="texture-unit">Texture unit<a class="headerlink" href="#texture-unit" title="Permanent link">¶</a></h3>
+<p>All shaders work on texture unit <code>0</code> (the default). 2D textures must be used. Power-of-two sized textures are recommended for optimal visual quality. The shaders must deal with the actual picture data not filling out the entire texture. Incoming texture coordinates and uniforms provide this information.</p>
+<p>The texture coordinate origin is defined to be top-left oriented. A texture coordinate of <code>(0, 0)</code> will always refer to the top-left pixel of the visible frame. This is opposite of what most graphical APIs expect. The implementation must always ensure that this ordering is held for any texture that the shader has access to.</p>
+<p>!!! Note
+    Every texture bound for a shader must have black border mode set. Sampling a texel outside the given texture coordinates must always return a pixel with RGBA values <code>(0, 0, 0, 0)</code>.</p>
+<h3 id="uniforms">Uniforms<a class="headerlink" href="#uniforms" title="Permanent link">¶</a></h3>
+<p>Some parameters will need to be passed to all shaders, both vertex and fragment program. A generic entry point for fragment shader will look like:</p>
+<pre><code class="c">float4 main_fragment (float2 tex : TEXCOORD0, 
+   uniform input IN, uniform sampler2D s_p : TEXUNIT0) : COLOR
+{}
+</code></pre>
+
+<p>The input is a struct:</p>
+<pre><code class="c">struct input
+{
+   float2 video_size;
+   float2 texture_size;
+   float2 output_size;
+   float frame_count;
+   float frame_direction;
+};
+</code></pre>
+
+<ul>
+<li><code>TEXCOORD0</code>: Texture coordinates for the current input frame will be passed in <code>TEXCOORD0</code>. (<code>TEXCOORD</code> is a valid alias for <code>TEXCOORD0</code>).</li>
+<li><code>COLOR0</code>: Although legal, no data of interest is passed here. You cannot assume anything about data in this stream.</li>
+<li><code>IN.video_size</code>: The size of the actual video data in the texture, e.g for a SNES this will be generally <code>(256, 224)</code> for normal resolution frames.</li>
+<li><code>IN.texture_size</code>: This is the size of the texture itself. Optimally power-of-two sized.</li>
+<li><code>IN.output_size</code>: The size of the video output. This is the size of the viewport shown on screen.</li>
+<li><code>IN.frame_count</code>: A counter of the frame number. This increases with 1 every frame. This value is really an integer,    but needs to be float for CGs lack of integer uniforms.</li>
+<li><code>IN.frame_direction</code>: A number telling which direction the frames are flowing. For regular playing, this value should be <code>1.0</code>. While the game is rewinding, this value should be <code>-1.0</code>.</li>
+<li><code>modelViewProj</code>: This uniform needs to be set in vertex shader. It is a uniform for the current MVP transform.</li>
+</ul>
+<h3 id="pre-filtering">Pre-filtering<a class="headerlink" href="#pre-filtering" title="Permanent link">¶</a></h3>
+<p>Most of these shaders are intended to be used with a non-filtered input. Nearest-neighbor filtering on the textures themselves are preferred. Some shaders, like scanline will most likely prefer bilinear texture filtering.</p>
+<h2 id="cg-meta-shader-format">Cg meta-shader format<a class="headerlink" href="#cg-meta-shader-format" title="Permanent link">¶</a></h2>
+<h3 id="rationale">Rationale<a class="headerlink" href="#rationale" title="Permanent link">¶</a></h3>
+<p>The <code>.cg</code> files themselves contain no metadata necessary to perform advanced filtering. They also cannot process an effect in multiple passes, which is necessary for some effects. The CgFX format does exist, but it would need current shaders to be rewritten to a HLSL-esque format. It also suffers a problem mentioned below.</p>
+<p>Rather than putting everything into one file (XML shader format), this format is config file based. This greatly helps testing shader combinations as there is no need to rearrange code in one big file. Another plus with this approach is that a large library of .cg files can be used to combine many shaders without needing to redundantly copy code over. It also helps testing as it is possible to unit-test every pass separately completely seamless.</p>
+<h2 id="format">Format<a class="headerlink" href="#format" title="Permanent link">¶</a></h2>
+<p>The meta-shader format is based around the idea of a config file with the format: <code>key = value</code>. Values with spaces need to be wrapped in quotes: key = "value stuff". </p>
+<p>No .ini sections or similar are allowed. Meta-shaders may include comments, prefixed by the "#" character, both on their own in an otherwise empty line or at the end of a key = value pair.</p>
+<p>The meta-format has four purposes:</p>
+<ul>
+<li>Combine several standalone .cg shaders into a multipass shader.</li>
+<li>Define scaling parameters for each pass. I.e., a HQ2x shader might want to output with a scale of exactly 2x.</li>
+<li>Control filtering of textures. Many shaders will want nearest-neighbor filtering, and some will want linear.</li>
+<li>Define external lookup textures. Shaders can access external textures found in <code>.tga</code> files.</li>
+</ul>
+<h3 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">¶</a></h3>
+<h4 id="shaders-int"><code>shaders</code> (int)<a class="headerlink" href="#shaders-int" title="Permanent link">¶</a></h4>
+<p>This param defines how many .cg shaders will be loaded. This value must be at least one. The path to these shaders will be found as a string in parameters shader0, shader1, ... shaderN, and so on. The path is relative to the directory the meta-shader was loaded from.</p>
+<h4 id="filter_linearn-boolean"><code>filter_linearN</code> (boolean)<a class="headerlink" href="#filter_linearn-boolean" title="Permanent link">¶</a></h4>
+<p>This parameter defines how the texture of the result of pass <code>N</code> will be filtered. <code>N = 0</code> (pass 0) is the raw input frame, <code>N = 1</code> is result of the first pass, etc. (A boolean value here might be <code>true</code>/<code>false</code>/<code>1</code>/<code>0</code>). Should this value not be defined, the filtering option is implementation-defined.</p>
+<h4 id="float_framebuffern-boolean"><code>float_framebufferN</code> (boolean)<a class="headerlink" href="#float_framebuffern-boolean" title="Permanent link">¶</a></h4>
+<p>This parameters defines if shader <code>N</code> should render to a 32-bit floating point buffer. This only takes effect if shaderN is actually rendered to an FBO. This is useful for shaders which have to store FBO values outside <code>[0, 1]</code> range.</p>
+<h4 id="frame_count_modn-int"><code>frame_count_modN</code> (int)<a class="headerlink" href="#frame_count_modn-int" title="Permanent link">¶</a></h4>
+<p>This positive parameter defines which modulo to apply to <code>IN.frame_count</code>. <code>IN.frame_count</code> will take the value <code>frame_count % frame_count_modN</code>.</p>
+<h4 id="scale_typen-string"><code>scale_typeN</code> (string)<a class="headerlink" href="#scale_typen-string" title="Permanent link">¶</a></h4>
+<p>This can be set to one of these values:
+   - <code>source</code>:   Output size of shader pass <code>N</code> is relative to the input size as found in <code>IN.video_size</code>. Value is <code>float</code>.
+   - <code>viewport</code>: Output size of shader pass <code>N</code> is relative to the size of the window viewport. Value is <code>float</code>. <strong>This value can change over time if the user resizes their window!</strong>
+   - <code>absolute</code>: Output size is statically defined to a certain size. Useful for hi-res blenders or similiar.</p>
+<p>If no scale type is assumed, it is assumed that it is set to <code>source</code> with <code>scaleN</code> set to <code>1.0</code>.</p>
+<p>It is possible to set <code>scale_type_xN</code> and <code>scale_type_yN</code> to specialize the scaling type in either direction. <code>scale_typeN</code> however overrides both of these.</p>
+<p><strong>Exceptions</strong></p>
+<ul>
+<li>If no <code>scale_type</code> is set for the very last shader, it is assumed to output at the full resolution rather than assuming
+   a scale of <code>1.0x</code>, and bypasses any frame-buffer object rendering. </li>
+<li>If there is only one shader, it is also considered to be the very last shader. If any scale option is defined, it has to go through a frame-buffer object, and subsequently rendered to screen. The filtering option used when stretching
+   is implementation defined. It is encouraged to not have any scaling parameters in last pass if you care about the filtering
+   option here.</li>
+<li>In first pass, should no scaling factor be defined, the implementation is free to choose a fitting scale. This means, that for a single pass shader, it is allowed for the implementation to set a scale, render to FBO, and stretch. (Rule above).</li>
+</ul>
+<h4 id="scalen-scale_xn-scale_yn-floatint"><code>scaleN</code>, <code>scale_xN</code>, <code>scale_yN</code> (float/int)<a class="headerlink" href="#scalen-scale_xn-scale_yn-floatint" title="Permanent link">¶</a></h4>
+<p>These values control the scaling params from <code>scale_typeN</code>. The values may be either floating or int depending on the type. <code>scaleN</code> controls both scaling type in horizontal and vertical directions.</p>
+<p>If <code>scaleN</code> is defined, <code>scale_xN</code> and <code>scale_yN</code> have no effect. <code>scale_xN</code> and <code>scale_yN</code> controls scaling properties for the directions separately. Should only one of these be defined, the other direction will assume a source scale with value <code>1.0</code>, i.e. no change in resolution.</p>
+<p>Should <code>scale_type_xN</code> and <code>scale_type_yN</code> be set to different values, the use of scaleN is undefined (i.e. if X-type is absolute (takes <code>int</code>), and Y-type is source (takes <code>float</code>).)</p>
+<h4 id="textures-multiple-strings"><code>textures</code> (multiple strings)<a class="headerlink" href="#textures-multiple-strings" title="Permanent link">¶</a></h4>
+<p>The textures param defines one or more lookup textures IDs. Several IDs are delimited with <code>;</code> such as <code>textures = "foo;bar"</code>.  These IDs serves as the names for a Cg sampler uniform, such as <code>uniform sampler2D foo;</code> and <code>uniform sampler2D bar;</code></p>
+<p>The path of the textures can be found in the IDs, i.e. <code>foo = image0.tga</code> and <code>bar = image1.tga</code>.  The paths of these textures are relative to the directory the meta-shader was loaded from.</p>
+<p>It is also possible to control the filtering options of the lookup texture as a boolean option in <code>ID_linear = true/false</code>. For example <code>foo_linear = false</code> will force nearest neighbor filtering for texture <code>foo</code>.</p>
+<p>!!! Note
+    If <code>ID_linear</code> is not set, it is assumed to be linearily filtered.</p>
+<p>The textures will be loaded "as-is", and coordinates <code>(0, 0)</code>, <code>(0, 1)</code>, <code>(1, 0)</code>, <code>(1, 1)</code> will correspond to the corners of the texture. Since the texture coordinates of the texture in TEXUNIT0 might not be as convenient, the texture coordinates for all lookup textures will be found in <code>TEXCOORD1</code>.</p>
+<p>!!! Warning
+    You cannot assume which texture unit the lookup textures will be bound to!</p>
+<p>The implementation only guarantees to be able to load plain top-left non-RLE <code>.tga</code> files. It may provide possibilities to load <code>.png</code> and other popular formats.</p>
+<h2 id="multipass">Multipass<a class="headerlink" href="#multipass" title="Permanent link">¶</a></h2>
+<p>It is sometimes feasible to process an effect in several steps.</p>
+<pre><code class="c">shaders = 2
+shader0 = pass1.cg
+shader1 = pass2.cg
+scale_type0 = source
+scale0 = 2.0
+filter_linear0 = true
+filter_linear1 = false
+</code></pre>
+
+<p>During multi-pass rendering, some additional uniforms are available.</p>
+<p>With multi-pass rendering, it is possible to utilize the resulting output for every pass that came before it, including the unfiltered input. This allows for an additive approach to shading rather than serial style.</p>
+<p>The unfiltered input can be found in the ORIG struct:</p>
+<ul>
+<li><code>uniform sampler2D ORIG.texture</code>: Texture handle. Must not be set to a predefined texture unit.</li>
+<li><code>uniform float2 ORIG.video_size</code>: The video size of original frame.</li>
+<li><code>uniform float2 ORIG.texture_size</code>: The texture size of original frame.</li>
+<li><code>in float2 ORIG.tex_coord</code>: An attribute input holding the texturecoordinates of original frame.</li>
+<li><code>PASS%u</code>: This struct holds the same data as the <code>ORIG</code> struct, although the result of passes {1, 2, 3 ...}, i.e.   <code>PASS1.texture</code> holds the result of the first shader pass. If rendering pass <code>N</code>, passes <code>{1, ..., N-2}</code> are available.   (<code>N-1</code> being input in the regular <code>IN</code> structure).</li>
+<li><code>PREV</code>: This struct holds the same data as the <code>ORIG</code> struct, and corresponds to the raw input image from the previous frame. Useful for motion blur.</li>
+<li><code>PREV1..6</code>: Similar struct as <code>PREV</code>, but holds the data for passes further back in time. <code>PREV1</code> is the frame before <code>PREV</code>, <code>PREV2</code> the frame before that again, and so on. This allows up to 8-tap motion blur.</li>
+</ul>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebarwrapper">
+        
+          
+            
+  <p class="logo">
+    <a href="../../..">
+      <img class="logo" src="../../../logo.png" title="Alabaster">
+    </a>
+  </p>
+  
+
+
+
+          
+            
+
+
+
+<h3>Table Of Contents</h3>
+
+<nav>
+  
+  
+    <ul>
+    
+      <li><a href="#new-slang-shader-specification">New Slang Shader Specification</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#example-cghlsl-program">Example Cg/HLSL program</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#shader-hello-world">Shader Hello World</a></li>
+      <ul>
+    
+      <li><a href="#cg-types">Cg types</a></li>
+      <ul>
+    
+      <li><a href="#float">Float</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#semantics">Semantics</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#putting-it-together">Putting it together</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#result">Result</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#shader-file-format">Shader file format</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#cg-shader-spec">Cg shader spec</a></li>
+      <ul>
+    
+      <li><a href="#another-example-cg-shader">Another example Cg shader</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#example-cg-preset">Example Cg preset</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#entry-points">Entry points:</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#texture-unit">Texture unit</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#uniforms">Uniforms</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#pre-filtering">Pre-filtering</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#cg-meta-shader-format">Cg meta-shader format</a></li>
+      <ul>
+    
+      <li><a href="#rationale">Rationale</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#format">Format</a></li>
+      <ul>
+    
+      <li><a href="#parameters">Parameters</a></li>
+      <ul>
+    
+      <li><a href="#shaders-int">shaders (int)</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#filter_linearn-boolean">filter_linearN (boolean)</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#float_framebuffern-boolean">float_framebufferN (boolean)</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#frame_count_modn-int">frame_count_modN (int)</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#scale_typen-string">scale_typeN (string)</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#scalen-scale_xn-scale_yn-floatint">scaleN, scale_xN, scale_yN (float/int)</a></li>
+      <ul>
+    
+  </ul>
+    
+      <li><a href="#textures-multiple-strings">textures (multiple strings)</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+    
+  </ul>
+    
+      <li><a href="#multipass">Multipass</a></li>
+      <ul>
+    
+  </ul>
+    
+  </ul>
+  
+
+  
+    <hr>
+    <ul>
+      
+        <li class="toctree-l1"><a href="https://github.com/notpushkin/mkdocs-alabaster">Fork me on GitHub</a></li>
+      
+    </ul>
+  
+</nav>
+          
+            
+  <h3>Related Topics</h3>
+  <ul>
+    
+      <li>Previous: <a href="../glsl-shaders/" title="previous chapter">
+        GLSL Shader Development
+      </a></li>
+    
+    
+      <li>Next: <a href="../xml-shaders/" title="next chapter">
+        XML Shader Development (discontinued)
+      </a></li>
+    
+  </ul>
+
+          
+            <div id="searchbox" style="display: none;" role="search">
+  <h3>Quick search</h3>
+  <form class="search" action="../../../search.html" method="get">
+    <input name="q" type="text">
+    <input value="Go" type="submit">
+  </form>
+  <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+  </p>
+</div>
+<script type="text/javascript">
+  document.getElementById("searchbox").style.display = "block";
+</script>
+          
+        
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+
+  
+    <div class="footer">
+      
+        &copy; 2019 Alexander Pushkov
+      
+      
+        |
+        Powered by <a href="http://www.mkdocs.org">mkdocs 1.1</a>
+        &amp; <a href="https://github.com/iamale/mkdocs-alabaster">mkdocs-alabaster</a>
+      
+    </div>
+  
+
+  <!--
+  MkDocs version      : 1.1
+  Docs Build Date UTC : 2020-05-14 06:50:09
+  -->
+</body>
+</html>
