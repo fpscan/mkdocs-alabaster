@@ -1,13 +1,30 @@
-Alabaster for MkDocs
-=====================
+# Welcome to the Libretro/RetroArch Documentation!
 
-Original Alabaster is a visually (c)lean, responsive, configurable theme for the Sphinx documentation system. It began as a third-party theme, but as of Sphinx 1.3, Alabaster is an install-time dependency of Sphinx and is selected as the default theme, and is used in projects such as <http://paramiko.org/>, <http://fabfile.org/> or <http://pyinvoke.org/>.
+![www.retroarch.com](image/branding/retroarch_banner.png)
 
-This is a port of Alabaster for the [MkDocs](http://www.mkdocs.org/) static site generator.
+RetroArch is the official reference frontend for libretro "cores": applications that include emulators, game engines, and media players. Settings are also unified across cores with advanced features like shaders, netplay, rewinding, and more!
 
+![www.libretro.com](image/branding/libretro_banner.png)
 
-## Features
+libretro is a simple backend API for emulators, game engines, and media players to be run through a unified GUI.
 
-- Navigation and TOC
-- Search
-- Customizable sidebar (planned)
+## Which platforms is RetroArch available for?
+RetroArch runs and is supported on GNU/Linux, BSD, Windows, Mac OSX (PPC/Intel), Haiku, PlayStation 2, PlayStation 3, Playstation Vita, Playstation Portable, Xbox 360, Xbox One, Raspberry Pi, Nintendo GameCube, Nintendo Wii, Nintendo Wii U, Nintendo 3DS & 2DS Family, Nintendo Switch, Android, iOS, Open Pandora, and Blackberry.
+
+## What is the license for this?
+libretro is released under the MIT license. RetroArch is released under the GNU GPLv3. The cores are usually released with the same license as the originating projects.
+
+## What emulators, games, and other cores are currently supported?
+You can see a list sorted by hardware maker under *For Users > Core Documentation*
+
+## Official Links
+
+- [Website](https://www.retroarch.com/)
+- [Github Repository](https://github.com/libretro/RetroArch)
+- [Libretro Documentation](https://docs.libretro.com/)
+- [Forum](https://forums.libretro.com/)
+- [Facebook](https://www.facebook.com/libretro)
+- [Twitter](https://twitter.com/libretro)
+- [YouTube](https://www.youtube.com/Libretro)
+- [Discord](https://discord.gg/27Xxm2h)
+- [Teespring](https://teespring.com/stores/retroarch)
