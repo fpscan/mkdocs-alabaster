@@ -1,9 +1,24 @@
-- name: Cache
-  uses: actions/cache@v1.1.2
-  with:
-    # A directory to store and save the cache
-    path: 
-    # An explicit key for restoring and saving the cache
-    key: 
-    # An ordered list of keys to use for restoring the cache if no cache hit occurred for key
-    restore-keys: # optional
+name: Caching Primes
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Cache Primes
+      id: cache-primes
+      uses: actions/cache@v1
+      with:
+        path: prime-numbers
+        key: ${{ runner.os }}-primes
+
+    - name: Generate Prime Numbers
+      if: steps.cache-primes.outputs.cache-hit != 'true'
+      run: /generate-primes.sh -d prime-numbers
+
+    - name: Use Prime Numbers
+      run: /primes.sh -d prime-numbers
